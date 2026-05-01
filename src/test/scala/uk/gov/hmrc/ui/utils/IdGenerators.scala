@@ -23,7 +23,7 @@ trait IdGenerators {
   val randomisedNino: String = new NinoGenerator().nextNino.nino
   val randomisedUtr: String  = new SaUtrGenerator().nextSaUtr.toString()
 
-  //prefixes
+  // prefixes
   val validCtUtr: String     = "333"
   val preRegUtr: String      = "222"
   val individualNino: String = "AA1"

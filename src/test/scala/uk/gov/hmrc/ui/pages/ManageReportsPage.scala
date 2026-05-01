@@ -21,18 +21,18 @@ import uk.gov.hmrc.ui.utils.DateUtil
 import uk.gov.hmrc.selenium.webdriver.Driver
 import uk.gov.hmrc.ui.conf.TestConfiguration
 
-object ManageReportsPage extends BasePage with DateUtil{
+object ManageReportsPage extends BasePage with DateUtil {
 
+  override val pageUrl: String =
+    TestConfiguration.url("crs-fatca-manual-submission-frontend") + s"/manage-reports-for-$reportingYear"
+  val manageReportsLink: By    = By.xpath("//a[contains(@href, 'read-submission-data')]")
 
-  override val pageUrl: String         = TestConfiguration.url("crs-fatca-manual-submission-frontend") + s"/manage-reports-for-$reportingYear"
-  val manageReportsLink: By = By.xpath("//a[contains(@href, 'read-submission-data')]")
-
-  val pageHeading: By = By.tagName("h1")
-  val crsReportsHeading: By = By.xpath("//h2[contains(text(), 'CRS reports')]")
+  val pageHeading: By         = By.tagName("h1")
+  val crsReportsHeading: By   = By.xpath("//h2[contains(text(), 'CRS reports')]")
   val fatcaReportsHeading: By = By.xpath("//h2[contains(text(), 'FATCA reports')]")
 
-  val uploadXmlLink: By = By.linkText("uploading an XML file")
-  val manualReportingLink: By = By.linkText("filling in an online form for manual reporting")
+  val uploadXmlLink: By           = By.linkText("uploading an XML file")
+  val manualReportingLink: By     = By.linkText("filling in an online form for manual reporting")
   val backToManageReportsLink: By = By.linkText("Back to manage your CRS and FATCA reports")
   val voidThisInformationLink: By = By.linkText("Void this information")
 

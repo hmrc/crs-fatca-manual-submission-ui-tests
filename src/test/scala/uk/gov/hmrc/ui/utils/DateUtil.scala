@@ -20,8 +20,8 @@ import java.time.LocalDate
 
 trait DateUtil {
 
-  val now: LocalDate = LocalDate.now()
-  val currentYear: Int = now.getYear
+  val now: LocalDate     = LocalDate.now()
+  val currentYear: Int   = now.getYear
   val reportingYear: Int = currentYear - 1
 
 }

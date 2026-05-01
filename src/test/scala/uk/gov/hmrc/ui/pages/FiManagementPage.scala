@@ -22,10 +22,10 @@ object FiManagementPage extends BasePage {
 
   override val pageUrl: String              = baseUrl
   val manageYourFinancialInstitutionsId: By = By.id("your-financial-institutions")
-  
-  def checkPage(): Unit                     =
+
+  def checkPage(): Unit =
     onPage(pageUrl)
-  
+
   def clickManageYourFinancialInstitutions(): Unit = {
     onPage(pageUrl)
     click(manageYourFinancialInstitutionsId)
