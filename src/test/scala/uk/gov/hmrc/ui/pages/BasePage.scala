@@ -16,6 +16,80 @@
 
 package uk.gov.hmrc.ui.pages
 
+import org.openqa.selenium.support.ui.{ExpectedConditions, FluentWait, Wait}
+import org.openqa.selenium.{By, WebDriver}
+import org.scalatest.Assertion
+import org.scalatest.matchers.should.Matchers
 import uk.gov.hmrc.selenium.component.PageObject
+import uk.gov.hmrc.selenium.webdriver.Driver
+import uk.gov.hmrc.ui.conf.TestConfiguration
+import uk.gov.hmrc.ui.driver.BrowserDriver
+import uk.gov.hmrc.ui.utils.IdGenerators
 
-trait BasePage extends PageObject {}
+import java.time.Duration
+
+trait BasePage extends BrowserDriver with Matchers with IdGenerators with PageObject {
+
+  case class PageNotFoundException(message: String) extends Exception(message)
+
+  val pageUrl: String
+  val baseUrl: String    = TestConfiguration.url("crs-fatca-fi-management-frontend")
+  val submitButtonId: By = By.id("submit")
+  val backLinkText: By   = By.linkText("Back")
+  val pageHeader: By     = By.tagName("h1")
+  val yesRadioId: By     = By.id("value")
+  val noRadioId: By      = By.id("value-no")
+
+  private def fluentWait: Wait[WebDriver] = new FluentWait[WebDriver](Driver.instance)
+    .withTimeout(Duration.ofSeconds(15))
+    .pollingEvery(Duration.ofMillis(200))
+
+  def onPage(url: String = this.pageUrl): this.type = {
+    fluentWait.until(ExpectedConditions.urlToBe(url))
+    this
+  }
+
+  def clickOnBackLink(): Unit = {
+    onPage()
+    click(backLinkText)
+  }
+
+  def submitPage(): this.type = {
+    onPage(pageUrl)
+    click(submitButtonId)
+    this
+  }
+
+  def selectYesAndContinue(): Unit = {
+    onPage(pageUrl)
+    click(yesRadioId)
+    click(submitButtonId)
+  }
+
+  def selectNoAndContinue(): Unit = {
+    onPage(pageUrl)
+    click(noRadioId)
+    click(submitButtonId)
+  }
+
+  def checkH1(h1: String): Assertion =
+    getText(pageHeader) should include(h1)
+
+  def waitUntilVisible(locator: By): Unit =
+    fluentWait.until(ExpectedConditions.visibilityOfElementLocated(locator))
+
+  def waitWith(timeoutSeconds: Int): FluentWait[WebDriver] =
+    new FluentWait[WebDriver](Driver.instance)
+      .withTimeout(Duration.ofSeconds(timeoutSeconds))
+      .pollingEvery(Duration.ofMillis(200))
+
+  def onPageContaining(urlPart: String): this.type = {
+    fluentWait.until(ExpectedConditions.urlContains(urlPart))
+    this
+  }
+
+  def checkDynamicPage(): this.type = {
+    onPageContaining(pageUrl)
+    this
+  }
+}

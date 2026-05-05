@@ -20,6 +20,7 @@ import org.scalatest.featurespec.AnyFeatureSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.{BeforeAndAfterEach, GivenWhenThen}
 import uk.gov.hmrc.selenium.webdriver.{Browser, ScreenshotOnFailure}
+import uk.gov.hmrc.ui.utils.MongoTestUtils
 
 trait BaseSpec
     extends AnyFeatureSpec
@@ -27,10 +28,18 @@ trait BaseSpec
     with Matchers
     with BeforeAndAfterEach
     with Browser
-    with ScreenshotOnFailure {
+    with ScreenshotOnFailure
+    with MongoTestUtils {
 
-  override def beforeEach(): Unit =
+  def commonJourneySetUp(): Unit = {
+    Given("Mongo is clean")
+    cleanUserAnswersCollection()
+  }
+
+  override def beforeEach(): Unit = {
     startBrowser()
+    commonJourneySetUp()
+  }
 
   override def afterEach(): Unit =
     quitBrowser()

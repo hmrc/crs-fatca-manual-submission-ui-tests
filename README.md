@@ -2,7 +2,7 @@
 
 # crs-fatca-manual-submission-ui-tests
 
-<SERVICE_NAME> UI journey tests.
+`<crs-fatca-manual-submission-frontend>` UI journey tests.
 
 ## Pre-requisites
 
@@ -14,10 +14,10 @@ Start Mongo Docker container as follows:
 docker run --rm -d -p 27017:27017 --name mongo percona/percona-server-mongodb:6.0
 ```
 
-Start `<SERVICE_MANAGER_PROFILE>` services as follows:
+Start `<crs-fatca-manual-submission-frontend>` services as follows:
 
 ```bash
-sm2 --start <SERVICE_MANAGER_PROFILE>
+sm2 --start CRS_FATCA_ALL
 ```
 
 ## Tests
@@ -28,7 +28,7 @@ Run tests as follows:
 * Argument `<environment>` must be `local`, `dev`, `qa` or `staging`.
 
 ```bash
-sbt clean -Dbrowser="<browser>" -Denvironment="<environment>" test testReport
+./run_tests.sh <browser> <environment>
 ```
 
 ## Scalafmt
