@@ -41,7 +41,7 @@ trait BaseSpec
     commonJourneySetUp()
   }
 
-//  override def afterEach(): Unit =
-//    quitBrowser()
+  override def afterEach(): Unit =
+    quitBrowser()
 
 }
