@@ -19,12 +19,10 @@ package uk.gov.hmrc.ui.pages
 import org.openqa.selenium.By
 import uk.gov.hmrc.ui.utils.DateUtil
 import uk.gov.hmrc.selenium.webdriver.Driver
-import uk.gov.hmrc.ui.conf.TestConfiguration
 
 object ManageReportsPage extends BasePage with DateUtil {
 
-  override val pageUrl: String =
-    TestConfiguration.url("crs-fatca-manual-submission-frontend") + s"/manage-reports-for-$reportingYear"
+  override val pageUrl: String = baseUrlManualSub + s"/manage-reports-for-$reportingYear"
   val manageReportsLink: By    = By.xpath("//a[contains(@href, 'read-submission-data')]")
 
   val pageHeading: By         = By.tagName("h1")
@@ -72,7 +70,7 @@ object ManageReportsPage extends BasePage with DateUtil {
     this
   }
 
-  def clickVoidThisInformation(): this.type = { // To be implemented as part of DAC6-4212
+  def clickVoidThisInformation(): this.type = {
     click(voidThisInformationLink)
     this
   }

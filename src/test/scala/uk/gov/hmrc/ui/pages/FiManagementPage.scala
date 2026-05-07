@@ -20,7 +20,7 @@ import org.openqa.selenium.By
 
 object FiManagementPage extends BasePage {
 
-  override val pageUrl: String              = baseUrl
+  override val pageUrl: String              = baseUrlFi
   val manageYourFinancialInstitutionsId: By = By.id("your-financial-institutions")
 
   def checkPage(): Unit =

@@ -18,17 +18,26 @@ package uk.gov.hmrc.ui.pages
 
 import org.openqa.selenium.By
 
-object YourFisPage extends BasePage {
+object FatcaInformationVoidedPage extends BasePage {
 
-  override val pageUrl: String = baseUrlFi + "/your-fis"
-  val manageReportsLink: By    = By.xpath("//a[contains(@href, 'read-submission-data')]")
+  override val pageUrl: String  = "/fatca-void/information-voided"
+  override val backLinkText: By = By.linkText("Back")
 
-  def checkPage(): Unit =
-    onPage(pageUrl)
+  val backToManageReportsLink: By     = By.id("submitted-reports-link")
+  val backToManageCrsAndFatcaLink: By = By.linkText("Back to manage your CRS and FATCA reports")
 
-  def clickOnManageReports(): Unit = {
-    onPage(pageUrl)
-    click(manageReportsLink)
+  def checkPageHeading(): Unit =
+    checkH1("FATCA information voided")
+
+  def clickBackToManageSubmittedReports(): Unit = {
+    checkDynamicPage()
+    click(backToManageReportsLink)
+    click(backLinkText)
+  }
+
+  def clickBackToManageCrsAndFatca(): Unit = {
+    checkDynamicPage()
+    click(backToManageCrsAndFatcaLink)
   }
 
 }
