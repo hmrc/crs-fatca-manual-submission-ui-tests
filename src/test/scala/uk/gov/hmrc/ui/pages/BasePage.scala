@@ -33,12 +33,13 @@ trait BasePage extends BrowserDriver with Matchers with IdGenerators with PageOb
   case class PageNotFoundException(message: String) extends Exception(message)
 
   val pageUrl: String
-  val baseUrl: String    = TestConfiguration.url("crs-fatca-fi-management-frontend")
-  val submitButtonId: By = By.id("submit")
-  val backLinkText: By   = By.linkText("Back")
-  val pageHeader: By     = By.tagName("h1")
-  val yesRadioId: By     = By.id("value")
-  val noRadioId: By      = By.id("value-no")
+  val baseUrlFi: String        = TestConfiguration.url("crs-fatca-fi-management-frontend")
+  val baseUrlManualSub: String = TestConfiguration.url("crs-fatca-manual-submission-frontend")
+  val submitButtonId: By       = By.id("submit")
+  val backLinkText: By         = By.linkText("Back")
+  val pageHeader: By           = By.tagName("h1")
+  val yesRadioId: By           = By.id("value")
+  val noRadioId: By            = By.id("value-no")
 
   private def fluentWait: Wait[WebDriver] = new FluentWait[WebDriver](Driver.instance)
     .withTimeout(Duration.ofSeconds(15))

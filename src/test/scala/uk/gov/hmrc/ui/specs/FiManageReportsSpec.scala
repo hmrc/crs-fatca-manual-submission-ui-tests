@@ -58,5 +58,39 @@ class FiManageReportsSpec extends BaseSpec {
       Then("The user is back on the your FIs page")
       YourFisPage.onPage()
     }
+
+    Scenario("FATCA - Void journey", ManualSubmissionTests, SoloTests) {
+      Given("The user logs in as a standard User")
+      AuthLoginPage.loginAsBasic()
+
+      And("The user is on the manage your financial institutions page")
+      FiManagementPage.clickManageYourFinancialInstitutions()
+
+      When("The user clicks manage reports for an FI")
+      YourFisPage.clickOnManageReports()
+
+      Then("The user is on the manage reports page")
+      ManageReportsPage.onManageReportsPage()
+
+      When("The user clicks void this information")
+      ManageReportsPage.clickVoidThisInformation()
+
+      Then("The user is on the voiding FATCA information page")
+      VoidingFatcaInformationPage.checkDynamicPage()
+
+      When("The user selects Yes and continues")
+      VoidingFatcaInformationPage.selectYesAndContinue()
+
+      Then("The user is on the FATCA information voided confirmation page")
+      FatcaInformationVoidedPage.checkDynamicPage()
+      FatcaInformationVoidedPage.checkPageHeading()
+
+      When("The user clicks back to manage submitted reports")
+      FatcaInformationVoidedPage.clickBackToManageSubmittedReports()
+      And("The user clicks back to manage CRS and FATCA reports")
+      FatcaInformationVoidedPage.clickBackToManageCrsAndFatca()
+      Then("The user is on the FI management page")
+      FiManagementPage.onPage()
+    }
   }
 }

@@ -18,17 +18,16 @@ package uk.gov.hmrc.ui.pages
 
 import org.openqa.selenium.By
 
-object YourFisPage extends BasePage {
+object VoidingFatcaInformationPage extends BasePage {
 
-  override val pageUrl: String = baseUrlFi + "/your-fis"
-  val manageReportsLink: By    = By.xpath("//a[contains(@href, 'read-submission-data')]")
+  override val pageUrl: String = "/fatca-void/voiding-fatca-information"
+  val continueButton: By       = By.cssSelector("button.govuk-button")
 
-  def checkPage(): Unit =
-    onPage(pageUrl)
-
-  def clickOnManageReports(): Unit = {
-    onPage(pageUrl)
-    click(manageReportsLink)
+  override def selectYesAndContinue(): Unit = {
+    checkDynamicPage()
+    click(yesRadioId)
+    waitUntilVisible(continueButton)
+    click(continueButton)
   }
 
 }
