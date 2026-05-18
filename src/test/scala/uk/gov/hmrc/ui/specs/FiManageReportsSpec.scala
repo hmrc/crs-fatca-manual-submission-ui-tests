@@ -55,8 +55,8 @@ class FiManageReportsSpec extends BaseSpec {
       When("The user clicks back to manage your CRS and FATCA reports")
       ManageReportsPage.clickBackToManageReports()
 
-//      Then("The user is back on the your FIs page") - will uncomment after DAC6-4270 merged
-//      YourFisPage.onPage()
+      Then("The user is on the FI management page")
+      FiManagementPage.onPage()
     }
 
     Scenario("FATCA - Void journey", ManualSubmissionTests, SoloTests) {
