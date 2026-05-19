@@ -18,7 +18,7 @@ package uk.gov.hmrc.ui.pages
 
 object CrsExcludingContractsPage extends BasePage {
 
-  override val pageUrl: String = baseUrlManualSub + "/manual/elections/crs/contracts"
+  override val pageUrl: String = baseUrlManualSub + "/elections/crs/contracts"
 
   def checkPage(): this.type = {
     onPage(pageUrl)

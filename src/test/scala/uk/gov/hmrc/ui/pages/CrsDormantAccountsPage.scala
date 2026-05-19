@@ -18,7 +18,7 @@ package uk.gov.hmrc.ui.pages
 
 object CrsDormantAccountsPage extends BasePage {
 
-  override val pageUrl: String = baseUrlManualSub + "/manual/elections/crs/dormant-accounts"
+  override val pageUrl: String = baseUrlManualSub + "/elections/crs/dormant-accounts"
 
   def checkPage(): this.type = {
     onPage(pageUrl)
