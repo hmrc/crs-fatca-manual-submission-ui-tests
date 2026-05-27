@@ -18,12 +18,10 @@ package uk.gov.hmrc.ui.pages
 
 import org.openqa.selenium.By
 import uk.gov.hmrc.ui.utils.DateUtil
-import uk.gov.hmrc.selenium.webdriver.Driver
 
 object ManageReportsPage extends BasePage with DateUtil {
 
   override val pageUrl: String = baseUrlManualSub + s"/manage-reports-for-$reportingYear"
-  val manageReportsLink: By    = By.xpath("//a[contains(@href, 'read-submission-data')]")
 
   val pageHeading: By         = By.tagName("h1")
   val crsReportsHeading: By   = By.xpath("//h2[contains(text(), 'CRS reports')]")
@@ -39,13 +37,7 @@ object ManageReportsPage extends BasePage with DateUtil {
     this
   }
 
-  def getFiNameFromUrl: String = {
-    val url = Driver.instance.getCurrentUrl
-    url.split("fiName=").last.replace("+", " ")
-  }
-
-  def checkPageHeading(): this.type = {
-    val fiName = getFiNameFromUrl
+  def checkPageHeading(fiName: String): this.type = {
     checkH1(s"Submitted reports for $fiName for $reportingYear")
     this
   }
