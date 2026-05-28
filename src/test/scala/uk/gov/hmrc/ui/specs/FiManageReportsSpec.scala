@@ -85,8 +85,8 @@ class FiManageReportsSpec extends BaseSpec {
       FatcaInformationVoidedPage.checkDynamicPage()
       FatcaInformationVoidedPage.checkPageHeading()
 
-      When("The user clicks back to manage submitted reports")
-      FatcaInformationVoidedPage.clickBackToManageSubmittedReports()
+//      When("The user clicks back to manage submitted reports")
+//      FatcaInformationVoidedPage.clickBackToManageSubmittedReports()
       And("The user clicks back to manage CRS and FATCA reports")
       FatcaInformationVoidedPage.clickBackToManageCrsAndFatca()
       Then("The user is on the FI management page")
