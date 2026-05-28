@@ -36,7 +36,7 @@ class FiManageReportsSpec extends BaseSpec {
       Then("The user is on the manage reports page")
       ManageReportsPage
         .onManageReportsPage()
-        .checkPageHeading()
+        .checkPageHeading("Fifth FI")
         .checkCrsReportsSection()
         .checkFatcaReportsSection()
 

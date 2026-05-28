@@ -21,7 +21,7 @@ import org.openqa.selenium.By
 object YourFisPage extends BasePage {
 
   override val pageUrl: String = baseUrlFi + "/your-fis"
-  val manageReportsLink: By    = By.xpath("//a[contains(@href, 'read-submission-data')]")
+  val manageReportsLink: By    = By.xpath("//a[contains(@href, 'manage-reports-for')]")
 
   def checkPage(): Unit =
     onPage(pageUrl)
