@@ -31,7 +31,7 @@ object CrsChangeContractsPage extends BasePage {
     click(submitButtonId)
   }
 
-  override  def selectNoAndContinue(): Unit = {
+  override def selectNoAndContinue(): Unit = {
     checkDynamicPage()
     click(noRadioId)
     click(submitButtonId)
