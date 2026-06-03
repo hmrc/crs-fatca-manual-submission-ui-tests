@@ -14,15 +14,26 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.ui.pages
+package uk.gov.hmrc.ui.pages.electionCrsChangePages
 
-object CrsExcludingContractsPage extends BasePage {
+import uk.gov.hmrc.ui.pages.BasePage
 
-  override val pageUrl: String = baseUrlManualSub + "/elections/crs/contracts"
+object CrsChangeThresholdsPage$ extends BasePage {
 
-  def checkPage(): this.type = {
-    onPage(pageUrl)
-    this
+  override val pageUrl: String = baseUrlManualSub + "/elections/crs/change-crs-gross-proceeds"
+
+  def checkPage(): Unit =
+    checkDynamicPage()
+
+  override def selectYesAndContinue(): Unit = {
+    checkDynamicPage()
+    click(yesRadioId)
+    click(submitButtonId)
   }
 
+  override def selectNoAndContinue(): Unit = {
+    checkDynamicPage()
+    click(noRadioId)
+    click(submitButtonId)
+  }
 }
