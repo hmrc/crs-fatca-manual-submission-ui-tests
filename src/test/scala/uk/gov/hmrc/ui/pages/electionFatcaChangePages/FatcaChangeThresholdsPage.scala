@@ -14,15 +14,14 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.ui.pages
+package uk.gov.hmrc.ui.pages.electionFatcaChangePages
 
-object CrsExcludingContractsPage extends BasePage {
+import uk.gov.hmrc.ui.pages.BasePage
 
-  override val pageUrl: String = baseUrlManualSub + "/elections/crs/contracts"
+object FatcaChangeThresholdsPage extends BasePage {
 
-  def checkPage(): this.type = {
-    onPage(pageUrl)
-    this
-  }
+  override val pageUrl: String = baseUrlManualSub + "/elections/fatca/change-thresholds"
 
+  def checkPage(): Unit =
+    checkDynamicPage()
 }
