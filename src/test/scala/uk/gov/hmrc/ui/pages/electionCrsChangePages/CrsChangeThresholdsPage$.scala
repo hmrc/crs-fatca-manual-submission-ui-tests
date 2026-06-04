@@ -24,16 +24,4 @@ object CrsChangeThresholdsPage$ extends BasePage {
 
   def checkPage(): Unit =
     checkDynamicPage()
-
-  override def selectYesAndContinue(): Unit = {
-    checkDynamicPage()
-    click(yesRadioId)
-    click(submitButtonId)
-  }
-
-  override def selectNoAndContinue(): Unit = {
-    checkDynamicPage()
-    click(noRadioId)
-    click(submitButtonId)
-  }
 }
