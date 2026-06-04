@@ -20,7 +20,7 @@ import uk.gov.hmrc.ui.pages.BasePage
 
 object FatcaChangeThresholdsPage extends BasePage {
 
-  override val pageUrl: String = baseUrlManualSub + "/elections/fatca/change/thresholds"
+  override val pageUrl: String = baseUrlManualSub + "/elections/fatca/change-thresholds"
 
   def checkPage(): Unit =
     checkDynamicPage()
