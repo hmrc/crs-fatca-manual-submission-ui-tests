@@ -18,7 +18,7 @@ package uk.gov.hmrc.ui.pages
 
 object CheckYourAnswersPage extends BasePage {
 
-  override val pageUrl: String = baseUrlManualSub + "/elections/check-your-answers"
+  override val pageUrl: String = baseUrlManualSub + "/elections/check-answers"
 
   def confirmAndSend(): Unit = {
     checkDynamicPage()
