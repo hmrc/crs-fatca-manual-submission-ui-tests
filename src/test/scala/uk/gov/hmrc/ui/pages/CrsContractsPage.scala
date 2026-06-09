@@ -20,9 +20,4 @@ object CrsContractsPage extends BasePage {
 
   override val pageUrl: String = baseUrlManualSub + "/elections/crs/contracts"
 
-  def checkPage(): this.type = {
-    onPage(pageUrl)
-    this
-  }
-
 }

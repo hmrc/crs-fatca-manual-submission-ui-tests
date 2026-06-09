@@ -62,13 +62,13 @@ trait BasePage extends BrowserDriver with Matchers with IdGenerators with PageOb
   }
 
   def selectYesAndContinue(): Unit = {
-    onPage(pageUrl)
+    checkDynamicPage()
     click(yesRadioId)
     click(submitButtonId)
   }
 
   def selectNoAndContinue(): Unit = {
-    onPage(pageUrl)
+    checkDynamicPage()
     click(noRadioId)
     click(submitButtonId)
   }
@@ -92,5 +92,26 @@ trait BasePage extends BrowserDriver with Matchers with IdGenerators with PageOb
   def checkDynamicPage(): this.type = {
     onPageContaining(pageUrl)
     this
+  }
+
+  def checkChangeDynamicPage(): this.type = {
+    onPageContaining(
+      pageUrl
+        .replace("/elections/crs/", "/elections/crs/change-")
+        .replace("/elections/fatca/", "/elections/fatca/change-")
+    )
+    this
+  }
+
+  def selectNoAndContinueFromChange(): Unit = {
+    checkChangeDynamicPage()
+    click(noRadioId)
+    click(submitButtonId)
+  }
+
+  def selectYesAndContinueFromChange(): Unit = {
+    checkChangeDynamicPage()
+    click(yesRadioId)
+    click(submitButtonId)
   }
 }

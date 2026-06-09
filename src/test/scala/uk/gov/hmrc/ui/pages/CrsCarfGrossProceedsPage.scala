@@ -20,9 +20,4 @@ object CrsCarfGrossProceedsPage extends BasePage {
 
   override val pageUrl: String = baseUrlManualSub + "/elections/crs/carf-gross-proceeds"
 
-  def checkPage(): this.type = {
-    onPage(pageUrl)
-    this
-  }
-
 }

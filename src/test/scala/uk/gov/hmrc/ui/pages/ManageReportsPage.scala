@@ -32,6 +32,13 @@ object ManageReportsPage extends BasePage with DateUtil {
   val backToManageReportsLink: By = By.linkText("Back to manage your CRS and FATCA reports")
   val voidThisInformationLink: By = By.linkText("Void this information")
 
+  val viewOrMakeElectionsLink: By = By.partialLinkText("view or make elections for")
+  val previousPaginationLink: By  = By.cssSelector("a.govuk-pagination__link[rel='prev']")
+  val nextPaginationLink: By      = By.cssSelector("a.govuk-pagination__link[rel='next']")
+
+  def yearPaginationLink(year: String): By =
+    By.xpath(s"//nav[@aria-label='Pagination']//a[normalize-space()='$year']")
+
   def onManageReportsPage(): this.type = {
     onPageContaining(s"manage-reports-for-$reportingYear")
     this
@@ -67,4 +74,25 @@ object ManageReportsPage extends BasePage with DateUtil {
     this
   }
 
+  def clickViewOrMakeElectionsForFI(): this.type = {
+    click(viewOrMakeElectionsLink)
+    this
+  }
+
+//  def selectReportingYear(year: String): this.type = {
+//    while (driver.findElements(yearPaginationLink(year)).isEmpty) {
+//      click(previousPaginationLink)
+//    }
+//
+//    click(yearPaginationLink(year))
+//    this
+//  }
+
+  def selectReportingYear(year: String): this.type = {
+    while (driver.findElements(yearPaginationLink(year)).isEmpty)
+      if (year.toInt < reportingYear.toInt) click(previousPaginationLink)
+      else click(nextPaginationLink)
+    click(yearPaginationLink(year))
+    this
+  }
 }
