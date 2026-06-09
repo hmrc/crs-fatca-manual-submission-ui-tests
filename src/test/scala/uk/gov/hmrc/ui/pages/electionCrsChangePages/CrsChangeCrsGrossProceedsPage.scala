@@ -18,7 +18,7 @@ package uk.gov.hmrc.ui.pages.electionCrsChangePages
 
 import uk.gov.hmrc.ui.pages.BasePage
 
-object CrsChangeThresholdsPage$ extends BasePage {
+object CrsChangeCrsGrossProceedsPage extends BasePage {
 
   override val pageUrl: String = baseUrlManualSub + "/elections/crs/change-crs-gross-proceeds"
 

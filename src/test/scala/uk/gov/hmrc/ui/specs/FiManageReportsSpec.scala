@@ -85,12 +85,246 @@ class FiManageReportsSpec extends BaseSpec {
       FatcaInformationVoidedPage.checkDynamicPage()
       FatcaInformationVoidedPage.checkPageHeading()
 
-//      When("The user clicks back to manage submitted reports")
+//      When("The user clicks back to manage submitted reports")   --> Ticket raised for this : DAC6-4324
 //      FatcaInformationVoidedPage.clickBackToManageSubmittedReports()
       And("The user clicks back to manage CRS and FATCA reports")
       FatcaInformationVoidedPage.clickBackToManageCrsAndFatca()
       Then("The user is on the FI management page")
       FiManagementPage.onPage()
+    }
+
+    Scenario("CRS Elections journey - pre 2026 (no CARF)", ManualSubmissionTests, SoloTests) {
+      Given("The user logs in as a standard User")
+      AuthLoginPage.loginAsBasic()
+
+      And("The user is on the manage your financial institutions page")
+      FiManagementPage.clickManageYourFinancialInstitutions()
+
+      When("The user clicks manage reports for an FI")
+      YourFisPage.clickOnManageReports()
+
+      ManageReportsPage.selectReportingYear("2022")
+
+      When("The user clicks the view or make elections link")
+      ManageReportsPage.clickViewOrMakeElectionsForFI()
+
+      Then("The user is on the manage elections page")
+      ManageElectionsPage
+        .onManageElectionsPage()
+        .checkPageHeading("Fifth FI", "2022")
+        .checkCrsElectionsSection()
+        .checkFatcaElectionsSection()
+
+      When("The user clicks Make CRS elections")
+      ManageElectionsPage.clickMakeCrsElections()
+
+      When("The user selects Yes on the CRS contracts page")
+      CrsContractsPage.selectYesAndContinue()
+
+      When("The user selects Yes on the CRS dormant accounts page")
+      CrsDormantAccountsPage.selectYesAndContinue()
+
+      When("The user selects Yes on the CRS thresholds page")
+      CrsThresholdsPage.selectYesAndContinue()
+
+      Then("The user is on the CRS check your answers page")
+      CheckAnswersPage.checkDynamicPage()
+
+    }
+
+    Scenario("CRS Elections journey - 2026 onwards (with CARF)", ManualSubmissionTests, SoloTests) {
+      Given("The user logs in as a standard User")
+      AuthLoginPage.loginAsBasic()
+
+      And("The user is on the manage your financial institutions page")
+      FiManagementPage.clickManageYourFinancialInstitutions()
+
+      When("The user clicks manage reports for an FI")
+      YourFisPage.clickOnManageReports()
+
+      And("The user navigates to the 2026 reporting year")
+      ManageReportsPage.selectReportingYear("2026")
+
+      When("The user clicks the view or make elections link")
+      ManageReportsPage.clickViewOrMakeElectionsForFI()
+
+      Then("The user is on the manage elections page for 2026")
+      ManageElectionsPage
+        .onManageElectionsPage()
+        .checkPageHeading("Fifth FI", "2026")
+        .checkCrsElectionsSection()
+        .checkFatcaElectionsSection()
+
+      When("The user clicks Make CRS elections")
+      ManageElectionsPage.clickMakeCrsElections()
+
+      When("The user selects Yes on the CRS contracts page")
+      CrsContractsPage.selectYesAndContinue()
+
+      When("The user selects Yes on the CRS dormant accounts page")
+      CrsDormantAccountsPage.selectYesAndContinue()
+
+      When("The user selects Yes on the CRS thresholds page")
+      CrsThresholdsPage.selectYesAndContinue()
+
+      When("The user selects Yes on the CARF reporting page")
+      CrsCarfGrossProceedsPage.selectYesAndContinue()
+
+      When("The user selects Yes on the CARF under CRS page")
+      CrsCarfGrossProceedsUnderCrsPage.selectYesAndContinue()
+
+      Then("The user is on the CRS check your answers page")
+      CheckAnswersPage.checkDynamicPage()
+    }
+
+    Scenario("CRS Elections 2026 - Change all answers from Yes to No", ManualSubmissionTests, SoloTests) {
+      Given("The user logs in as a standard User")
+      AuthLoginPage.loginAsBasic()
+
+      And("The user is on the manage your financial institutions page")
+      FiManagementPage.clickManageYourFinancialInstitutions()
+
+      When("The user clicks manage reports for an FI")
+      YourFisPage.clickOnManageReports()
+
+      And("The user navigates to the 2026 reporting year")
+      ManageReportsPage.selectReportingYear("2026")
+
+      And("The user clicks the view or make elections link")
+      ManageReportsPage.clickViewOrMakeElectionsForFI()
+
+      And("The user completes the CRS elections journey answering Yes to all questions")
+      ManageElectionsPage.onManageElectionsPage()
+      ManageElectionsPage.clickMakeCrsElections()
+      CrsContractsPage.selectYesAndContinue()
+      CrsDormantAccountsPage.selectYesAndContinue()
+      CrsThresholdsPage.selectYesAndContinue()
+      CrsCarfGrossProceedsPage.selectYesAndContinue()
+      CrsCarfGrossProceedsUnderCrsPage.selectYesAndContinue()
+
+      When("The user clicks Change for contracts and selects No")
+      CheckAnswersPage.clickChangeContracts()
+      CrsContractsPage.selectNoAndContinueFromChange()
+
+      When("The user clicks Change for dormant accounts and selects No")
+      CheckAnswersPage.clickChangeDormant()
+      CrsDormantAccountsPage.selectNoAndContinueFromChange()
+
+      When("The user clicks Change for thresholds and selects No")
+      CheckAnswersPage.clickChangeThresholds()
+      CrsThresholdsPage.selectNoAndContinueFromChange()
+
+      When("The user clicks Change for CARF and selects No")
+      CheckAnswersPage.clickChangeCarf()
+      CrsCarfGrossProceedsPage.selectNoAndContinueFromChange()
+
+      Then("The user is back on the CRS check your answers page with all answers updated to No")
+      CheckAnswersPage.checkDynamicPage()
+    }
+
+    Scenario("FATCA Elections journey - 2026", ManualSubmissionTests, SoloTests) {
+      Given("The user logs in as a standard User")
+      AuthLoginPage.loginAsBasic()
+
+      And("The user is on the manage your financial institutions page")
+      FiManagementPage.clickManageYourFinancialInstitutions()
+
+      When("The user clicks manage reports for an FI")
+      YourFisPage.clickOnManageReports()
+
+      And("The user navigates to the 2026 reporting year")
+      ManageReportsPage.selectReportingYear("2026")
+
+      When("The user clicks the view or make elections link")
+      ManageReportsPage.clickViewOrMakeElectionsForFI()
+
+      Then("The user is on the manage elections page for 2026")
+      ManageElectionsPage
+        .onManageElectionsPage()
+        .checkPageHeading("Fifth FI", "2026")
+        .checkCrsElectionsSection()
+        .checkFatcaElectionsSection()
+
+      When("The user clicks Make FATCA elections")
+      ManageElectionsPage.clickMakeFatcaElections()
+
+      When("The user selects Yes on the US Treasury Regulations page")
+      FatcaUSTreasuryRegulationsPage.selectYesAndContinue()
+
+      When("The user selects Yes on the FATCA thresholds page")
+      FatcaThresholdsPage.selectYesAndContinue()
+
+      Then("The user is on the FATCA check your answers page")
+      CheckAnswersPage.checkDynamicPage()
+    }
+
+    Scenario("FATCA Elections 2026 - Change all answers from Yes to No", ManualSubmissionTests, SoloTests) {
+      Given("The user logs in as a standard User")
+      AuthLoginPage.loginAsBasic()
+
+      And("The user is on the manage your financial institutions page")
+      FiManagementPage.clickManageYourFinancialInstitutions()
+
+      When("The user clicks manage reports for an FI")
+      YourFisPage.clickOnManageReports()
+
+      And("The user navigates to the 2026 reporting year")
+      ManageReportsPage.selectReportingYear("2026")
+
+      When("The user clicks the view or make elections link")
+      ManageReportsPage.clickViewOrMakeElectionsForFI()
+
+      And("The user completes the FATCA elections journey answering Yes to all questions")
+      ManageElectionsPage.onManageElectionsPage()
+      ManageElectionsPage.clickMakeFatcaElections()
+      FatcaUSTreasuryRegulationsPage.selectYesAndContinue()
+      FatcaThresholdsPage.selectYesAndContinue()
+
+      When("The user clicks Change for US Treasury Regulations and selects No")
+      CheckAnswersPage.clickChangeFatcaUsTreasury()
+      FatcaUSTreasuryRegulationsPage.selectNoAndContinueFromChange()
+
+      When("The user clicks Change for FATCA thresholds and selects No")
+      CheckAnswersPage.clickChangeFatcaThresholds()
+      FatcaThresholdsPage.selectNoAndContinueFromChange()
+
+      Then("The user is back on the FATCA check your answers page with all answers updated to No")
+      CheckAnswersPage.checkDynamicPage()
+    }
+
+    Scenario(
+      "Manage Elections - user can navigate through all years via pagination",
+      ManualSubmissionTests,
+      SoloTests
+    ) {
+      Given("The user logs in as a standard User")
+      AuthLoginPage.loginAsBasic()
+
+      And("The user is on the manage your financial institutions page")
+      FiManagementPage.clickManageYourFinancialInstitutions()
+
+      When("The user clicks manage reports for an FI")
+      YourFisPage.clickOnManageReports()
+
+      And("The user clicks the view or make elections link")
+      ManageReportsPage.clickViewOrMakeElectionsForFI()
+
+      Then("The manage elections page defaults to the reporting year")
+      ManageElectionsPage
+        .onManageElectionsPage()
+        .checkDefaultYear()
+
+      When("The user navigates back through each year to the earliest year")
+      ManageElectionsPage.navigateThroughAllPreviousYears()
+
+      Then("The manage elections page is shown for the earliest year")
+      ManageElectionsPage.checkEarliestYear()
+
+      When("The user navigates forward to the current year")
+      ManageElectionsPage.navigateToCurrentYear()
+
+      Then("The manage elections page is shown for the current year")
+      ManageElectionsPage.checkCurrentYear()
     }
   }
 }
