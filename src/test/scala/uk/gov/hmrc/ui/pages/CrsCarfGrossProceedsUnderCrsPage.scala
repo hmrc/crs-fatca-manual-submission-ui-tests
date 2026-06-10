@@ -18,6 +18,6 @@ package uk.gov.hmrc.ui.pages
 
 object CrsCarfGrossProceedsUnderCrsPage extends BasePage {
 
-  override val pageUrl: String = baseUrlManualSub + "/elections/crs/crs-gross-proceeds"
+  override val pageUrl: String = baseUrlManualSub + "/elections/crs/gross-proceeds"
 
 }
