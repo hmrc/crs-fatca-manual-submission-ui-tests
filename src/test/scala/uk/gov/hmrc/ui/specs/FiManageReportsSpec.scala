@@ -85,8 +85,8 @@ class FiManageReportsSpec extends BaseSpec {
       FatcaInformationVoidedPage.checkDynamicPage()
       FatcaInformationVoidedPage.checkPageHeading()
 
-//      When("The user clicks back to manage submitted reports")   --> Ticket raised for this : DAC6-4324
-//      FatcaInformationVoidedPage.clickBackToManageSubmittedReports()
+      //      When("The user clicks back to manage submitted reports")   --> Ticket raised for this : DAC6-4324
+      //      FatcaInformationVoidedPage.clickBackToManageSubmittedReports()
       And("The user clicks back to manage CRS and FATCA reports")
       FatcaInformationVoidedPage.clickBackToManageCrsAndFatca()
       Then("The user is on the FI management page")
@@ -101,7 +101,7 @@ class FiManageReportsSpec extends BaseSpec {
       FiManagementPage.clickManageYourFinancialInstitutions()
 
       When("The user clicks manage reports for an FI")
-      YourFisPage.clickOnManageReports()
+      YourFisPage.clickOnSecondManageReports()
 
       ManageReportsPage.selectReportingYear("2022")
 
@@ -111,7 +111,7 @@ class FiManageReportsSpec extends BaseSpec {
       Then("The user is on the manage elections page")
       ManageElectionsPage
         .onManageElectionsPage()
-        .checkPageHeading("Fifth FI", "2022")
+        .checkPageHeading("First FI", "2022")
         .checkCrsElectionsSection()
         .checkFatcaElectionsSection()
 
@@ -127,8 +127,11 @@ class FiManageReportsSpec extends BaseSpec {
       When("The user selects Yes on the CRS thresholds page")
       CrsThresholdsPage.selectYesAndContinue()
 
-      Then("The user is on the CRS check your answers page")
-      CheckAnswersPage.checkDynamicPage()
+      And("The user selects Confirm and Send on check answers page")
+      CheckAnswersPage.confirmAndSend()
+
+      Then("The user completes the elections-sent journey")
+      ElectionsSentPage.checkDynamicPage()
 
     }
 
@@ -140,7 +143,7 @@ class FiManageReportsSpec extends BaseSpec {
       FiManagementPage.clickManageYourFinancialInstitutions()
 
       When("The user clicks manage reports for an FI")
-      YourFisPage.clickOnManageReports()
+      YourFisPage.clickOnSecondManageReports()
 
       And("The user navigates to the 2026 reporting year")
       ManageReportsPage.selectReportingYear("2026")
@@ -151,7 +154,7 @@ class FiManageReportsSpec extends BaseSpec {
       Then("The user is on the manage elections page for 2026")
       ManageElectionsPage
         .onManageElectionsPage()
-        .checkPageHeading("Fifth FI", "2026")
+        .checkPageHeading("First FI", "2026")
         .checkCrsElectionsSection()
         .checkFatcaElectionsSection()
 
@@ -173,8 +176,11 @@ class FiManageReportsSpec extends BaseSpec {
       When("The user selects Yes on the CARF under CRS page")
       CrsCarfGrossProceedsUnderCrsPage.selectYesAndContinue()
 
-      Then("The user is on the CRS check your answers page")
-      CheckAnswersPage.checkDynamicPage()
+      And("The user selects Confirm and Send on check answers page")
+      CheckAnswersPage.confirmAndSend()
+
+      Then("The user completes the elections-sent journey")
+      ElectionsSentPage.checkDynamicPage()
     }
 
     Scenario("CRS Elections 2026 - Change all answers from Yes to No", ManualSubmissionTests, SoloTests) {
@@ -185,7 +191,7 @@ class FiManageReportsSpec extends BaseSpec {
       FiManagementPage.clickManageYourFinancialInstitutions()
 
       When("The user clicks manage reports for an FI")
-      YourFisPage.clickOnManageReports()
+      YourFisPage.clickOnSecondManageReports()
 
       And("The user navigates to the 2026 reporting year")
       ManageReportsPage.selectReportingYear("2026")
@@ -218,8 +224,14 @@ class FiManageReportsSpec extends BaseSpec {
       CheckAnswersPage.clickChangeCarf()
       CrsCarfGrossProceedsPage.selectNoAndContinueFromChange()
 
-      Then("The user is back on the CRS check your answers page with all answers updated to No")
-      CheckAnswersPage.checkDynamicPage()
+      And(
+        "The user is back on the CRS check your answers page with all answers updated to No and click the confirm and send"
+      )
+      CheckAnswersPage.confirmAndSend()
+
+      Then("The user completes the elections-sent journey")
+      ElectionsSentPage.checkDynamicPage()
+
     }
 
     Scenario("FATCA Elections journey - 2026", ManualSubmissionTests, SoloTests) {
@@ -230,7 +242,7 @@ class FiManageReportsSpec extends BaseSpec {
       FiManagementPage.clickManageYourFinancialInstitutions()
 
       When("The user clicks manage reports for an FI")
-      YourFisPage.clickOnManageReports()
+      YourFisPage.clickOnSecondManageReports()
 
       And("The user navigates to the 2026 reporting year")
       ManageReportsPage.selectReportingYear("2026")
@@ -241,7 +253,7 @@ class FiManageReportsSpec extends BaseSpec {
       Then("The user is on the manage elections page for 2026")
       ManageElectionsPage
         .onManageElectionsPage()
-        .checkPageHeading("Fifth FI", "2026")
+        .checkPageHeading("First FI", "2026")
         .checkCrsElectionsSection()
         .checkFatcaElectionsSection()
 
@@ -254,8 +266,11 @@ class FiManageReportsSpec extends BaseSpec {
       When("The user selects Yes on the FATCA thresholds page")
       FatcaThresholdsPage.selectYesAndContinue()
 
-      Then("The user is on the FATCA check your answers page")
-      CheckAnswersPage.checkDynamicPage()
+      And("The user selects Confirm and Send on check answers page")
+      CheckAnswersPage.confirmAndSend()
+
+      Then("The user completes the elections-sent journey")
+      ElectionsSentPage.checkDynamicPage()
     }
 
     Scenario("FATCA Elections 2026 - Change all answers from Yes to No", ManualSubmissionTests, SoloTests) {
@@ -266,7 +281,7 @@ class FiManageReportsSpec extends BaseSpec {
       FiManagementPage.clickManageYourFinancialInstitutions()
 
       When("The user clicks manage reports for an FI")
-      YourFisPage.clickOnManageReports()
+      YourFisPage.clickOnSecondManageReports()
 
       And("The user navigates to the 2026 reporting year")
       ManageReportsPage.selectReportingYear("2026")
@@ -288,8 +303,14 @@ class FiManageReportsSpec extends BaseSpec {
       CheckAnswersPage.clickChangeFatcaThresholds()
       FatcaThresholdsPage.selectNoAndContinueFromChange()
 
-      Then("The user is back on the FATCA check your answers page with all answers updated to No")
-      CheckAnswersPage.checkDynamicPage()
+      And(
+        "The user is back on the FATCA check your answers page with all answers updated to No and selects confirm and send"
+      )
+      CheckAnswersPage.confirmAndSend()
+
+      Then("The user completes the elections-sent journey")
+      ElectionsSentPage.checkDynamicPage()
+
     }
 
     Scenario(

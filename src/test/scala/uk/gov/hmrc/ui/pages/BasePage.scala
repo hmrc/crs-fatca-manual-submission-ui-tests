@@ -30,8 +30,6 @@ import java.time.Duration
 
 trait BasePage extends BrowserDriver with Matchers with IdGenerators with PageObject {
 
-  case class PageNotFoundException(message: String) extends Exception(message)
-
   val pageUrl: String
   val baseUrlFi: String        = TestConfiguration.url("crs-fatca-fi-management-frontend")
   val baseUrlManualSub: String = TestConfiguration.url("crs-fatca-manual-submission-frontend")
@@ -41,18 +39,14 @@ trait BasePage extends BrowserDriver with Matchers with IdGenerators with PageOb
   val yesRadioId: By           = By.id("value")
   val noRadioId: By            = By.id("value-no")
 
-  private def fluentWait: Wait[WebDriver] = new FluentWait[WebDriver](Driver.instance)
-    .withTimeout(Duration.ofSeconds(15))
-    .pollingEvery(Duration.ofMillis(200))
+  def clickOnBackLink(): Unit = {
+    onPage()
+    click(backLinkText)
+  }
 
   def onPage(url: String = this.pageUrl): this.type = {
     fluentWait.until(ExpectedConditions.urlToBe(url))
     this
-  }
-
-  def clickOnBackLink(): Unit = {
-    onPage()
-    click(backLinkText)
   }
 
   def submitPage(): this.type = {
@@ -65,6 +59,11 @@ trait BasePage extends BrowserDriver with Matchers with IdGenerators with PageOb
     checkDynamicPage()
     click(yesRadioId)
     click(submitButtonId)
+  }
+
+  def checkDynamicPage(): this.type = {
+    onPageContaining(pageUrl)
+    this
   }
 
   def selectNoAndContinue(): Unit = {
@@ -84,14 +83,10 @@ trait BasePage extends BrowserDriver with Matchers with IdGenerators with PageOb
       .withTimeout(Duration.ofSeconds(timeoutSeconds))
       .pollingEvery(Duration.ofMillis(200))
 
-  def onPageContaining(urlPart: String): this.type = {
-    fluentWait.until(ExpectedConditions.urlContains(urlPart))
-    this
-  }
-
-  def checkDynamicPage(): this.type = {
-    onPageContaining(pageUrl)
-    this
+  def selectNoAndContinueFromChange(): Unit = {
+    checkChangeDynamicPage()
+    click(noRadioId)
+    click(submitButtonId)
   }
 
   def checkChangeDynamicPage(): this.type = {
@@ -103,15 +98,20 @@ trait BasePage extends BrowserDriver with Matchers with IdGenerators with PageOb
     this
   }
 
-  def selectNoAndContinueFromChange(): Unit = {
-    checkChangeDynamicPage()
-    click(noRadioId)
-    click(submitButtonId)
+  def onPageContaining(urlPart: String): this.type = {
+    fluentWait.until(ExpectedConditions.urlContains(urlPart))
+    this
   }
+
+  private def fluentWait: Wait[WebDriver] = new FluentWait[WebDriver](Driver.instance)
+    .withTimeout(Duration.ofSeconds(15))
+    .pollingEvery(Duration.ofMillis(200))
 
   def selectYesAndContinueFromChange(): Unit = {
     checkChangeDynamicPage()
     click(yesRadioId)
     click(submitButtonId)
   }
+
+  case class PageNotFoundException(message: String) extends Exception(message)
 }

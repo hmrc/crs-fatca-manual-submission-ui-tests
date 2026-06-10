@@ -26,7 +26,7 @@ object CheckAnswersPage extends BasePage {
   val changeDormantLink: By      = By.cssSelector("a[href*='change-dormant-accounts']")
   val changeThresholdsLink: By   = By.cssSelector("a[href*='change-thresholds']")
   val changeCarfLink: By         = By.cssSelector("a[href*='change-carf-gross-proceeds']")
-  val changeCarfUnderCrsLink: By = By.cssSelector("a[href*='change-crs-gross-proceeds']")
+  val changeCarfUnderCrsLink: By = By.cssSelector("a[href*='change-gross-proceeds']")
 
   val changeFatcaUsTreasuryLink: By = By.cssSelector("a[href*='change-us-treasury-regulations']")
   val changeFatcaThresholdsLink: By = By.cssSelector("a[href*='fatca/change-thresholds']")

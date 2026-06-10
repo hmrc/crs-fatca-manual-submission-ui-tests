@@ -20,8 +20,9 @@ import org.openqa.selenium.By
 
 object YourFisPage extends BasePage {
 
-  override val pageUrl: String = baseUrlFi + "/your-fis"
-  val manageReportsLink: By    = By.xpath("//a[contains(@href, 'manage-reports-for')]")
+  override val pageUrl: String    = baseUrlFi + "/your-fis"
+  val manageReportsLink: By       = By.xpath("//a[contains(@href, 'manage-reports-for')]")
+  val secondManageReportsLink: By = By.xpath("//a[contains(@href, 'manage-reports-for-2025?fiId=683373339')]")
 
   def checkPage(): Unit =
     onPage(pageUrl)
@@ -29,6 +30,11 @@ object YourFisPage extends BasePage {
   def clickOnManageReports(): Unit = {
     onPage(pageUrl)
     click(manageReportsLink)
+  }
+
+  def clickOnSecondManageReports(): Unit = {
+    onPage(pageUrl)
+    click(secondManageReportsLink)
   }
 
 }
