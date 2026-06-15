@@ -22,7 +22,7 @@ object YourFisPage extends BasePage {
 
   override val pageUrl: String    = baseUrlFi + "/your-fis"
   val manageReportsLink: By       = By.xpath("//a[contains(@href, 'manage-reports-for')]")
-  val secondManageReportsLink: By = By.xpath("//a[contains(@href, 'manage-reports-for-2025?fiId=683373339')]")
+  val secondManageReportsLink: By = By.xpath("//a[contains(@href, 'manage-reports-for-2025?fiId=TES683373339')]")
 
   def checkPage(): Unit =
     onPage(pageUrl)
