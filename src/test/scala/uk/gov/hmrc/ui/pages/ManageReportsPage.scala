@@ -79,15 +79,6 @@ object ManageReportsPage extends BasePage with DateUtil {
     this
   }
 
-//  def selectReportingYear(year: String): this.type = {
-//    while (driver.findElements(yearPaginationLink(year)).isEmpty) {
-//      click(previousPaginationLink)
-//    }
-//
-//    click(yearPaginationLink(year))
-//    this
-//  }
-
   def selectReportingYear(year: String): this.type = {
     while (driver.findElements(yearPaginationLink(year)).isEmpty)
       if (year.toInt < reportingYear.toInt) click(previousPaginationLink)
@@ -95,4 +86,7 @@ object ManageReportsPage extends BasePage with DateUtil {
     click(yearPaginationLink(year))
     this
   }
+
+  def clickFillInOnlineManualReport(): Unit =
+    click(manualReportingLink)
 }
