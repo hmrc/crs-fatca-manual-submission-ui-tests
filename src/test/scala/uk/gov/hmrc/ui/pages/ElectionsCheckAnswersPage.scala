@@ -18,7 +18,7 @@ package uk.gov.hmrc.ui.pages
 
 import org.openqa.selenium.By
 
-object CheckAnswersPage extends BasePage {
+object ElectionsCheckAnswersPage extends BasePage {
 
   override val pageUrl: String = baseUrlManualSub + "/elections/check-answers"
 

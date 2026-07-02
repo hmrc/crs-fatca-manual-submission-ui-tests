@@ -128,7 +128,7 @@ class FiManageReportsSpec extends BaseSpec {
       CrsThresholdsPage.selectYesAndContinue()
 
       And("The user selects Confirm and Send on check answers page")
-      CheckAnswersPage.confirmAndSend()
+      ElectionsCheckAnswersPage.confirmAndSend()
 
       Then("The user completes the elections-sent journey")
       ElectionsSentPage.checkDynamicPage()
@@ -177,7 +177,7 @@ class FiManageReportsSpec extends BaseSpec {
       CrsCarfGrossProceedsUnderCrsPage.selectYesAndContinue()
 
       And("The user selects Confirm and Send on check answers page")
-      CheckAnswersPage.confirmAndSend()
+      ElectionsCheckAnswersPage.confirmAndSend()
 
       Then("The user completes the elections-sent journey")
       ElectionsSentPage.checkDynamicPage()
@@ -209,25 +209,25 @@ class FiManageReportsSpec extends BaseSpec {
       CrsCarfGrossProceedsUnderCrsPage.selectYesAndContinue()
 
       When("The user clicks Change for contracts and selects No")
-      CheckAnswersPage.clickChangeContracts()
+      ElectionsCheckAnswersPage.clickChangeContracts()
       CrsContractsPage.selectNoAndContinueFromChange()
 
       When("The user clicks Change for dormant accounts and selects No")
-      CheckAnswersPage.clickChangeDormant()
+      ElectionsCheckAnswersPage.clickChangeDormant()
       CrsDormantAccountsPage.selectNoAndContinueFromChange()
 
       When("The user clicks Change for thresholds and selects No")
-      CheckAnswersPage.clickChangeThresholds()
+      ElectionsCheckAnswersPage.clickChangeThresholds()
       CrsThresholdsPage.selectNoAndContinueFromChange()
 
       When("The user clicks Change for CARF and selects No")
-      CheckAnswersPage.clickChangeCarf()
+      ElectionsCheckAnswersPage.clickChangeCarf()
       CrsCarfGrossProceedsPage.selectNoAndContinueFromChange()
 
       And(
         "The user is back on the CRS check your answers page with all answers updated to No and click the confirm and send"
       )
-      CheckAnswersPage.confirmAndSend()
+      ElectionsCheckAnswersPage.confirmAndSend()
 
       Then("The user completes the elections-sent journey")
       ElectionsSentPage.checkDynamicPage()
@@ -267,7 +267,7 @@ class FiManageReportsSpec extends BaseSpec {
       FatcaThresholdsPage.selectYesAndContinue()
 
       And("The user selects Confirm and Send on check answers page")
-      CheckAnswersPage.confirmAndSend()
+      ElectionsCheckAnswersPage.confirmAndSend()
 
       Then("The user completes the elections-sent journey")
       ElectionsSentPage.checkDynamicPage()
@@ -296,17 +296,17 @@ class FiManageReportsSpec extends BaseSpec {
       FatcaThresholdsPage.selectYesAndContinue()
 
       When("The user clicks Change for US Treasury Regulations and selects No")
-      CheckAnswersPage.clickChangeFatcaUsTreasury()
+      ElectionsCheckAnswersPage.clickChangeFatcaUsTreasury()
       FatcaUSTreasuryRegulationsPage.selectNoAndContinueFromChange()
 
       When("The user clicks Change for FATCA thresholds and selects No")
-      CheckAnswersPage.clickChangeFatcaThresholds()
+      ElectionsCheckAnswersPage.clickChangeFatcaThresholds()
       FatcaThresholdsPage.selectNoAndContinueFromChange()
 
       And(
         "The user is back on the FATCA check your answers page with all answers updated to No and selects confirm and send"
       )
-      CheckAnswersPage.confirmAndSend()
+      ElectionsCheckAnswersPage.confirmAndSend()
 
       Then("The user completes the elections-sent journey")
       ElectionsSentPage.checkDynamicPage()
