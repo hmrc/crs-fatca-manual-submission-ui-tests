@@ -20,5 +20,4 @@ object HaveASponsorPage extends BasePage {
 
   override val pageUrl: String = baseUrlManualSub + "/manual/sponsor/have-sponsor"
 
-
 }
