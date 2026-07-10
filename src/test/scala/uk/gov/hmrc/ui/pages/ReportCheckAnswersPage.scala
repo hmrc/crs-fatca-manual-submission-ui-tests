@@ -17,6 +17,7 @@
 package uk.gov.hmrc.ui.pages
 
 import org.openqa.selenium.By
+import uk.gov.hmrc.ui.utils.TestData
 
 object ReportCheckAnswersPage extends BasePage {
 
@@ -26,9 +27,9 @@ object ReportCheckAnswersPage extends BasePage {
   val changeYearLink: By         = By.cssSelector("a[href*='change-year']")
   val changeTypeOfReportLink: By = By.cssSelector("a[href*='change-type-of-report']")
 
-  def checkPage(fiName: String): this.type = {
+  def checkPage(): this.type = {
     checkDynamicPage()
-    checkH1(s"Check your report details for $fiName")
+    checkH1(s"Check your report details for ${TestData.firstFi}")
     this
   }
 

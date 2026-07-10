@@ -51,16 +51,37 @@ class CrsFatcaManualSpec extends BaseSpec {
       TypeOfReportPage.checkPage()
 
       And("The legend shows the correct FI name and year")
-      TypeOfReportPage.checkLegend(TestData.firstFi, "2025")
+      TypeOfReportPage.checkLegend()
 
       And("They select a report with information and continue")
       TypeOfReportPage.selectReportWithInformationAndContinue()
 
       Then("They are on the check your report details page for the FI")
-      ReportCheckAnswersPage.checkPage(TestData.firstFi)
+      ReportCheckAnswersPage.checkPage()
 
       And("They save and continue")
       ReportCheckAnswersPage.confirmAndSend()
+
+      Then("They are on the manual send a report task list page")
+      ManualSendAReportIndexPage.checkDynamicPage()
+
+      When("They open the sponsor details task")
+      ManualSendAReportIndexPage.clickSponsorDetails()
+
+      And("They select yes and continue")
+      HaveASponsorPage.selectYesAndContinue()
+
+      When("They enter the sponsor name and continue")
+      SponsorNamePage.enterSponsorNameAndContinue()
+
+      And("The GIIN question shows the sponsor name entered")
+      SponsorGiinPage.checkLabelForSponsor()
+
+      When("They enter the GIIN and continue")
+      SponsorGiinPage.enterGiinAndContinue()
+
+      And("They select yes and continue")
+      SponsorWhereBasedPage.selectYesAndContinue()
     }
 
   }
