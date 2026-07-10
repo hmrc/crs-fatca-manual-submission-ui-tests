@@ -18,7 +18,6 @@ package uk.gov.hmrc.ui.specs
 
 import uk.gov.hmrc.ui.pages.*
 import uk.gov.hmrc.ui.specs.tags.*
-import uk.gov.hmrc.ui.utils.TestData
 
 class CrsFatcaManualSpec extends BaseSpec {
 
