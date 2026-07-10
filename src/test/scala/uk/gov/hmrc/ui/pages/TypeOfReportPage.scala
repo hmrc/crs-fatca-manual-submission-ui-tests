@@ -18,6 +18,7 @@ package uk.gov.hmrc.ui.pages
 
 import org.openqa.selenium.By
 import org.scalatest.Assertion
+import uk.gov.hmrc.ui.utils.TestData
 
 object TypeOfReportPage extends BasePage {
 
@@ -33,8 +34,10 @@ object TypeOfReportPage extends BasePage {
     this
   }
 
-  def checkLegend(fiName: String, year: String): Assertion =
-    getText(legend) should include(s"What type of report would you like to send for $fiName for $year?")
+  def checkLegend(): Assertion =
+    getText(legend) should include(
+      s"What type of report would you like to send for ${TestData.firstFi} for ${TestData.reportingYear}?"
+    )
 
   def selectReportWithInformationAndContinue(): this.type = {
     onPage(pageUrl)

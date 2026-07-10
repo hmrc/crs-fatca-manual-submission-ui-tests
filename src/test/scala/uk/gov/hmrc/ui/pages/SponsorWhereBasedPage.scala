@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,14 +14,10 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.ui.utils
+package uk.gov.hmrc.ui.pages
 
-object TestData {
+object SponsorWhereBasedPage extends BasePage {
 
-  val firstFi       = "First FI"
-  val fifthFi       = "Fifth FI"
-  val reportingYear = "2025"
-  val sponsorName   = "Fatca Sponsor"
-  val sponsorGiin   = "98096B.00000.LE.350"
+  override val pageUrl: String = baseUrlManualSub + "/manual/sponsor/where-are-they-based"
 
 }
