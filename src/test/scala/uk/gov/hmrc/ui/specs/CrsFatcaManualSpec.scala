@@ -44,7 +44,7 @@ class CrsFatcaManualSpec extends BaseSpec {
       CrsOrFatcaPage.selectCrsAndContinue()
 
       And("They enter a valid year and continue")
-      ReportingDetailsYearPage.enterYearAndContinue("2025")
+      ReportingDetailsYearPage.enterYearAndContinue()
 
       Then("They are on the 'Type of report' page")
       TypeOfReportPage.checkPage()
@@ -63,25 +63,61 @@ class CrsFatcaManualSpec extends BaseSpec {
 
       Then("They are on the manual send a report task list page")
       ManualSendAReportIndexPage.checkDynamicPage()
+    }
+
+    Scenario(
+      "CRS/FATCA Manual - complete sponsor journey (FATCA)",
+      ManualSubmissionTests,
+      SoloTests
+    ) {
+      Given("The user logs in as a standard User")
+      AuthLoginPage.loginAsBasic()
+
+      And("The user is on the manage your financial institutions page")
+      FiManagementPage.clickManageYourFinancialInstitutions()
+
+      When("The user clicks manage reports for an FI")
+      YourFisPage.clickOnSecondManageReports()
+
+      And("The user clicks 'filling in an online form for manual reporting'")
+      ManageReportsPage.clickFillInOnlineManualReport()
+
+      And("They select FATCA and continue")
+      CrsOrFatcaPage.selectFatcaAndContinue()
+
+      And("They enter a valid year and continue")
+      ReportingDetailsYearPage.enterYearAndContinue()
+
+      And("They select a report with information and continue")
+      TypeOfReportPage.selectReportWithInformationAndContinue()
+
+      And("They save and continue on the check answers page")
+      ReportCheckAnswersPage.confirmAndSend()
+
+      Then("They are on the manual send a report task list page")
+      ManualSendAReportIndexPage.checkDynamicPage()
 
       When("They open the sponsor details task")
       ManualSendAReportIndexPage.clickSponsorDetails()
 
-      And("They select yes and continue")
+      And("They confirm they have a sponsor and continue")
       HaveASponsorPage.selectYesAndContinue()
 
-      When("They enter the sponsor name and continue")
+      And("They enter the sponsor name and continue")
       SponsorNamePage.enterSponsorNameAndContinue()
 
-      And("The GIIN question shows the sponsor name entered")
+      Then("They are on the sponsor GIIN page and it shows the sponsor name")
       SponsorGiinPage.checkLabelForSponsor()
 
-      When("They enter the GIIN and continue")
+      And("They enter the GIIN and continue")
       SponsorGiinPage.enterGiinAndContinue()
 
-      And("They select yes and continue")
+      And("They confirm the sponsor is UK-based and continue")
       SponsorWhereBasedPage.selectYesAndContinue()
-    }
 
+      Then("They are on the sponsor UK postcode page")
+      SponsorUkPostcodePage.checkPage()
+      SponsorUkPostcodePage.enterPostcodeAndFindAddress()
+    }
   }
 }

@@ -23,5 +23,6 @@ object TestData {
   val reportingYear = "2025"
   val sponsorName   = "Fatca Sponsor"
   val sponsorGiin   = "98096B.00000.LE.350"
+  val postCode      = "ZZ1 1ZZ"
 
 }
