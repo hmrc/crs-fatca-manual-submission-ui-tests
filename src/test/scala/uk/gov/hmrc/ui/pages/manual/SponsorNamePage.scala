@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,10 +14,23 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.ui.pages
+package uk.gov.hmrc.ui.pages.manual
 
-object CrsContractsPage extends BasePage {
+import org.openqa.selenium.By
+import uk.gov.hmrc.ui.pages.BasePage
+import uk.gov.hmrc.ui.utils.TestData
 
-  override val pageUrl: String = baseUrlManualSub + "/elections/crs/contracts"
+object SponsorNamePage extends BasePage {
+
+  override val pageUrl: String = baseUrlManualSub + "/manual/sponsor/name"
+
+  val nameInput: By = By.id("value")
+
+  def enterSponsorNameAndContinue(): this.type = {
+    onPage(pageUrl)
+    sendKeys(nameInput, TestData.sponsorName)
+    click(submitButtonId)
+    this
+  }
 
 }

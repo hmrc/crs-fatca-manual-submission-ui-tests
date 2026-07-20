@@ -14,19 +14,27 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.ui.pages
+package uk.gov.hmrc.ui.pages.manual
 
 import org.openqa.selenium.By
+import uk.gov.hmrc.ui.pages.BasePage
 
 object ManualSendAReportIndexPage extends BasePage {
 
   override val pageUrl: String = baseUrlManualSub + "/manual/send-a-report"
 
   val sponsorDetailsLink: By = By.cssSelector("a[href*='sponsor/have-sponsor']")
+  val accountsLink: By       = By.cssSelector("a[href*='account/have-number']")
 
   def clickSponsorDetails(): this.type = {
     onPage(pageUrl)
     click(sponsorDetailsLink)
+    this
+  }
+
+  def clickAccounts(): this.type = {
+    onPage(pageUrl)
+    click(accountsLink)
     this
   }
 

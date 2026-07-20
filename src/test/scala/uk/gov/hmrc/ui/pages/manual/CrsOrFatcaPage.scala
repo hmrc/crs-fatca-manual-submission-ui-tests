@@ -1,5 +1,5 @@
 /*
- * Copyright 2026 HM Revenue & Customs
+ * Copyright 2023 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,28 +14,30 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.ui.pages
+package uk.gov.hmrc.ui.pages.manual
 
 import org.openqa.selenium.By
-import uk.gov.hmrc.ui.utils.TestData
+import uk.gov.hmrc.ui.pages.BasePage
 
-object SponsorUkPostcodePage extends BasePage {
+object CrsOrFatcaPage extends BasePage {
 
-  override val pageUrl: String = baseUrlManualSub + "/manual/sponsor/uk-postcode"
+  override val pageUrl: String = baseUrlManualSub + "/manual/report-details/crs-or-fatca"
 
-  val postcodeInput: By   = By.id("value")
-  val manualEntryLink: By = By.linkText("Or enter the address manually")
+  val crsRadioId: By   = By.id("value_0")
+  val fatcaRadioId: By = By.id("value_1")
 
-  def checkPage(): this.type = {
+  def selectCrsAndContinue(): this.type = {
     onPage(pageUrl)
-    checkH1(s"What is the postcode for ${TestData.sponsorName}?")
-    this
-  }
-
-  def enterPostcodeAndFindAddress(): this.type = {
-    onPage(pageUrl)
-    sendKeys(postcodeInput, TestData.postCode)
+    click(crsRadioId)
     click(submitButtonId)
     this
   }
+
+  def selectFatcaAndContinue(): this.type = {
+    onPage(pageUrl)
+    click(fatcaRadioId)
+    click(submitButtonId)
+    this
+  }
+
 }

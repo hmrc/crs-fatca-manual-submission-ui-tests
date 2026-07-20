@@ -1,5 +1,5 @@
 /*
- * Copyright 2026 HM Revenue & Customs
+ * Copyright 2023 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,10 +14,12 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.ui.pages
+package uk.gov.hmrc.ui.pages.elections
 
-object ElectionsSentPage extends BasePage {
+import uk.gov.hmrc.ui.pages.BasePage
 
-  override val pageUrl: String = baseUrlManualSub + "/elections/elections-sent"
+object CrsCarfGrossProceedsPage extends BasePage {
+
+  override val pageUrl: String = baseUrlManualSub + "/elections/crs/carf-gross-proceeds"
 
 }

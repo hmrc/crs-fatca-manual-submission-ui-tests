@@ -1,5 +1,5 @@
 /*
- * Copyright 2026 HM Revenue & Customs
+ * Copyright 2023 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,9 +14,12 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.ui.pages
+package uk.gov.hmrc.ui.pages.elections
 
-object NameOfTheSponsorPage extends BasePage {
+import uk.gov.hmrc.ui.pages.BasePage
 
-  override val pageUrl: String = baseUrlManualSub + "/manual/sponsor/name"
+object CrsThresholdsPage extends BasePage {
+
+  override val pageUrl: String = baseUrlManualSub + "/elections/crs/thresholds"
+
 }

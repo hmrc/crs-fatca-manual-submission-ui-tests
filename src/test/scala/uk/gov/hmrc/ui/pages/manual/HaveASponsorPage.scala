@@ -14,22 +14,12 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.ui.pages
+package uk.gov.hmrc.ui.pages.manual
 
-import org.openqa.selenium.By
-import uk.gov.hmrc.ui.utils.TestData
+import uk.gov.hmrc.ui.pages.BasePage
 
-object SponsorNamePage extends BasePage {
+object HaveASponsorPage extends BasePage {
 
-  override val pageUrl: String = baseUrlManualSub + "/manual/sponsor/name"
-
-  val nameInput: By = By.id("value")
-
-  def enterSponsorNameAndContinue(): this.type = {
-    onPage(pageUrl)
-    sendKeys(nameInput, TestData.sponsorName)
-    click(submitButtonId)
-    this
-  }
+  override val pageUrl: String = baseUrlManualSub + "/manual/sponsor/have-sponsor"
 
 }

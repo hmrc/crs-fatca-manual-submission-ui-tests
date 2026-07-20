@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.ui.pages
+package uk.gov.hmrc.ui.pages.manual
 
 import org.openqa.selenium.By
+import uk.gov.hmrc.ui.pages.BasePage
 import uk.gov.hmrc.ui.utils.TestData
 
 object ReportCheckAnswersPage extends BasePage {

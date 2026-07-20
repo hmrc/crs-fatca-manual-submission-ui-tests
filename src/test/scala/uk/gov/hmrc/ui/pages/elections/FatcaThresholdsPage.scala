@@ -14,9 +14,12 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.ui.pages
+package uk.gov.hmrc.ui.pages.elections
 
-object SendAReportPage extends BasePage {
+import uk.gov.hmrc.ui.pages.BasePage
 
-  override val pageUrl: String = baseUrlManualSub + "/manual/send-a-report"
+object FatcaThresholdsPage extends BasePage {
+
+  override val pageUrl: String = baseUrlManualSub + "/elections/fatca/thresholds"
+
 }

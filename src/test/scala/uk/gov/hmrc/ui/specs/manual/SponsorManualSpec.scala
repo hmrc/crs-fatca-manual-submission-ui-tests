@@ -14,59 +14,19 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.ui.specs
+package uk.gov.hmrc.ui.specs.manual
 
 import uk.gov.hmrc.ui.pages.*
+import uk.gov.hmrc.ui.pages.manual.{CrsOrFatcaPage, HaveASponsorPage, ManualSendAReportIndexPage, ReportCheckAnswersPage, ReportingDetailsYearPage, SponsorGiinPage, SponsorNamePage, SponsorUkPostcodePage, SponsorWhereBasedPage, TypeOfReportPage}
+import uk.gov.hmrc.ui.specs.BaseSpec
 import uk.gov.hmrc.ui.specs.tags.*
 
-class CrsFatcaManualSpec extends BaseSpec {
+class SponsorManualSpec extends BaseSpec {
 
-  Feature("CRS/FATCA Manual - Report details (CRS or FATCA & reporting year)") {
-
-    Scenario(
-      "CRS/FATCA Manual - complete report-details journey (CRS, report with information)",
-      ManualSubmissionTests,
-      SoloTests
-    ) {
-      Given("The user logs in as a standard User")
-      AuthLoginPage.loginAsBasic()
-
-      And("The user is on the manage your financial institutions page")
-      FiManagementPage.clickManageYourFinancialInstitutions()
-
-      When("The user clicks manage reports for an FI")
-      YourFisPage.clickOnSecondManageReports()
-
-      And("The user clicks 'filling in an online form for manual reporting'")
-      ManageReportsPage.clickFillInOnlineManualReport()
-
-      And("They select CRS and continue")
-      CrsOrFatcaPage.selectCrsAndContinue()
-
-      And("They enter a valid year and continue")
-      ReportingDetailsYearPage.enterYearAndContinue()
-
-      Then("They are on the 'Type of report' page")
-      TypeOfReportPage.checkPage()
-
-      And("The legend shows the correct FI name and year")
-      TypeOfReportPage.checkLegend()
-
-      And("They select a report with information and continue")
-      TypeOfReportPage.selectReportWithInformationAndContinue()
-
-      Then("They are on the check your report details page for the FI")
-      ReportCheckAnswersPage.checkPage()
-
-      And("They save and continue")
-      ReportCheckAnswersPage.confirmAndSend()
-
-      Then("They are on the manual send a report task list page")
-      ManualSendAReportIndexPage.checkDynamicPage()
-    }
+  Feature("CRS/FATCA Manual - Sponsor journey (FATCA)") {
 
     Scenario(
-      "CRS/FATCA Manual - complete sponsor journey (FATCA)",
+      "Sponsor - complete journey up to UK postcode (FATCA)",
       ManualSubmissionTests,
       SoloTests
     ) {

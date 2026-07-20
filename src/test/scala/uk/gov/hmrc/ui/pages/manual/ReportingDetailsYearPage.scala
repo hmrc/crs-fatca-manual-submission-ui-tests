@@ -1,5 +1,5 @@
 /*
- * Copyright 2026 HM Revenue & Customs
+ * Copyright 2023 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,10 +14,23 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.ui.pages
+package uk.gov.hmrc.ui.pages.manual
 
-object HaveASponsorPage extends BasePage {
+import org.openqa.selenium.By
+import uk.gov.hmrc.ui.pages.BasePage
+import uk.gov.hmrc.ui.utils.TestData
 
-  override val pageUrl: String = baseUrlManualSub + "/manual/sponsor/have-sponsor"
+object ReportingDetailsYearPage extends BasePage {
+
+  override val pageUrl: String = baseUrlManualSub + "/manual/report-details/year"
+
+  private val yearInput: By = By.id("value")
+
+  def enterYearAndContinue(): this.type = {
+    onPage(pageUrl)
+    sendKeys(yearInput, TestData.reportingYear)
+    click(submitButtonId)
+    this
+  }
 
 }

@@ -14,10 +14,12 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.ui.pages
+package uk.gov.hmrc.ui.pages.elections
 
-object CrsCarfGrossProceedsPage extends BasePage {
+import uk.gov.hmrc.ui.pages.BasePage
 
-  override val pageUrl: String = baseUrlManualSub + "/elections/crs/carf-gross-proceeds"
+object CrsContractsPage extends BasePage {
+
+  override val pageUrl: String = baseUrlManualSub + "/elections/crs/contracts"
 
 }
