@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.ui.pages.electionFatcaChangePages
+package uk.gov.hmrc.ui.pages.elections.CrsChangePages
 
 import uk.gov.hmrc.ui.pages.BasePage
 
-object FatcaChangeUsTreasuryRegulationsPage extends BasePage {
+object CrsChangeCrsGrossProceedsPage extends BasePage {
 
-  override val pageUrl: String = baseUrlManualSub + "/elections/fatca/change-us-treasury-regulations"
+  override val pageUrl: String = baseUrlManualSub + "/elections/crs/change-crs-gross-proceeds"
 
   def checkPage(): Unit =
     checkDynamicPage()

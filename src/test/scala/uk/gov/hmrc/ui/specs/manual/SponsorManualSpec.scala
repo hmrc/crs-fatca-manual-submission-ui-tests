@@ -17,7 +17,8 @@
 package uk.gov.hmrc.ui.specs.manual
 
 import uk.gov.hmrc.ui.pages.*
-import uk.gov.hmrc.ui.pages.manual.{CrsOrFatcaPage, HaveASponsorPage, ManualSendAReportIndexPage, ReportCheckAnswersPage, ReportingDetailsYearPage, SponsorGiinPage, SponsorNamePage, SponsorUkPostcodePage, SponsorWhereBasedPage, TypeOfReportPage}
+import uk.gov.hmrc.ui.pages.manual.sponsor.{HaveASponsorPage, SponsorGiinPage, SponsorNamePage, SponsorUkPostcodePage, SponsorWhereBasedPage}
+import uk.gov.hmrc.ui.pages.manual.{CrsOrFatcaPage, ManualSendAReportIndexPage, ReportCheckAnswersPage, ReportingDetailsYearPage, TypeOfReportPage}
 import uk.gov.hmrc.ui.specs.BaseSpec
 import uk.gov.hmrc.ui.specs.tags.*
 

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.ui.pages.manual
+package uk.gov.hmrc.ui.pages.manual.sponsor
 
 import uk.gov.hmrc.ui.pages.BasePage
 

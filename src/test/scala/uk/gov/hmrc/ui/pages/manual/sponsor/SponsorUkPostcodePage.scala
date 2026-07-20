@@ -14,33 +14,28 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.ui.pages.manual
+package uk.gov.hmrc.ui.pages.manual.sponsor
 
 import org.openqa.selenium.By
 import uk.gov.hmrc.ui.pages.BasePage
 import uk.gov.hmrc.ui.utils.TestData
 
-object SponsorGiinPage extends BasePage {
+object SponsorUkPostcodePage extends BasePage {
 
-  override val pageUrl: String = baseUrlManualSub + "/manual/sponsor/giin"
+  override val pageUrl: String = baseUrlManualSub + "/manual/sponsor/uk-postcode"
 
-  private val giinInput: By = By.id("value")
-  private val label: By     = By.cssSelector("label[for='value']")
+  val postcodeInput: By   = By.id("value")
+  val manualEntryLink: By = By.linkText("Or enter the address manually")
 
   def checkPage(): this.type = {
-    checkDynamicPage()
-    checkH1("Global Intermediary Identification Number (GIIN)")
+    onPage(pageUrl)
+    checkH1(s"What is the postcode for ${TestData.sponsorName}?")
     this
   }
 
-  def checkLabelForSponsor(): this.type = {
-    getText(label) should include(s"What is the GIIN for ${TestData.sponsorName}?")
-    this
-  }
-
-  def enterGiinAndContinue(): this.type = {
-    checkDynamicPage()
-    sendKeys(giinInput, TestData.sponsorGiin)
+  def enterPostcodeAndFindAddress(): this.type = {
+    onPage(pageUrl)
+    sendKeys(postcodeInput, TestData.postCode)
     click(submitButtonId)
     this
   }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2026 HM Revenue & Customs
+ * Copyright 2023 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,12 +14,14 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.ui.pages.manual
+package uk.gov.hmrc.ui.pages.elections.FatcaChangePages
 
 import uk.gov.hmrc.ui.pages.BasePage
 
-object HaveASponsorPage extends BasePage {
+object FatcaChangeThresholdsPage extends BasePage {
 
-  override val pageUrl: String = baseUrlManualSub + "/manual/sponsor/have-sponsor"
+  override val pageUrl: String = baseUrlManualSub + "/elections/fatca/change-thresholds"
 
+  def checkPage(): Unit =
+    checkDynamicPage()
 }
