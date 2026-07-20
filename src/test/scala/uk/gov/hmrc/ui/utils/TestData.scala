@@ -24,5 +24,11 @@ object TestData {
   val sponsorName   = "Fatca Sponsor"
   val sponsorGiin   = "98096B.00000.LE.350"
   val postCode      = "ZZ1 1ZZ"
+  val iban          = "IBAN"
+  val oban          = "OBAN"
+  val isin          = "ISIN"
+  val osin          = "OSIN"
+  val semp          = "SEMP"
+  val anyOther      = "Any other"
 
 }

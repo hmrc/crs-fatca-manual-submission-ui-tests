@@ -21,6 +21,7 @@ import uk.gov.hmrc.ui.pages.manual.*
 import uk.gov.hmrc.ui.pages.manual.account.{AccountHaveNumberPage, AccountNumberTypePage}
 import uk.gov.hmrc.ui.specs.BaseSpec
 import uk.gov.hmrc.ui.specs.tags.*
+import uk.gov.hmrc.ui.utils.TestData
 
 class AccountsManualSpec extends BaseSpec {
 
@@ -71,7 +72,7 @@ class AccountsManualSpec extends BaseSpec {
       AccountNumberTypePage.checkSempIsNotPresent()
 
       When("They select IBAN and continue")
-      AccountNumberTypePage.selectIbanAndContinue()
+      AccountNumberTypePage.selectAccountNumberType(TestData.iban)
     }
 
     Scenario(
@@ -119,7 +120,7 @@ class AccountsManualSpec extends BaseSpec {
       AccountNumberTypePage.checkSempIsPresent()
 
       When("They select IBAN and continue")
-      AccountNumberTypePage.selectIbanAndContinue()
+      AccountNumberTypePage.selectAccountNumberType(TestData.semp)
     }
   }
 }

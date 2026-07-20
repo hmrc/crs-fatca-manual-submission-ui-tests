@@ -37,16 +37,17 @@ object AccountNumberTypePage extends BasePage {
     this
   }
 
-  def selectIbanAndContinue(): this.type  = selectAndContinue(ibanRadio)
-  def selectObanAndContinue(): this.type  = selectAndContinue(obanRadio)
-  def selectIsinAndContinue(): this.type  = selectAndContinue(isinRadio)
-  def selectOsinAndContinue(): this.type  = selectAndContinue(osinRadio)
-  def selectSempAndContinue(): this.type  = selectAndContinue(sempRadio)
-  def selectOtherAndContinue(): this.type = selectAndContinue(otherRadio)
-
-  private def selectAndContinue(radio: By): this.type = {
+  def selectAccountNumberType(accountNumberType: String): this.type = {
     onPage(pageUrl)
-    click(radio)
+    click(accountNumberType match {
+      case "IBAN"      => ibanRadio
+      case "OBAN"      => obanRadio
+      case "ISIN"      => isinRadio
+      case "OSIN"      => osinRadio
+      case "SEMP"      => sempRadio
+      case "Any other" => otherRadio
+      case other       => throw new IllegalArgumentException(s"Unknown account number type: $other")
+    })
     click(submitButtonId)
     this
   }
