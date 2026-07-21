@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2023 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,21 +14,23 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.ui.utils
+package uk.gov.hmrc.ui.pages.manual
 
-object TestData {
+import org.openqa.selenium.By
+import uk.gov.hmrc.ui.pages.BasePage
+import uk.gov.hmrc.ui.utils.TestData
 
-  val firstFi       = "First FI"
-  val fifthFi       = "Fifth FI"
-  val reportingYear = "2025"
-  val sponsorName   = "Fatca Sponsor"
-  val sponsorGiin   = "98096B.00000.LE.350"
-  val postCode      = "ZZ1 1ZZ"
-  val iban          = "IBAN"
-  val oban          = "OBAN"
-  val isin          = "ISIN"
-  val osin          = "OSIN"
-  val semp          = "SEMP"
-  val anyOther      = "Any other"
+object ReportingDetailsYearPage extends BasePage {
+
+  override val pageUrl: String = baseUrlManualSub + "/manual/report-details/year"
+
+  private val yearInput: By = By.id("value")
+
+  def enterYearAndContinue(): this.type = {
+    onPage(pageUrl)
+    sendKeys(yearInput, TestData.reportingYear)
+    click(submitButtonId)
+    this
+  }
 
 }

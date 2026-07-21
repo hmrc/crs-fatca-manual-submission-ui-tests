@@ -113,5 +113,8 @@ trait BasePage extends BrowserDriver with Matchers with IdGenerators with PageOb
     click(submitButtonId)
   }
 
+  def isElementPresent(locator: By): Boolean =
+    !Driver.instance.findElements(locator).isEmpty
+
   case class PageNotFoundException(message: String) extends Exception(message)
 }

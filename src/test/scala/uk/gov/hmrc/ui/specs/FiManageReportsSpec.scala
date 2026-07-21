@@ -17,6 +17,7 @@
 package uk.gov.hmrc.ui.specs
 
 import uk.gov.hmrc.ui.pages.*
+import uk.gov.hmrc.ui.pages.elections.{CrsCarfGrossProceedsPage, CrsCarfGrossProceedsUnderCrsPage, CrsContractsPage, CrsDormantAccountsPage, CrsThresholdsPage, ElectionsCheckAnswersPage, ElectionsSentPage, FatcaThresholdsPage, FatcaUSTreasuryRegulationsPage, ManageElectionsPage}
 import uk.gov.hmrc.ui.specs.tags.*
 
 class FiManageReportsSpec extends BaseSpec {
