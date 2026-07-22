@@ -25,6 +25,7 @@ object ManualSendAReportIndexPage extends BasePage {
 
   val sponsorDetailsLink: By = By.cssSelector("a[href*='sponsor/have-sponsor']")
   val accountsLink: By       = By.cssSelector("a[href*='account/have-number']")
+  val filerCategoryLink: By  = By.cssSelector("a[href*='filer-category/sponsor']")
 
   def clickSponsorDetails(): this.type = {
     onPage(pageUrl)
@@ -35,6 +36,12 @@ object ManualSendAReportIndexPage extends BasePage {
   def clickAccounts(): this.type = {
     onPage(pageUrl)
     click(accountsLink)
+    this
+  }
+
+  def clickFilerCategory(): this.type = {
+    onPage(pageUrl)
+    click(filerCategoryLink)
     this
   }
 
