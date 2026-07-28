@@ -17,12 +17,13 @@
 package uk.gov.hmrc.ui.specs.manual
 
 import uk.gov.hmrc.ui.pages.*
-import uk.gov.hmrc.ui.pages.manual.sponsor.{HaveASponsorPage, SponsorGiinPage, SponsorNamePage, SponsorUkPostcodePage, SponsorWhereBasedPage}
-import uk.gov.hmrc.ui.pages.manual.{CrsOrFatcaPage, ManualSendAReportIndexPage, ReportCheckAnswersPage, ReportingDetailsYearPage, TypeOfReportPage}
+import uk.gov.hmrc.ui.pages.manual.sponsor.*
+import uk.gov.hmrc.ui.pages.manual.*
 import uk.gov.hmrc.ui.specs.BaseSpec
 import uk.gov.hmrc.ui.specs.tags.*
+import uk.gov.hmrc.ui.utils.TestData
 
-class SponsorManualSpec extends BaseSpec {
+class SponsorManualSpec extends BaseSpec with SponsorJourneyHelper {
 
   Feature("CRS/FATCA Manual - Sponsor journey (FATCA)") {
 
@@ -78,7 +79,34 @@ class SponsorManualSpec extends BaseSpec {
 
       Then("They are on the sponsor UK postcode page")
       SponsorUkPostcodePage.checkPage()
-      SponsorUkPostcodePage.enterPostcodeAndFindAddress()
+      When("They enter a postcode that returns multiple addresses and find the address")
+      SponsorUkPostcodePage.enterPostcodeAndFindAddress(TestData.postcodeMultipleAddress)
+
+      Then("They are on the sponsor select address page")
+      SponsorSelectAddressPage.checkPage()
+
+      When("They select the first address and continue")
+      SponsorSelectAddressPage.selectFirstAddressAndContinue()
+
+    }
+
+    Scenario(
+      "Sponsor address - single address returned goes to is-this-the-address (FATCA)",
+      ManualSubmissionTests,
+      SoloTests
+    ) {
+      Given("The user has completed the sponsor journey up to the UK postcode page")
+      navigateToSponsorPostcode()
+
+      When("They enter a postcode that returns one address and find the address")
+      SponsorUkPostcodePage.enterPostcodeAndFindAddress(TestData.postcodeSingleAddress)
+
+      Then("They are on the sponsor is-this-the-address page")
+      SponsorIsThisTheAddressPage.checkPage()
+      SponsorIsThisTheAddressPage.checkCountryNotDisplayed("United Kingdom")
+
+      When("They confirm the address and continue")
+      SponsorIsThisTheAddressPage.selectYesAndContinue()
     }
   }
 }
