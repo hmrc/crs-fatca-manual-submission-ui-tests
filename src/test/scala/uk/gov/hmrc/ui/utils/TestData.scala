@@ -18,17 +18,18 @@ package uk.gov.hmrc.ui.utils
 
 object TestData {
 
-  val firstFi       = "First FI"
-  val fifthFi       = "Fifth FI"
-  val reportingYear = "2025"
-  val sponsorName   = "Fatca Sponsor"
-  val sponsorGiin   = "98096B.00000.LE.350"
-  val postCode      = "ZZ1 1ZZ"
-  val iban          = "IBAN"
-  val oban          = "OBAN"
-  val isin          = "ISIN"
-  val osin          = "OSIN"
-  val semp          = "SEMP"
-  val anyOther      = "Any other"
-
+  val firstFi                 = "First FI"
+  val fifthFi                 = "Fifth FI"
+  val reportingYear           = "2025"
+  val sponsorName             = "Fatca Sponsor"
+  val sponsorGiin             = "98096B.00000.LE.350"
+  val postCode                = "ZZ1 1ZZ"
+  val iban                    = "IBAN"
+  val oban                    = "OBAN"
+  val isin                    = "ISIN"
+  val osin                    = "OSIN"
+  val semp                    = "SEMP"
+  val anyOther                = "Any other"
+  val postcodeSingleAddress   = "ZZ1Z 7AB"
+  val postcodeMultipleAddress = "ZZ1 1ZZ"
 }

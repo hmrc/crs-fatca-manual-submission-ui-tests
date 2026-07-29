@@ -18,7 +18,7 @@ package uk.gov.hmrc.ui.specs.manual
 
 import uk.gov.hmrc.ui.pages.*
 import uk.gov.hmrc.ui.pages.manual.*
-import uk.gov.hmrc.ui.pages.manual.account.{AccountHaveNumberPage, AccountNumberTypePage}
+import uk.gov.hmrc.ui.pages.manual.account.*
 import uk.gov.hmrc.ui.specs.BaseSpec
 import uk.gov.hmrc.ui.specs.tags.*
 import uk.gov.hmrc.ui.utils.TestData

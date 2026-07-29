@@ -17,7 +17,7 @@
 package uk.gov.hmrc.ui.specs.manual
 
 import uk.gov.hmrc.ui.pages.manual.*
-import uk.gov.hmrc.ui.pages.{AuthLoginPage, FiManagementPage, ManageReportsPage, YourFisPage}
+import uk.gov.hmrc.ui.pages.*
 import uk.gov.hmrc.ui.specs.BaseSpec
 import uk.gov.hmrc.ui.specs.tags.{ManualSubmissionTests, SoloTests}
 

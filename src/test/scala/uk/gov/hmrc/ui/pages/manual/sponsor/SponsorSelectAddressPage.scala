@@ -20,23 +20,29 @@ import org.openqa.selenium.By
 import uk.gov.hmrc.ui.pages.BasePage
 import uk.gov.hmrc.ui.utils.TestData
 
-object SponsorUkPostcodePage extends BasePage {
+object SponsorSelectAddressPage extends BasePage {
 
-  override val pageUrl: String = baseUrlManualSub + "/manual/sponsor/uk-postcode"
+  override val pageUrl: String = baseUrlManualSub + "/manual/sponsor/select-address"
 
-  val postcodeInput: By   = By.id("value")
-  val manualEntryLink: By = By.linkText("Or enter the address manually")
+  val firstAddressRadio: By = By.id("value")
+  val manualEntryLink: By   = By.linkText("enter the address manually")
 
   def checkPage(): this.type = {
     onPage(pageUrl)
-    checkH1(s"What is the postcode for ${TestData.sponsorName}?")
+    checkH1(s"What is the address for ${TestData.sponsorName}?")
     this
   }
 
-  def enterPostcodeAndFindAddress(postCode: String): this.type = {
+  def selectFirstAddressAndContinue(): this.type = {
     onPage(pageUrl)
-    sendKeys(postcodeInput, postCode)
+    click(firstAddressRadio)
     click(submitButtonId)
+    this
+  }
+
+  def clickEnterAddressManually(): this.type = {
+    onPage(pageUrl)
+    click(manualEntryLink)
     this
   }
 }

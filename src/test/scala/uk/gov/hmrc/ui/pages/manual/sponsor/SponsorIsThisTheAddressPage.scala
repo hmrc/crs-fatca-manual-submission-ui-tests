@@ -20,23 +20,25 @@ import org.openqa.selenium.By
 import uk.gov.hmrc.ui.pages.BasePage
 import uk.gov.hmrc.ui.utils.TestData
 
-object SponsorUkPostcodePage extends BasePage {
+object SponsorIsThisTheAddressPage extends BasePage {
 
-  override val pageUrl: String = baseUrlManualSub + "/manual/sponsor/uk-postcode"
+  override val pageUrl: String = baseUrlManualSub + "/manual/sponsor/is-this-the-address"
 
-  val postcodeInput: By   = By.id("value")
-  val manualEntryLink: By = By.linkText("Or enter the address manually")
+  val addressBlock: By = By.cssSelector(".govuk-body")
 
   def checkPage(): this.type = {
     onPage(pageUrl)
-    checkH1(s"What is the postcode for ${TestData.sponsorName}?")
+    checkH1(s"Is this the address for ${TestData.sponsorName}?")
     this
   }
 
-  def enterPostcodeAndFindAddress(postCode: String): this.type = {
-    onPage(pageUrl)
-    sendKeys(postcodeInput, postCode)
-    click(submitButtonId)
+  def checkCountryDisplayed(country: String): this.type = {
+    getText(addressBlock) should include(country)
+    this
+  }
+
+  def checkCountryNotDisplayed(country: String): this.type = {
+    getText(addressBlock) should not include country
     this
   }
 }
