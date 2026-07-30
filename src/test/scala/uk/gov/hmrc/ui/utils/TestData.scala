@@ -34,6 +34,7 @@ object TestData {
   val postcodeMultipleAddress = "ZZ1 1ZZ"
   val postcodeSingleStaging   = "LE1 7AS"
   val postcodeMultipleStaging = "LL61 5AN"
+  val accountIdentifier       = "ACC-12345"
 
   private val env: String =
     System.getProperty("environment", "local").toLowerCase

@@ -39,7 +39,7 @@ class FilerCategoryManualSpec extends BaseSpec {
       ManageReportsPage.clickFillInOnlineManualReport()
 
       And("They select FATCA and continue")
-      CrsOrFatcaPage.selectFatcaAndContinue()
+      CrsOrFatcaPage.selectReportType("FATCA")
 
       And("They enter a valid year and continue")
       ReportingDetailsYearPage.enterYearAndContinue()

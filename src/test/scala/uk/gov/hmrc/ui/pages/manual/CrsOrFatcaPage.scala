@@ -26,18 +26,14 @@ object CrsOrFatcaPage extends BasePage {
   val crsRadioId: By   = By.id("value_0")
   val fatcaRadioId: By = By.id("value_1")
 
-  def selectCrsAndContinue(): this.type = {
+  def selectReportType(reportType: String): this.type = {
     onPage(pageUrl)
-    click(crsRadioId)
+    click(reportType match {
+      case "CRS"   => crsRadioId
+      case "FATCA" => fatcaRadioId
+      case other   => throw new IllegalArgumentException(s"Unknown report type: $other")
+    })
     click(submitButtonId)
     this
   }
-
-  def selectFatcaAndContinue(): this.type = {
-    onPage(pageUrl)
-    click(fatcaRadioId)
-    click(submitButtonId)
-    this
-  }
-
 }

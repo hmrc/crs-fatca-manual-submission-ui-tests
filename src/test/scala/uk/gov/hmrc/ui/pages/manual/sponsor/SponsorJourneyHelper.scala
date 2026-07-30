@@ -19,22 +19,15 @@ package uk.gov.hmrc.ui.pages.manual.sponsor
 import uk.gov.hmrc.ui.pages.*
 import uk.gov.hmrc.ui.pages.manual.*
 
-trait SponsorJourneyHelper {
+trait SponsorJourneyHelper extends ManualJourneyHelper {
 
   def navigateToWhereAreTheyBased(): Unit = {
-    AuthLoginPage.loginAsBasic()
-    FiManagementPage.clickManageYourFinancialInstitutions()
-    YourFisPage.clickOnSecondManageReports()
-    ManageReportsPage.clickFillInOnlineManualReport()
-    CrsOrFatcaPage.selectFatcaAndContinue()
-    ReportingDetailsYearPage.enterYearAndContinue()
-    TypeOfReportPage.selectReportWithInformationAndContinue()
-    ReportCheckAnswersPage.confirmAndSend()
+    navigateToTaskList("FATCA")
     ManualSendAReportIndexPage.clickSponsorDetails()
     HaveASponsorPage.selectYesAndContinue()
     SponsorNamePage.enterSponsorNameAndContinue()
+    SponsorGiinPage.checkLabelForSponsor()
     SponsorGiinPage.enterGiinAndContinue()
     SponsorWhereBasedPage.checkPage()
-
   }
 }

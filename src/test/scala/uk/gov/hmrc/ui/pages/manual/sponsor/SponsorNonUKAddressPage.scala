@@ -17,6 +17,8 @@
 package uk.gov.hmrc.ui.pages.manual.sponsor
 
 import org.openqa.selenium.By
+import org.openqa.selenium.support.ui.Select
+import uk.gov.hmrc.selenium.webdriver.Driver
 import uk.gov.hmrc.ui.pages.BasePage
 
 object SponsorNonUKAddressPage extends BasePage {
@@ -30,7 +32,7 @@ object SponsorNonUKAddressPage extends BasePage {
   val postcode: By       = By.id("postcode")
 
   def enterAddressNonUK(): Unit = {
-    onPage()
+    onPage(pageUrl)
     sendKeys(addressLineOne, "42 Test Street")
     sendKeys(addressLineTwo, "Test Town")
     sendKeys(city, "Test City")

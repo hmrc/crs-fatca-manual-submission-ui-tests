@@ -23,7 +23,7 @@ import uk.gov.hmrc.ui.specs.BaseSpec
 import uk.gov.hmrc.ui.specs.tags.*
 import uk.gov.hmrc.ui.utils.TestData
 
-class AccountsManualSpec extends BaseSpec {
+class AccountsManualSpec extends BaseSpec with ManualJourneyHelper {
 
   Feature("CRS/FATCA Manual - Accounts journey") {
 
@@ -32,35 +32,14 @@ class AccountsManualSpec extends BaseSpec {
       ManualSubmissionTests,
       SoloTests
     ) {
-      Given("The user logs in as a standard User")
-      AuthLoginPage.loginAsBasic()
-
-      And("The user is on the manage your financial institutions page")
-      FiManagementPage.clickManageYourFinancialInstitutions()
-
-      When("The user clicks manage reports for an FI")
-      YourFisPage.clickOnSecondManageReports()
-
-      And("The user clicks 'filling in an online form for manual reporting'")
-      ManageReportsPage.clickFillInOnlineManualReport()
-
-      And("They select FATCA and continue")
-      CrsOrFatcaPage.selectFatcaAndContinue()
-
-      And("They enter a valid year and continue")
-      ReportingDetailsYearPage.enterYearAndContinue()
-
-      And("They select a report with information and continue")
-      TypeOfReportPage.selectReportWithInformationAndContinue()
-
-      And("They save and continue on the check answers page")
-      ReportCheckAnswersPage.confirmAndSend()
-
-      Then("They are on the manual send a report task list page")
-      ManualSendAReportIndexPage.checkDynamicPage()
+      Given("The user has reached the manual task list as FATCA")
+      navigateToTaskList("FATCA")
 
       When("They open the accounts task")
       ManualSendAReportIndexPage.clickAccounts()
+
+      Then("They are on the account have-number page")
+      AccountHaveNumberPage.checkDynamicPage()
 
       When("They confirm the account has a number and continue")
       AccountHaveNumberPage.selectYesAndContinue()
@@ -80,35 +59,14 @@ class AccountsManualSpec extends BaseSpec {
       ManualSubmissionTests,
       SoloTests
     ) {
-      Given("The user logs in as a standard User")
-      AuthLoginPage.loginAsBasic()
-
-      And("The user is on the manage your financial institutions page")
-      FiManagementPage.clickManageYourFinancialInstitutions()
-
-      When("The user clicks manage reports for an FI")
-      YourFisPage.clickOnSecondManageReports()
-
-      And("The user clicks 'filling in an online form for manual reporting'")
-      ManageReportsPage.clickFillInOnlineManualReport()
-
-      And("They select CRS and continue")
-      CrsOrFatcaPage.selectCrsAndContinue()
-
-      And("They enter a valid year and continue")
-      ReportingDetailsYearPage.enterYearAndContinue()
-
-      And("They select a report with information and continue")
-      TypeOfReportPage.selectReportWithInformationAndContinue()
-
-      And("They save and continue on the check answers page")
-      ReportCheckAnswersPage.confirmAndSend()
-
-      Then("They are on the manual send a report task list page")
-      ManualSendAReportIndexPage.checkDynamicPage()
+      Given("The user has reached the manual task list as CRS")
+      navigateToTaskList("CRS")
 
       When("They open the accounts task")
       ManualSendAReportIndexPage.clickAccounts()
+
+      Then("They are on the account have-number page")
+      AccountHaveNumberPage.checkDynamicPage()
 
       When("They confirm the account has a number and continue")
       AccountHaveNumberPage.selectYesAndContinue()
@@ -119,8 +77,32 @@ class AccountsManualSpec extends BaseSpec {
       And("SEMP is shown for a CRS report")
       AccountNumberTypePage.checkSempIsPresent()
 
-      When("They select IBAN and continue")
+      When("They select SEMP and continue")
       AccountNumberTypePage.selectAccountNumberType(TestData.semp)
+    }
+
+    Scenario(
+      "Accounts - No official number goes to the identifier page (CRS)",
+      ManualSubmissionTests,
+      SoloTests
+    ) {
+      Given("The user has reached the manual task list as FATCA")
+      navigateToTaskList("CRS")
+
+      When("They open the accounts task")
+      ManualSendAReportIndexPage.clickAccounts()
+
+      Then("They are on the account have-number page")
+      AccountHaveNumberPage.checkDynamicPage()
+
+      When("They confirm the account has no number and continue")
+      AccountHaveNumberPage.selectNoAndContinue()
+
+      Then("They are on the account identifier page")
+      AccountIdentifierPage.checkPage()
+
+      When("They enter a valid identifier and continue")
+      AccountIdentifierPage.enterIdentifierAndContinue()
     }
   }
 }
