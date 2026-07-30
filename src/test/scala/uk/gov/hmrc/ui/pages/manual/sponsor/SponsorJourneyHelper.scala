@@ -21,7 +21,7 @@ import uk.gov.hmrc.ui.pages.manual.*
 
 trait SponsorJourneyHelper {
 
-  def navigateToSponsorPostcode(): Unit = {
+  def navigateToWhereAreTheyBased(): Unit = {
     AuthLoginPage.loginAsBasic()
     FiManagementPage.clickManageYourFinancialInstitutions()
     YourFisPage.clickOnSecondManageReports()
@@ -34,7 +34,7 @@ trait SponsorJourneyHelper {
     HaveASponsorPage.selectYesAndContinue()
     SponsorNamePage.enterSponsorNameAndContinue()
     SponsorGiinPage.enterGiinAndContinue()
-    SponsorWhereBasedPage.selectYesAndContinue()
-    SponsorUkPostcodePage.checkPage()
+    SponsorWhereBasedPage.checkPage()
+
   }
 }
