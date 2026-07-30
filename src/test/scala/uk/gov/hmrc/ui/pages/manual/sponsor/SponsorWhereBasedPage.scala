@@ -17,9 +17,16 @@
 package uk.gov.hmrc.ui.pages.manual.sponsor
 
 import uk.gov.hmrc.ui.pages.BasePage
+import uk.gov.hmrc.ui.utils.TestData
 
 object SponsorWhereBasedPage extends BasePage {
 
   override val pageUrl: String = baseUrlManualSub + "/manual/sponsor/where-are-they-based"
+
+  def checkPage(): this.type = {
+    onPage(pageUrl)
+    checkH1(s"Is ${TestData.sponsorName} based in the UK, Jersey, Guernsey or the Isle of Man?")
+    this
+  }
 
 }

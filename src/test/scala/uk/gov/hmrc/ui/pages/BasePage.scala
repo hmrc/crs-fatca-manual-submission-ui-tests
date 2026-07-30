@@ -38,20 +38,22 @@ trait BasePage extends BrowserDriver with Matchers with IdGenerators with PageOb
   val pageHeader: By           = By.tagName("h1")
   val yesRadioId: By           = By.id("value")
   val noRadioId: By            = By.id("value-no")
+  val countryList: By          = By.id("country")
+  val countryOption: By        = By.id("country__option--0")
 
   def clickOnBackLink(): Unit = {
     onPage()
     click(backLinkText)
   }
 
-  def onPage(url: String = this.pageUrl): this.type = {
-    fluentWait.until(ExpectedConditions.urlToBe(url))
-    this
-  }
-
   def submitPage(): this.type = {
     onPage(pageUrl)
     click(submitButtonId)
+    this
+  }
+
+  def onPage(url: String = this.pageUrl): this.type = {
+    fluentWait.until(ExpectedConditions.urlToBe(url))
     this
   }
 
@@ -65,6 +67,15 @@ trait BasePage extends BrowserDriver with Matchers with IdGenerators with PageOb
     onPageContaining(pageUrl)
     this
   }
+
+  def onPageContaining(urlPart: String): this.type = {
+    fluentWait.until(ExpectedConditions.urlContains(urlPart))
+    this
+  }
+
+  private def fluentWait: Wait[WebDriver] = new FluentWait[WebDriver](Driver.instance)
+    .withTimeout(Duration.ofSeconds(15))
+    .pollingEvery(Duration.ofMillis(200))
 
   def selectNoAndContinue(): Unit = {
     checkDynamicPage()
@@ -98,19 +109,16 @@ trait BasePage extends BrowserDriver with Matchers with IdGenerators with PageOb
     this
   }
 
-  def onPageContaining(urlPart: String): this.type = {
-    fluentWait.until(ExpectedConditions.urlContains(urlPart))
-    this
-  }
-
-  private def fluentWait: Wait[WebDriver] = new FluentWait[WebDriver](Driver.instance)
-    .withTimeout(Duration.ofSeconds(15))
-    .pollingEvery(Duration.ofMillis(200))
-
   def selectYesAndContinueFromChange(): Unit = {
     checkChangeDynamicPage()
     click(yesRadioId)
     click(submitButtonId)
+  }
+
+  def selectCountry(countryName: String): Unit = {
+    click(countryList)
+    sendKeys(countryList, countryName)
+    click(countryOption)
   }
 
   def isElementPresent(locator: By): Boolean =

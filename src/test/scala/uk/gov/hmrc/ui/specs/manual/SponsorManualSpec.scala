@@ -17,8 +17,8 @@
 package uk.gov.hmrc.ui.specs.manual
 
 import uk.gov.hmrc.ui.pages.*
-import uk.gov.hmrc.ui.pages.manual.sponsor.*
 import uk.gov.hmrc.ui.pages.manual.*
+import uk.gov.hmrc.ui.pages.manual.sponsor.*
 import uk.gov.hmrc.ui.specs.BaseSpec
 import uk.gov.hmrc.ui.specs.tags.*
 import uk.gov.hmrc.ui.utils.TestData
@@ -80,7 +80,7 @@ class SponsorManualSpec extends BaseSpec with SponsorJourneyHelper {
       Then("They are on the sponsor UK postcode page")
       SponsorUkPostcodePage.checkPage()
       When("They enter a postcode that returns multiple addresses and find the address")
-      SponsorUkPostcodePage.enterPostcodeAndFindAddress(TestData.postcodeMultipleAddress)
+      SponsorUkPostcodePage.enterPostcodeAndFindAddress(TestData.postcodeMultipleAddressEnv)
 
       Then("They are on the sponsor select address page")
       SponsorSelectAddressPage.checkPage()
@@ -95,11 +95,14 @@ class SponsorManualSpec extends BaseSpec with SponsorJourneyHelper {
       ManualSubmissionTests,
       SoloTests
     ) {
-      Given("The user has completed the sponsor journey up to the UK postcode page")
-      navigateToSponsorPostcode()
+      Given("The user has completed the sponsor journey up to the Where are they based page")
+      navigateToWhereAreTheyBased()
 
-      When("They enter a postcode that returns one address and find the address")
-      SponsorUkPostcodePage.enterPostcodeAndFindAddress(TestData.postcodeSingleAddress)
+      When("The sponsor is UK-based and continue")
+      SponsorWhereBasedPage.selectYesAndContinue()
+
+      And("The sponsor enter a postcode that returns one address and find the address")
+      SponsorUkPostcodePage.enterPostcodeAndFindAddress(TestData.postcodeSingleAddressEnv)
 
       Then("They are on the sponsor is-this-the-address page")
       SponsorIsThisTheAddressPage.checkPage()
@@ -107,6 +110,17 @@ class SponsorManualSpec extends BaseSpec with SponsorJourneyHelper {
 
       When("They confirm the address and continue")
       SponsorIsThisTheAddressPage.selectYesAndContinue()
+    }
+
+    Scenario("Sponsor journey - Address Non-UK", ManualSubmissionTests, SoloTests) {
+      Given("The user have completed the sponsor journey up to Where are they based page")
+      navigateToWhereAreTheyBased()
+
+      When("The Sponsor is Non-UK based and continue")
+      SponsorWhereBasedPage.selectNoAndContinue()
+
+      And("The user entered the Non-UK address manually")
+      SponsorNonUKAddressPage.enterAddressNonUK()
     }
   }
 }

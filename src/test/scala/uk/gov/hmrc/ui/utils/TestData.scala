@@ -32,4 +32,21 @@ object TestData {
   val anyOther                = "Any other"
   val postcodeSingleAddress   = "ZZ1Z 7AB"
   val postcodeMultipleAddress = "ZZ1 1ZZ"
+  val postcodeSingleStaging   = "LE1 7AS"
+  val postcodeMultipleStaging = "LL61 5AN"
+
+  private val env: String =
+    System.getProperty("environment", "local").toLowerCase
+
+  def postcodeSingleAddressEnv: String = env match {
+    case "local"   => postcodeSingleAddress
+    case "staging" => postcodeSingleStaging
+    case _         => throw new IllegalArgumentException(s"Unsupported environment: $env")
+  }
+
+  def postcodeMultipleAddressEnv: String = env match {
+    case "local"   => postcodeMultipleAddress
+    case "staging" => postcodeMultipleStaging
+    case _         => throw new IllegalArgumentException(s"Unsupported environment: $env")
+  }
 }
