@@ -17,7 +17,7 @@
 package uk.gov.hmrc.ui.pages
 
 import org.openqa.selenium.support.ui.{ExpectedConditions, FluentWait, Select, Wait}
-import org.openqa.selenium.{By, WebDriver}
+import org.openqa.selenium.{By, JavascriptExecutor, WebDriver}
 import org.scalatest.Assertion
 import org.scalatest.matchers.should.Matchers
 import uk.gov.hmrc.selenium.component.PageObject
@@ -115,8 +115,9 @@ trait BasePage extends BrowserDriver with Matchers with IdGenerators with PageOb
   }
 
   def selectCountry(countryName: String): Unit = {
-    val select = new Select(Driver.instance.findElement(countrySelect))
-    select.selectByVisibleText(countryName)
+    val js = Driver.instance.asInstanceOf[JavascriptExecutor]
+    js.executeScript("document.getElementById('country-select').style.display = 'block';")
+    new Select(Driver.instance.findElement(By.id("country-select"))).selectByVisibleText(countryName)
   }
 
   def isElementPresent(locator: By): Boolean =
