@@ -80,8 +80,8 @@ class SponsorManualSpec extends BaseSpec with SponsorJourneyHelper {
       When("The Sponsor is Non-UK based and continue")
       SponsorWhereBasedPage.selectNoAndContinue()
 
-      //And("The user entered the Non-UK address manually")
-      //SponsorNonUKAddressPage.enterAddressNonUK()
+      // And("The user entered the Non-UK address manually")
+      // SponsorNonUKAddressPage.enterAddressNonUK()
     }
   }
 }
