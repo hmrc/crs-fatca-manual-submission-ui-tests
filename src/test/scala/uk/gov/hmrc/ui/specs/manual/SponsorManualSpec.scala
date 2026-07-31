@@ -28,53 +28,14 @@ class SponsorManualSpec extends BaseSpec with SponsorJourneyHelper {
   Feature("CRS/FATCA Manual - Sponsor journey (FATCA)") {
 
     Scenario(
-      "Sponsor - complete journey up to UK postcode (FATCA)",
+      "Sponsor address - multiple addresses returned goes to select-address (FATCA)",
       ManualSubmissionTests,
       SoloTests
     ) {
-      Given("The user logs in as a standard User")
-      AuthLoginPage.loginAsBasic()
+      Given("The user has completed the sponsor journey up to the Where are they based page")
+      navigateToWhereAreTheyBased()
 
-      And("The user is on the manage your financial institutions page")
-      FiManagementPage.clickManageYourFinancialInstitutions()
-
-      When("The user clicks manage reports for an FI")
-      YourFisPage.clickOnSecondManageReports()
-
-      And("The user clicks 'filling in an online form for manual reporting'")
-      ManageReportsPage.clickFillInOnlineManualReport()
-
-      And("They select FATCA and continue")
-      CrsOrFatcaPage.selectFatcaAndContinue()
-
-      And("They enter a valid year and continue")
-      ReportingDetailsYearPage.enterYearAndContinue()
-
-      And("They select a report with information and continue")
-      TypeOfReportPage.selectReportWithInformationAndContinue()
-
-      And("They save and continue on the check answers page")
-      ReportCheckAnswersPage.confirmAndSend()
-
-      Then("They are on the manual send a report task list page")
-      ManualSendAReportIndexPage.checkDynamicPage()
-
-      When("They open the sponsor details task")
-      ManualSendAReportIndexPage.clickSponsorDetails()
-
-      And("They confirm they have a sponsor and continue")
-      HaveASponsorPage.selectYesAndContinue()
-
-      And("They enter the sponsor name and continue")
-      SponsorNamePage.enterSponsorNameAndContinue()
-
-      Then("They are on the sponsor GIIN page and it shows the sponsor name")
-      SponsorGiinPage.checkLabelForSponsor()
-
-      And("They enter the GIIN and continue")
-      SponsorGiinPage.enterGiinAndContinue()
-
-      And("They confirm the sponsor is UK-based and continue")
+      When("The sponsor is UK-based and continue")
       SponsorWhereBasedPage.selectYesAndContinue()
 
       Then("They are on the sponsor UK postcode page")

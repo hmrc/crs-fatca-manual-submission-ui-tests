@@ -14,33 +14,27 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.ui.pages.manual.sponsor
+package uk.gov.hmrc.ui.pages.manual.account
 
 import org.openqa.selenium.By
 import uk.gov.hmrc.ui.pages.BasePage
 import uk.gov.hmrc.ui.utils.TestData
 
-object SponsorGiinPage extends BasePage {
+object AccountIdentifierPage extends BasePage {
 
-  override val pageUrl: String = baseUrlManualSub + "/manual/sponsor/giin"
+  override val pageUrl: String = baseUrlManualSub + "/manual/account/identifier"
 
-  private val giinInput: By = By.id("value")
-  private val label: By     = By.cssSelector("label[for='value']")
+  val identifierInput: By = By.id("value")
 
   def checkPage(): this.type = {
-    checkDynamicPage()
-    checkH1("Global Intermediary Identification Number (GIIN)")
+    onPage(pageUrl)
+    checkH1("Identifying the account")
     this
   }
 
-  def checkLabelForSponsor(): this.type = {
-    waitForStableText(label) should include(s"What is the GIIN for ${TestData.sponsorName}?")
-    this
-  }
-
-  def enterGiinAndContinue(): this.type = {
-    checkDynamicPage()
-    sendKeys(giinInput, TestData.sponsorGiin)
+  def enterIdentifierAndContinue(): this.type = {
+    onPage(pageUrl)
+    sendKeys(identifierInput, TestData.accountIdentifier)
     click(submitButtonId)
     this
   }

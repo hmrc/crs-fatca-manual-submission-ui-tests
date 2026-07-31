@@ -43,7 +43,7 @@ class ReportDetailsManualSpec extends BaseSpec {
       ManageReportsPage.clickFillInOnlineManualReport()
 
       And("They select CRS and continue")
-      CrsOrFatcaPage.selectCrsAndContinue()
+      CrsOrFatcaPage.selectReportType("CRS")
 
       And("They enter a valid year and continue")
       ReportingDetailsYearPage.enterYearAndContinue()

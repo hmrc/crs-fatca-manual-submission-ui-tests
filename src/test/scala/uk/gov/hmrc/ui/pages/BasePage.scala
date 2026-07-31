@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.ui.pages
 
-import org.openqa.selenium.support.ui.{ExpectedConditions, FluentWait, Wait}
+import org.openqa.selenium.support.ui.{ExpectedConditions, FluentWait, Select, Wait}
 import org.openqa.selenium.{By, WebDriver}
 import org.scalatest.Assertion
 import org.scalatest.matchers.should.Matchers
@@ -38,8 +38,7 @@ trait BasePage extends BrowserDriver with Matchers with IdGenerators with PageOb
   val pageHeader: By           = By.tagName("h1")
   val yesRadioId: By           = By.id("value")
   val noRadioId: By            = By.id("value-no")
-  val countryList: By          = By.id("country")
-  val countryOption: By        = By.id("country__option--0")
+  val countrySelect: By        = By.id("country-select")
 
   def clickOnBackLink(): Unit = {
     onPage()
@@ -116,13 +115,17 @@ trait BasePage extends BrowserDriver with Matchers with IdGenerators with PageOb
   }
 
   def selectCountry(countryName: String): Unit = {
-    click(countryList)
-    sendKeys(countryList, countryName)
-    click(countryOption)
+    val select = new Select(Driver.instance.findElement(countrySelect))
+    select.selectByVisibleText(countryName)
   }
 
   def isElementPresent(locator: By): Boolean =
     !Driver.instance.findElements(locator).isEmpty
+
+  def waitForStableText(locator: By): String = {
+    fluentWait.until(ExpectedConditions.refreshed(ExpectedConditions.visibilityOfElementLocated(locator)))
+    getText(locator)
+  }
 
   case class PageNotFoundException(message: String) extends Exception(message)
 }
