@@ -82,12 +82,12 @@ class AccountsManualSpec extends BaseSpec with ManualJourneyHelper {
     }
 
     Scenario(
-      "Accounts - No official number goes to the identifier page (CRS)",
+      "Accounts - No official number, identifier and account closed (FATCA)",
       ManualSubmissionTests,
       SoloTests
     ) {
       Given("The user has reached the manual task list as FATCA")
-      navigateToTaskList("CRS")
+      navigateToTaskList("FATCA")
 
       When("They open the accounts task")
       ManualSendAReportIndexPage.clickAccounts()
@@ -103,6 +103,9 @@ class AccountsManualSpec extends BaseSpec with ManualJourneyHelper {
 
       When("They enter a valid identifier and continue")
       AccountIdentifierPage.enterIdentifierAndContinue()
+
+      Then("They are on the account closed page and select no and continue")
+      AccountClosedPage.selectNoAndContinue()
     }
   }
 }
