@@ -57,6 +57,5 @@ class FilerCategoryManualSpec extends BaseSpec {
       ManualSendAReportIndexPage.clickFilerCategory()
 
     }
-
   }
 }
