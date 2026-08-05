@@ -32,15 +32,11 @@ object AccountBalancePage extends BasePage {
     this
   }
 
+  def selectCurrency(): Unit =
+    selectFromAutocomplete("currency-select", TestData.currencyGbp)
+
   def enterAmount(amount: String): this.type = {
     sendKeys(amountInput, amount)
-    this
-  }
-
-  def enterAmountAndContinue(currency: String, amount: String): this.type = {
-    selectCurrency(currency)
-    enterAmount(amount)
-    click(submitButtonId)
     this
   }
 

@@ -38,8 +38,6 @@ trait BasePage extends BrowserDriver with Matchers with IdGenerators with PageOb
   val pageHeader: By           = By.tagName("h1")
   val yesRadioId: By           = By.id("value")
   val noRadioId: By            = By.id("value-no")
-  val countrySelect: By        = By.id("country-select")
-  val currencySelectId: By     = By.id("currency-select")
 
   def clickOnBackLink(): Unit = {
     onPage()
@@ -115,13 +113,6 @@ trait BasePage extends BrowserDriver with Matchers with IdGenerators with PageOb
     click(submitButtonId)
   }
 
-  def selectCountry(countryName: String): Unit = {
-    onPage(pageUrl)
-    val js = Driver.instance.asInstanceOf[JavascriptExecutor]
-    js.executeScript("document.getElementById('country-select').style.display = 'block';")
-    new Select(Driver.instance.findElement(By.id("country-select"))).selectByVisibleText(countryName)
-  }
-
   def isElementPresent(locator: By): Boolean =
     !Driver.instance.findElements(locator).isEmpty
 
@@ -130,12 +121,10 @@ trait BasePage extends BrowserDriver with Matchers with IdGenerators with PageOb
     getText(locator)
   }
 
-  def selectCurrency(currency: String): this.type = {
-    onPage(pageUrl)
+  def selectFromAutocomplete(selectId: String, visibleText: String): Unit = {
     val js = Driver.instance.asInstanceOf[JavascriptExecutor]
-    js.executeScript("document.getElementById('currency-select').style.display = 'block';")
-    new Select(Driver.instance.findElement(currencySelectId)).selectByVisibleText(currency)
-    this
+    js.executeScript(s"document.getElementById('$selectId').style.display = 'block';")
+    new Select(Driver.instance.findElement(By.id(selectId))).selectByVisibleText(visibleText)
   }
 
   case class PageNotFoundException(message: String) extends Exception(message)

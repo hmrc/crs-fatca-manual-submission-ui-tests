@@ -27,4 +27,7 @@ object ResidentForTaxPage extends BasePage {
     selectCountry("United States")
     click(submitButtonId)
   }
+
+  def selectCountry(countryName: String): Unit =
+    selectFromAutocomplete("country-select", countryName)
 }

@@ -20,12 +20,14 @@ import uk.gov.hmrc.ui.mongo.*
 
 trait MongoTestUtils {
 
-  val databaseName = "crs-fatca-submission-frontend"
-  val userAnswers  = "user-answers"
+  val manualSubmissionBE = "crs-fatca-manual-submission"
+  val manualSubmissionFE = "crs-fatca-manual-submission-frontend"
+  val userAnswers        = "user-answers"
 
   def cleanUserAnswersCollection(): Unit =
-    MongoService.dropMongoCollection(databaseName, userAnswers)
+    MongoService.dropMongoCollection(manualSubmissionBE, userAnswers)
+    MongoService.dropMongoCollection(manualSubmissionFE, userAnswers)
 
-  def dropCollection(collectionName: String): Unit =
-    MongoService.dropMongoCollection(databaseName, collectionName)
+  def dropCollection(dbName: String, collectionName: String): Unit =
+    MongoService.dropMongoCollection(dbName, collectionName)
 }

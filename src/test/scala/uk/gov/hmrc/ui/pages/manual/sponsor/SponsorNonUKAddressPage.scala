@@ -41,4 +41,7 @@ object SponsorNonUKAddressPage extends BasePage {
     selectCountry("Japan")
     click(submitButtonId)
   }
+
+  def selectCountry(countryName: String): Unit =
+    selectFromAutocomplete("country-select", countryName)
 }
