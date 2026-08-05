@@ -14,20 +14,34 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.ui.pages.manual.sponsor
+package uk.gov.hmrc.ui.pages.manual.account
 
+import org.openqa.selenium.By
 import uk.gov.hmrc.ui.pages.BasePage
+import uk.gov.hmrc.ui.utils.TestData
 
-object ResidentForTaxPage extends BasePage {
+object AccountBalancePage extends BasePage {
 
-  override val pageUrl: String = baseUrlManualSub + "/manual/sponsor/resident-for-tax"
+  override val pageUrl: String = baseUrlManualSub + "/manual/account/balance"
 
-  def residentForTax(): Unit = {
+  private val amountInput: By = By.id("amount")
+
+  def checkPage(): this.type = {
     onPage(pageUrl)
-    selectCountry("United States")
-    click(submitButtonId)
+    checkH1("What was the account balance?")
+    this
   }
 
-  def selectCountry(countryName: String): Unit =
-    selectFromAutocomplete("country-select", countryName)
+  def selectCurrency(): Unit =
+    selectFromAutocomplete("currency-select", TestData.currencyGbp)
+
+  def enterAmount(amount: String): this.type = {
+    sendKeys(amountInput, amount)
+    this
+  }
+
+  def continuePage(): this.type = {
+    click(submitButtonId)
+    this
+  }
 }
