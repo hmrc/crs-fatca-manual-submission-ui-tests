@@ -82,7 +82,7 @@ class AccountsManualSpec extends BaseSpec with ManualJourneyHelper {
     }
 
     Scenario(
-      "Accounts - No official number, identifier and account closed (FATCA)",
+      "Accounts - balance page valid currency and amount (FATCA)",
       ManualSubmissionTests,
       SoloTests
     ) {
@@ -106,6 +106,11 @@ class AccountsManualSpec extends BaseSpec with ManualJourneyHelper {
 
       Then("They are on the account closed page and select no and continue")
       AccountClosedPage.selectNoAndContinue()
+
+      When("They select a currency and enter a valid amount and continue")
+      AccountBalancePage.selectCurrency(TestData.currencyGbp)
+      AccountBalancePage.enterAmount("100.50")
+      AccountBalancePage.continuePage()
     }
   }
 }

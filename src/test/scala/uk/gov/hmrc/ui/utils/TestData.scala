@@ -35,6 +35,7 @@ object TestData {
   val postcodeSingleStaging   = "LE1 7AS"
   val postcodeMultipleStaging = "LL61 5AN"
   val accountIdentifier       = "ACC-12345"
+  val currencyGbp             = "British Pound Sterling (GBP)"
 
   private val env: String =
     System.getProperty("environment", "local").toLowerCase
