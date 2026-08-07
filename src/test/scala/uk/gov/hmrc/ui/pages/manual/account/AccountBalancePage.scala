@@ -32,7 +32,7 @@ object AccountBalancePage extends BasePage {
     this
   }
 
-  def selectCurrencyAndContinue(amount: String): this.type = {
+  def selectCurrencyAndAmount(amount: String): this.type = {
     onPage(pageUrl)
     selectCurrency()
     sendKeys(amountInput, amount)

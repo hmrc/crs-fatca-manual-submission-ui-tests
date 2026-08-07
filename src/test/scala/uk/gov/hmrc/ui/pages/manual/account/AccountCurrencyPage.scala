@@ -30,11 +30,6 @@ object AccountCurrencyPage extends BasePage {
     this
   }
 
-  def continuePage(): this.type = {
-    click(submitButtonId)
-    this
-  }
-
   def selectCurrencyAndContinue(): this.type = {
     onPage(pageUrl)
     selectCurrency()

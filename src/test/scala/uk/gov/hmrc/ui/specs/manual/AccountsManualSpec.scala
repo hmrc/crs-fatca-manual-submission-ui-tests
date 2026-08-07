@@ -99,7 +99,7 @@ class AccountsManualSpec extends BaseSpec with ManualJourneyHelper {
       AccountClosedPage.selectNoAndContinue()
 
       When("They select a currency and enter a valid amount and continue")
-      AccountBalancePage.selectCurrencyAndContinue("100.50")
+      AccountBalancePage.selectCurrencyAndAmount("100.50")
     }
 
     Scenario(
