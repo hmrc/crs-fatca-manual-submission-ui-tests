@@ -38,9 +38,6 @@ class AccountsManualSpec extends BaseSpec with ManualJourneyHelper {
       When("They open the accounts task")
       ManualSendAReportIndexPage.clickAccounts()
 
-      Then("They are on the account have-number page")
-      AccountHaveNumberPage.checkDynamicPage()
-
       When("They confirm the account has a number and continue")
       AccountHaveNumberPage.selectYesAndContinue()
 
@@ -64,9 +61,6 @@ class AccountsManualSpec extends BaseSpec with ManualJourneyHelper {
 
       When("They open the accounts task")
       ManualSendAReportIndexPage.clickAccounts()
-
-      Then("They are on the account have-number page")
-      AccountHaveNumberPage.checkDynamicPage()
 
       When("They confirm the account has a number and continue")
       AccountHaveNumberPage.selectYesAndContinue()
@@ -92,9 +86,6 @@ class AccountsManualSpec extends BaseSpec with ManualJourneyHelper {
       When("They open the accounts task")
       ManualSendAReportIndexPage.clickAccounts()
 
-      Then("They are on the account have-number page")
-      AccountHaveNumberPage.checkDynamicPage()
-
       When("They confirm the account has no number and continue")
       AccountHaveNumberPage.selectNoAndContinue()
 
@@ -108,9 +99,37 @@ class AccountsManualSpec extends BaseSpec with ManualJourneyHelper {
       AccountClosedPage.selectNoAndContinue()
 
       When("They select a currency and enter a valid amount and continue")
-      AccountBalancePage.selectCurrency()
-      AccountBalancePage.enterAmount("100.50")
-      AccountBalancePage.continuePage()
+      AccountBalancePage.selectCurrencyAndAmount("100.50")
+    }
+
+    Scenario(
+      "Accounts - balance page valid currency (CRS)",
+      ManualSubmissionTests,
+      SoloTests
+    ) {
+      Given("The user has reached the manual task list as CRS")
+      navigateToTaskList("CRS")
+
+      When("They open the accounts task")
+      ManualSendAReportIndexPage.clickAccounts()
+
+      When("They confirm the account has no number and continue")
+      AccountHaveNumberPage.selectNoAndContinue()
+
+      Then("They are on the account identifier page")
+      AccountIdentifierPage.checkPage()
+
+      When("They enter a valid identifier and continue")
+      AccountIdentifierPage.enterIdentifierAndContinue()
+
+      When("They select yes on the account closed page and continue")
+      AccountClosedPage.selectYesAndContinue()
+
+      Then("They are on the currency page")
+      AccountCurrencyPage.checkPage()
+
+      When("They select a currency and continue")
+      AccountCurrencyPage.selectCurrencyAndContinue()
     }
   }
 }

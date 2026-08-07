@@ -24,7 +24,7 @@ import uk.gov.hmrc.selenium.component.PageObject
 import uk.gov.hmrc.selenium.webdriver.Driver
 import uk.gov.hmrc.ui.conf.TestConfiguration
 import uk.gov.hmrc.ui.driver.BrowserDriver
-import uk.gov.hmrc.ui.utils.IdGenerators
+import uk.gov.hmrc.ui.utils.{IdGenerators, TestData}
 
 import java.time.Duration
 
@@ -120,6 +120,9 @@ trait BasePage extends BrowserDriver with Matchers with IdGenerators with PageOb
     fluentWait.until(ExpectedConditions.refreshed(ExpectedConditions.visibilityOfElementLocated(locator)))
     getText(locator)
   }
+
+  def selectCurrency(): Unit =
+    selectFromAutocomplete("currency-select", TestData.currencyGbp)
 
   def selectFromAutocomplete(selectId: String, visibleText: String): Unit = {
     val js = Driver.instance.asInstanceOf[JavascriptExecutor]
