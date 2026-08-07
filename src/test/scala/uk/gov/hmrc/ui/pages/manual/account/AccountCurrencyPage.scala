@@ -20,22 +20,24 @@ import org.openqa.selenium.By
 import uk.gov.hmrc.ui.pages.BasePage
 import uk.gov.hmrc.ui.utils.TestData
 
-object AccountBalancePage extends BasePage {
+object AccountCurrencyPage extends BasePage {
 
-  override val pageUrl: String = baseUrlManualSub + "/manual/account/balance"
-
-  private val amountInput: By = By.id("amount")
+  override val pageUrl: String = baseUrlManualSub + "/manual/account/currency"
 
   def checkPage(): this.type = {
     onPage(pageUrl)
-    checkH1("What was the account balance?")
+    checkH1("What was the account currency?")
     this
   }
 
-  def selectCurrencyAndContinue(amount: String): this.type = {
+  def continuePage(): this.type = {
+    click(submitButtonId)
+    this
+  }
+
+  def selectCurrencyAndContinue(): this.type = {
     onPage(pageUrl)
     selectCurrency()
-    sendKeys(amountInput, amount)
     click(submitButtonId)
     this
   }

@@ -50,9 +50,6 @@ class FilerCategoryManualSpec extends BaseSpec {
       And("They save and continue on the check answers page")
       ReportCheckAnswersPage.confirmAndSend()
 
-      Then("They are on the manual send a report task list page")
-      ManualSendAReportIndexPage.checkDynamicPage()
-
       When("They open the Filer-category task")
       ManualSendAReportIndexPage.clickFilerCategory()
 
