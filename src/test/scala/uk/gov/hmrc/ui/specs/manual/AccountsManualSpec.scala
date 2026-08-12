@@ -103,7 +103,7 @@ class AccountsManualSpec extends BaseSpec with ManualJourneyHelper {
     }
 
     Scenario(
-      "Accounts - balance page valid currency (CRS)",
+      "Accounts - CRS undocumented and dormant pages continue to under construction",
       ManualSubmissionTests,
       SoloTests
     ) {
