@@ -71,6 +71,16 @@ class SponsorManualSpec extends BaseSpec with SponsorJourneyHelper {
 
       When("They confirm the address and continue")
       SponsorIsThisTheAddressPage.selectYesAndContinue()
+
+      And("Enter the sponsor resident for tax")
+      ResidentForTaxPage.residentForTax()
+
+      Then("The tax resident countries display one country added")
+      TaxResidentCountriesPage.onPage()
+
+      And("Select No to add another tax resident countries")
+      TaxResidentCountriesPage.selectNoAndContinue()
+
     }
 
     Scenario("Sponsor journey - Address Non-UK", ManualSubmissionTests, SoloTests) {
