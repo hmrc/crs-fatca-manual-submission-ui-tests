@@ -17,10 +17,15 @@
 package uk.gov.hmrc.ui.pages.manual.sponsor
 
 import uk.gov.hmrc.ui.pages.BasePage
+import uk.gov.hmrc.ui.utils.TestData
 
 object TaxResidentCountriesPage extends BasePage {
 
   override val pageUrl: String = baseUrlManualSub + "/manual/sponsor/tax-resident-countries"
 
+  def checkPage(): this.type = {
+    checkH1(s"You have not added any countries where ${TestData.sponsorName} is resident for tax")
+    this
+  }
 
 }
