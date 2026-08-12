@@ -130,6 +130,13 @@ class AccountsManualSpec extends BaseSpec with ManualJourneyHelper {
 
       When("They select a currency and continue")
       AccountCurrencyPage.selectCurrencyAndContinue()
+
+      Then("They are on the account undocumented page and select yes or no and continue")
+      AccountUndocumentedPage.selectNoAndContinue()
+
+      Then("They are on the account dormant page and select yes and continue")
+      AccountDormantPage.selectYesAndContinue()
+
     }
   }
 }
