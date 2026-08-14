@@ -17,7 +17,6 @@
 package uk.gov.hmrc.ui.pages.manual
 
 import uk.gov.hmrc.ui.pages.*
-import uk.gov.hmrc.ui.pages.manual.*
 
 trait ManualJourneyHelper {
 

@@ -103,7 +103,7 @@ class AccountsManualSpec extends BaseSpec with ManualJourneyHelper {
     }
 
     Scenario(
-      "Accounts - CRS undocumented and dormant pages continue to under construction",
+      "Accounts - year opened, joint account and holders (CRS)",
       ManualSubmissionTests,
       SoloTests
     ) {
@@ -131,12 +131,23 @@ class AccountsManualSpec extends BaseSpec with ManualJourneyHelper {
       When("They select a currency and continue")
       AccountCurrencyPage.selectCurrencyAndContinue()
 
-      Then("They are on the account undocumented page and select yes or no and continue")
+      And("They are on the account undocumented page and select yes or no and continue")
       AccountUndocumentedPage.selectNoAndContinue()
 
-      Then("They are on the account dormant page and select yes and continue")
+      And("They are on the account dormant page and select yes and continue")
       AccountDormantPage.selectYesAndContinue()
 
+      When("They are on the account year opened page")
+      AccountYearOpenedPage.checkPage()
+
+      And("They confirm the account was opened in the year and continue")
+      AccountYearOpenedPage.selectYesAndContinue()
+
+      And("They are on the joint account page and confirm it is a joint account and continue")
+      AccountJointAccountPage.selectYesAndContinue()
+
+      Then("They are on the joint account holders page and enter a valid number of holders and continue")
+      AccountJointHoldersPage.enterNumberAndContinue("2")
     }
   }
 }
