@@ -16,10 +16,19 @@
 
 package uk.gov.hmrc.ui.pages.manual.account
 
+import org.openqa.selenium.By
 import uk.gov.hmrc.ui.pages.BasePage
 
-object AccountUndocumentedPage extends BasePage {
+object AccountJointHoldersPage extends BasePage {
 
-  override val pageUrl: String = baseUrlManualSub + "/manual/account/undocumented"
+  override val pageUrl: String = baseUrlManualSub + "/manual/account/joint-account-holders"
 
+  private val holdersInput: By = By.id("value")
+
+  def enterNumberAndContinue(number: String): this.type = {
+    checkDynamicPage()
+    sendKeys(holdersInput, number)
+    click(submitButtonId)
+    this
+  }
 }
