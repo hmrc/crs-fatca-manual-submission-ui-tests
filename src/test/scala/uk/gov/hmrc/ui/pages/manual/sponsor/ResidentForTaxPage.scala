@@ -23,9 +23,9 @@ object ResidentForTaxPage extends BasePage {
 
   override val pageUrl: String = baseUrlManualSub + "/manual/sponsor/resident-for-tax"
 
-  def residentForTax(): Unit = {
+  def addResidentCountryForTax(country: String = TestData.residentForTax): Unit = {
     onPage(pageUrl)
-    selectCountry(TestData.residentForTax)
+    selectCountry(country)
     click(submitButtonId)
   }
 

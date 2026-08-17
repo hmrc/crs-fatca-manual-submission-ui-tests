@@ -39,6 +39,8 @@ trait BasePage extends BrowserDriver with Matchers with IdGenerators with PageOb
   val yesRadioId: By           = By.id("value")
   val noRadioId: By            = By.id("value-no")
 
+  def removeCountryId(country: String): By = By.id(s"remove-country-$country")
+
   def clickOnBackLink(): Unit = {
     onPage()
     click(backLinkText)

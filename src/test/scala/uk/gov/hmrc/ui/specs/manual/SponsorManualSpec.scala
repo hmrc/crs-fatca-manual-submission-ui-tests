@@ -50,7 +50,7 @@ class SponsorManualSpec extends BaseSpec with SponsorJourneyHelper {
       SponsorSelectAddressPage.selectFirstAddressAndContinue()
 
       And("Enter the sponsor resident for tax")
-      ResidentForTaxPage.residentForTax()
+      ResidentForTaxPage.addResidentCountryForTax()
 
       Then("The tax resident countries display one country added")
       TaxResidentCountriesPage.onPage()
@@ -101,10 +101,23 @@ class SponsorManualSpec extends BaseSpec with SponsorJourneyHelper {
       SponsorIsThisTheAddressPage.selectYesAndContinue()
 
       And("Enter the sponsor resident for tax")
-      ResidentForTaxPage.residentForTax()
+      ResidentForTaxPage.addResidentCountryForTax()
 
       Then("The tax resident countries display one country added")
       TaxResidentCountriesPage.onPage()
+
+      And("Select Yes to add another tax resident countries")
+      TaxResidentCountriesPage.selectYesAndContinue()
+
+      And("Enter another sponsor resident for tax")
+      ResidentForTaxPage.addResidentCountryForTax("Iceland")
+
+      When("Click to remove a country from tax resident countries list") // need to assert 2 countries?
+      TaxResidentCountriesPage.removeCountry("Iceland")
+
+      Then("Confirm to remove country")
+      RemoveTaxResidentCountriesPage.onPage()
+      RemoveTaxResidentCountriesPage.selectYesAndContinue()
 
       And("Select No to add another tax resident countries")
       TaxResidentCountriesPage.selectNoAndContinue()
@@ -141,7 +154,7 @@ class SponsorManualSpec extends BaseSpec with SponsorJourneyHelper {
       SponsorNonUKAddressPage.enterAddressNonUK()
 
       And("Enter the sponsor resident for tax")
-      ResidentForTaxPage.residentForTax()
+      ResidentForTaxPage.addResidentCountryForTax()
 
       And("Select No to add another tax resident countries")
       TaxResidentCountriesPage.selectNoAndContinue()
