@@ -17,17 +17,19 @@
 package uk.gov.hmrc.ui.pages.manual.sponsor
 
 import uk.gov.hmrc.ui.pages.BasePage
+import uk.gov.hmrc.ui.utils.TestData
 
 object ResidentForTaxPage extends BasePage {
 
   override val pageUrl: String = baseUrlManualSub + "/manual/sponsor/resident-for-tax"
 
-  def residentForTax(): Unit = {
+  def addResidentCountryForTax(country: String = TestData.country): Unit = {
     onPage(pageUrl)
-    selectCountry("United States")
+    selectCountry(country)
     click(submitButtonId)
   }
 
   def selectCountry(countryName: String): Unit =
     selectFromAutocomplete("country-select", countryName)
+
 }

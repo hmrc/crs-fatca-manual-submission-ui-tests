@@ -31,13 +31,14 @@ import java.time.Duration
 trait BasePage extends BrowserDriver with Matchers with IdGenerators with PageObject {
 
   val pageUrl: String
-  val baseUrlFi: String        = TestConfiguration.url("crs-fatca-fi-management-frontend")
-  val baseUrlManualSub: String = TestConfiguration.url("crs-fatca-manual-submission-frontend")
-  val submitButtonId: By       = By.id("submit")
-  val backLinkText: By         = By.linkText("Back")
-  val pageHeader: By           = By.tagName("h1")
-  val yesRadioId: By           = By.id("value")
-  val noRadioId: By            = By.id("value-no")
+  val baseUrlFi: String                    = TestConfiguration.url("crs-fatca-fi-management-frontend")
+  val baseUrlManualSub: String             = TestConfiguration.url("crs-fatca-manual-submission-frontend")
+  val submitButtonId: By                   = By.id("submit")
+  val backLinkText: By                     = By.linkText("Back")
+  val pageHeader: By                       = By.tagName("h1")
+  val yesRadioId: By                       = By.id("value")
+  val noRadioId: By                        = By.id("value-no")
+  def removeCountryId(country: String): By = By.id(s"remove-country-$country")
 
   def clickOnBackLink(): Unit = {
     onPage()
