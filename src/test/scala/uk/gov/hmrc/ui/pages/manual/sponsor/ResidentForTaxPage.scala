@@ -17,6 +17,7 @@
 package uk.gov.hmrc.ui.pages.manual.sponsor
 
 import uk.gov.hmrc.ui.pages.BasePage
+import uk.gov.hmrc.ui.utils.TestData
 
 object ResidentForTaxPage extends BasePage {
 
@@ -24,7 +25,7 @@ object ResidentForTaxPage extends BasePage {
 
   def residentForTax(): Unit = {
     onPage(pageUrl)
-    selectCountry("United States")
+    selectCountry(TestData.residentForTax)
     click(submitButtonId)
   }
 
