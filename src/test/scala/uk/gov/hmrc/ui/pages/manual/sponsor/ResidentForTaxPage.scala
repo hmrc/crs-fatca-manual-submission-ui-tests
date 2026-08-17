@@ -23,7 +23,7 @@ object ResidentForTaxPage extends BasePage {
 
   override val pageUrl: String = baseUrlManualSub + "/manual/sponsor/resident-for-tax"
 
-  def addResidentCountryForTax(country: String = TestData.country): Unit = {
+  def addResidentCountryForTax(country: String = TestData.residentForTax): Unit = {
     onPage(pageUrl)
     selectCountry(country)
     click(submitButtonId)
@@ -31,5 +31,4 @@ object ResidentForTaxPage extends BasePage {
 
   def selectCountry(countryName: String): Unit =
     selectFromAutocomplete("country-select", countryName)
-
 }

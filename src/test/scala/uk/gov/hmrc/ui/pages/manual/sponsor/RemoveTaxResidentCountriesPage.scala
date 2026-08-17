@@ -25,7 +25,7 @@ object RemoveTaxResidentCountriesPage extends BasePage {
 
   def checkPage(): this.type = {
     checkH1(
-      s"Are you sure you want to remove ${TestData.country} as a tax resident country for ${TestData.sponsorName}?"
+      s"Are you sure you want to remove ${TestData.residentForTax} as a tax resident country for ${TestData.sponsorName}?"
     )
     this
   }

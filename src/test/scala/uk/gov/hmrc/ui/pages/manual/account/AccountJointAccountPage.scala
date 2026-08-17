@@ -18,8 +18,8 @@ package uk.gov.hmrc.ui.pages.manual.account
 
 import uk.gov.hmrc.ui.pages.BasePage
 
-object AccountUndocumentedPage extends BasePage {
+object AccountJointAccountPage extends BasePage {
 
-  override val pageUrl: String = baseUrlManualSub + "/manual/account/undocumented"
+  override val pageUrl: String = baseUrlManualSub + "/manual/account/joint-account"
 
 }
