@@ -49,6 +49,34 @@ class SponsorManualSpec extends BaseSpec with SponsorJourneyHelper {
       When("They select the first address and continue")
       SponsorSelectAddressPage.selectFirstAddressAndContinue()
 
+      And("Enter the sponsor resident for tax")
+      ResidentForTaxPage.residentForTax()
+
+      Then("The tax resident countries display one country added")
+      TaxResidentCountriesPage.onPage()
+
+      And("Select No to add another tax resident countries")
+      TaxResidentCountriesPage.selectNoAndContinue()
+
+      Then("They are on the sponsor check answers page")
+      SponsorCheckAnswersPage.checkPage()
+
+      And("The summary shows the sponsor details")
+      SponsorCheckAnswersPage
+        .checkSummaryContains("Yes")
+        .checkSummaryContains(TestData.sponsorName)
+        .checkSummaryContains(TestData.sponsorGiin)
+        .checkSummaryContains("United Kingdom")
+
+      And("The tax resident countries card shows the resident country")
+      SponsorCheckAnswersPage.checkTaxResidentContains(TestData.residentForTax)
+
+      When("They continue from the check answers page")
+      SponsorCheckAnswersPage.continueFromCheckAnswers()
+
+      Then("They are returned to the manual send a report task list page")
+      ManualSendAReportIndexPage.onPage()
+
     }
 
     Scenario(
@@ -81,6 +109,25 @@ class SponsorManualSpec extends BaseSpec with SponsorJourneyHelper {
       And("Select No to add another tax resident countries")
       TaxResidentCountriesPage.selectNoAndContinue()
 
+      Then("They are on the sponsor check answers page")
+      SponsorCheckAnswersPage.checkPage()
+
+      And("The summary shows the sponsor details")
+      SponsorCheckAnswersPage
+        .checkSummaryContains("Yes")
+        .checkSummaryContains(TestData.sponsorName)
+        .checkSummaryContains(TestData.sponsorGiin)
+        .checkSummaryContains("United Kingdom")
+
+      And("The tax resident countries card shows the resident country")
+      SponsorCheckAnswersPage.checkTaxResidentContains(TestData.residentForTax)
+
+      When("They continue from the check answers page")
+      SponsorCheckAnswersPage.continueFromCheckAnswers()
+
+      Then("They are returned to the manual send a report task list page")
+      ManualSendAReportIndexPage.onPage()
+
     }
 
     Scenario("Sponsor journey - Address Non-UK", ManualSubmissionTests, SoloTests) {
@@ -95,6 +142,28 @@ class SponsorManualSpec extends BaseSpec with SponsorJourneyHelper {
 
       And("Enter the sponsor resident for tax")
       ResidentForTaxPage.residentForTax()
+
+      And("Select No to add another tax resident countries")
+      TaxResidentCountriesPage.selectNoAndContinue()
+
+      Then("They are on the sponsor check answers page")
+      SponsorCheckAnswersPage.checkPage()
+
+      And("The summary shows the sponsor details")
+      SponsorCheckAnswersPage
+        .checkSummaryContains("Yes")
+        .checkSummaryContains(TestData.sponsorName)
+        .checkSummaryContains(TestData.sponsorGiin)
+        .checkSummaryContains("Japan")
+
+      And("The tax resident countries card shows the resident country")
+      SponsorCheckAnswersPage.checkTaxResidentContains(TestData.residentForTax)
+
+      When("They continue from the check answers page")
+      SponsorCheckAnswersPage.continueFromCheckAnswers()
+
+      Then("They are returned to the manual send a report task list page")
+      ManualSendAReportIndexPage.onPage()
     }
   }
 }
