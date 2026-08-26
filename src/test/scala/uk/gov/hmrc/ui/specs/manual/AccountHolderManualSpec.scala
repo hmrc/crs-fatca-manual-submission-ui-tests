@@ -24,10 +24,10 @@ import uk.gov.hmrc.ui.specs.tags.*
 
 class AccountHolderManualSpec extends BaseSpec with ManualJourneyHelper {
 
-  Feature("CRS/FATCA Manual - Account Holder journey") {
+  Feature("CRS/FATCA Manual - Account Holder individual name") {
 
     Scenario(
-      "Account Holder - selecting Individual continues the journey",
+      "Account Holder - selecting Individual continues the journey - CRS",
       ManualSubmissionTests,
       SoloTests
     ) {
@@ -47,10 +47,46 @@ class AccountHolderManualSpec extends BaseSpec with ManualJourneyHelper {
 
       When("They select Individual and continue")
       AccountHolderIndividualOrOrganisationPage.selectIndividualAndContinue()
+
+      Then("They are on the individual name page")
+      AccountHolderIndividualNamePage.checkPage()
+
+      When("They enter a valid first and last name and continue")
+      AccountHolderIndividualNamePage.enterNameAndContinue("Sarah", "Smith")
+
     }
 
     Scenario(
-      "Account Holder - selecting Organisation continues the journey",
+      "Account Holder - selecting Individual continues the journey - FATCA",
+      ManualSubmissionTests,
+      SoloTests
+    ) {
+      Given("The user has reached the manual task list as FATCA")
+      navigateToTaskList("FATCA")
+
+      // TODO: Replace direct navigation below with the click-through once
+      // ManualSendAReportIndexPage.clickAccountHolder() is implemented.
+      When("They navigate directly to the individual or organisation page")
+      AccountHolderIndividualOrOrganisationPage.goToPage()
+
+      //      When("They open the account holder task")
+      //      ManualSendAReportIndexPage.clickAccountHolder()
+
+      Then("They are on the individual or organisation page")
+      AccountHolderIndividualOrOrganisationPage.checkPage()
+
+      When("They select Individual and continue")
+      AccountHolderIndividualOrOrganisationPage.selectIndividualAndContinue()
+
+      Then("They are on the individual name page")
+      AccountHolderIndividualNamePage.checkPage()
+
+      When("They enter a valid first and last name and continue")
+      AccountHolderIndividualNamePage.enterNameAndContinue("Sarah", "Smith")
+    }
+
+    Scenario(
+      "Account Holder - selecting Organisation continues the journey - CRS/FATCA",
       ManualSubmissionTests,
       SoloTests
     ) {
