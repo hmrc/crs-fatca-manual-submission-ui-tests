@@ -27,7 +27,7 @@ class CpSoManualSpec extends BaseSpec with ManualJourneyHelper {
   Feature("CRS/FATCA Manual - CP-SO individual or organisation") {
 
     Scenario(
-      "CP-SO - selecting Individual continues the journey",
+      "CP-SO - reaching individual name page after selecting Individual (FATCA)",
       ManualSubmissionTests,
       SoloTests
     ) {
@@ -47,6 +47,13 @@ class CpSoManualSpec extends BaseSpec with ManualJourneyHelper {
 
       When("They select Individual and continue")
       CpSoIndividualOrOrganisationPage.selectIndividualAndContinue()
+
+      Then("They see the individual name page with FATCA wording")
+      CpSoIndividualNamePage.checkHeadingForFatca()
+
+      When("They enter a valid first and last name and continue")
+      CpSoIndividualNamePage.enterNameAndContinue("Sarah", "Smith")
+
     }
 
     Scenario(
@@ -73,6 +80,26 @@ class CpSoManualSpec extends BaseSpec with ManualJourneyHelper {
     }
 
     Scenario(
+      "CP-SO - individual name page under CRS regime",
+      ManualSubmissionTests,
+      SoloTests
+    ) {
+      Given("The user has reached the manual task list as CRS")
+      navigateToTaskList("CRS")
+
+      // TODO: Replace direct navigation below once the CRS route into this
+      // page (via /manual/cp-so/account-holder) is implemented.
+      When("They navigate directly to the individual name page")
+      CpSoIndividualNamePage.goToPage()
+
+      Then("They see the individual name page with CRS wording")
+      CpSoIndividualNamePage.checkHeadingForCrs()
+
+      When("They enter a valid first and last name and continue")
+      CpSoIndividualNamePage.enterNameAndContinue("Sarah", "Smith")
+    }
+
+    Scenario(
       "CP-SO - page is not accessible under CRS regime",
       ManualSubmissionTests,
       SoloTests
@@ -80,6 +107,8 @@ class CpSoManualSpec extends BaseSpec with ManualJourneyHelper {
       Given("The user has reached the manual task list as CRS")
       navigateToTaskList("CRS")
 
+      // TODO: Replace direct navigation below once the CRS route into this
+      // page (via /manual/cp-so/account-holder) is implemented.
       When("They navigate directly to the individual or organisation page")
       CpSoIndividualOrOrganisationPage.goToPage()
 
