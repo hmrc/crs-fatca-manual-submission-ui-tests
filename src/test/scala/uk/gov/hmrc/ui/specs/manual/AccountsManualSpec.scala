@@ -256,11 +256,7 @@ class AccountsManualSpec extends BaseSpec with ManualJourneyHelper {
       And("The Cash value insurance option is present")
       AccountTypePage.checkCashValueInsuranceOptionPresent()
 
-      // TODO: assumes default ReportingPeriod is before 2025-12-31 - Not reported radial present
-      // so 5 options = 3 base + Cash value insurance + ReportingPeriod earlier than 2025-12-31,
-      // this should be 5 instead (Not reported also shown) — needs a way to control
-
-      And("4 account type options are shown (3 base plus Cash value insurance)")
+      And("5 account type options are shown (3 base plus Cash value insurance and Reporting period)")
       AccountTypePage.checkAccountTypeOptionsCount(5)
 
       When("They select Cash value insurance contract or annuity contract and continue")

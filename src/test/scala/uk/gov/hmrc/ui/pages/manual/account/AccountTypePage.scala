@@ -37,17 +37,6 @@ object AccountTypePage extends BasePage {
     this
   }
 
-  // TODO: remove once /manual/account/joint-account and /manual/account/joint-account-holders
-  // are automated — direct nav is a stand-in for the real click-through into this page.
-  def goToPage(): this.type = {
-    Driver.instance.get(pageUrl)
-    this
-  }
-
-  def isCashValueInsuranceOptionPresent: Boolean = isElementPresent(cashValueInsuranceRadio)
-
-  def isNotReportedOptionPresent: Boolean = isElementPresent(notReportedRadio)
-
   def checkCashValueInsuranceOptionPresent(): this.type = {
     isElementPresent(cashValueInsuranceRadio) shouldBe true
     this
@@ -63,9 +52,6 @@ object AccountTypePage extends BasePage {
     this
   }
 
-  // Confirms the journey did NOT land on this page — used for the OECD601/OECD606
-  // bypass cases, where AcctNumberType should auto-set to CRS1101 and this page
-  // is skipped entirely rather than shown.
   def checkPageIsBypassed(): Unit =
     Driver.instance.getCurrentUrl should not include "/manual/account/type"
 
