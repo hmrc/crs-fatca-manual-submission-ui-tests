@@ -28,7 +28,7 @@ object AccountNumberTypePage extends BasePage {
   private val isinRadio: By  = By.cssSelector("input[name='value'][value='iSIN']")
   private val osinRadio: By  = By.cssSelector("input[name='value'][value='oSIN']")
   private val sempRadio: By  = By.cssSelector("input[name='value'][value='sEMP']")
-  private val otherRadio: By = By.cssSelector("input[name='value'][value='other']")
+  private val otherRadio: By = By.cssSelector("input[name='value'][value='oTHER']")
 
   def checkPage(): this.type = {
     onPage(pageUrl)
