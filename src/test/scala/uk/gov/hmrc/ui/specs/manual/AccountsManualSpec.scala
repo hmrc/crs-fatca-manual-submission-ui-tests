@@ -148,6 +148,213 @@ class AccountsManualSpec extends BaseSpec with ManualJourneyHelper {
 
       Then("They are on the joint account holders page and enter a valid number of holders and continue")
       AccountJointHoldersPage.enterNumberAndContinue("2")
+
+      When("They select Depository account and continue")
+      AccountTypePage.selectAccountTypeAndContinue("Depository")
     }
+
+    Scenario(
+      "Accounts - account type reached via joint account No. (CRS)",
+      ManualSubmissionTests,
+      SoloTests
+    ) {
+      Given("The user has reached the manual task list as CRS")
+      navigateToTaskList("CRS")
+
+      When("They open the accounts task")
+      ManualSendAReportIndexPage.clickAccounts()
+
+      When("They confirm the account has no number and continue")
+      AccountHaveNumberPage.selectNoAndContinue()
+
+      Then("They are on the account identifier page")
+      AccountIdentifierPage.checkPage()
+
+      When("They enter a valid identifier and continue")
+      AccountIdentifierPage.enterIdentifierAndContinue()
+
+      When("They select no on the account closed page and continue")
+      AccountClosedPage.selectNoAndContinue()
+
+      Then("They are on the currency page")
+      AccountBalancePage.checkPage()
+
+      When("They select a currency, amount and continue")
+      AccountBalancePage.selectCurrencyAndAmount("100")
+
+      And("They are on the account undocumented page and select no and continue")
+      AccountUndocumentedPage.selectNoAndContinue()
+
+      And("They are on the account dormant page and select no and continue")
+      AccountDormantPage.selectNoAndContinue()
+
+      When("They are on the account year opened page")
+      AccountYearOpenedPage.checkPage()
+
+      And("They confirm the account was opened in the year and continue")
+      AccountYearOpenedPage.selectYesAndContinue()
+
+      And("They are on the joint account page and confirm it is not a joint account and continue")
+      AccountJointAccountPage.selectNoAndContinue()
+
+      Then("They see the account type page")
+      AccountTypePage.checkPage()
+
+      When("They select Custodial account and continue")
+      AccountTypePage.selectAccountTypeAndContinue("Custodial")
+    }
+
+    Scenario(
+      "Accounts - account type via have-number Yes shows Cash value insurance when AcctNumberType is OECD605 (CRS)",
+      ManualSubmissionTests,
+      SoloTests
+    ) {
+      Given("The user has reached the manual task list as CRS")
+      navigateToTaskList("CRS")
+
+      When("They open the accounts task")
+      ManualSendAReportIndexPage.clickAccounts()
+
+      When("They confirm the account has a number and continue")
+      AccountHaveNumberPage.selectYesAndContinue()
+
+      Then("They are on the account number type page")
+      AccountNumberTypePage.checkPage()
+
+      // /manual/account/number is not yet built, so selecting a non-IBAN/SEMP number type
+      // here skips straight to /manual/account/closed.
+      // TODO: confirm TestData holds a constant for OECD605 ("Any other type of account
+      // number or identification number") — using the literal label text as a placeholder.
+
+      When("They select 'Any other type of account number or identification number' and continue")
+      AccountNumberTypePage.selectAccountNumberType("Any other")
+
+      Then("They land directly on the account closed page, skipping the unbuilt account number page")
+      AccountClosedPage.checkPage()
+
+      When("They select no on the account closed page and continue")
+      AccountClosedPage.selectNoAndContinue()
+
+      And("They select a currency, amount and continue")
+      AccountBalancePage.selectCurrencyAndAmount("100")
+
+      And("They select no on the account undocumented page and continue")
+      AccountUndocumentedPage.selectNoAndContinue()
+
+      And("They select no on the account dormant page and continue")
+      AccountDormantPage.selectNoAndContinue()
+
+      And("They confirm the account was opened in the year and continue")
+      AccountYearOpenedPage.selectYesAndContinue()
+
+      And("They select no on the joint account page and continue")
+      AccountJointAccountPage.selectNoAndContinue()
+
+      Then("They see the account type page")
+      AccountTypePage.checkPage()
+
+      And("The Cash value insurance option is present")
+      AccountTypePage.checkCashValueInsuranceOptionPresent()
+
+      And("5 account type options are shown (3 base plus Cash value insurance and Reporting period)")
+      AccountTypePage.checkAccountTypeOptionsCount(5)
+
+      When("They select Cash value insurance contract or annuity contract and continue")
+      AccountTypePage.selectAccountTypeAndContinue("Cash value insurance")
+    }
+
+    Scenario(
+      "Accounts - account type page bypassed when AcctNumberType is IBAN (OECD601) (CRS)",
+      ManualSubmissionTests,
+      SoloTests
+    ) {
+      Given("The user has reached the manual task list as CRS")
+      navigateToTaskList("CRS")
+
+      When("They open the accounts task")
+      ManualSendAReportIndexPage.clickAccounts()
+
+      When("They confirm the account has a number and continue")
+      AccountHaveNumberPage.selectYesAndContinue()
+
+      Then("They are on the account number type page")
+      AccountNumberTypePage.checkPage()
+
+      When("They select IBAN and continue")
+      AccountNumberTypePage.selectAccountNumberType(TestData.iban)
+
+      Then("They land directly on the account closed page, skipping the unbuilt account number page")
+      AccountClosedPage.checkPage()
+
+      When("They select no on the account closed page and continue")
+      AccountClosedPage.selectYesAndContinue()
+
+      And("They select a currency and continue")
+      AccountCurrencyPage.selectCurrencyAndContinue()
+
+      And("They select no on the account undocumented page and continue")
+      AccountUndocumentedPage.selectNoAndContinue()
+
+      And("They select no on the account dormant page and continue")
+      AccountDormantPage.selectNoAndContinue()
+
+      And("They confirm the account was opened in the year and continue")
+      AccountYearOpenedPage.selectYesAndContinue()
+
+      And("They select no on the joint account page and continue")
+      AccountJointAccountPage.selectNoAndContinue()
+
+      Then("The account type page is bypassed, as AcctNumberType is auto-set to CRS1101")
+      AccountTypePage.checkPageIsBypassed()
+    }
+
+    Scenario(
+      "Accounts - account type page bypassed via joint account holders when AcctNumberType is IBAN (OECD601) (CRS)",
+      ManualSubmissionTests,
+      SoloTests
+    ) {
+      Given("The user has reached the manual task list as CRS")
+      navigateToTaskList("CRS")
+
+      When("They open the accounts task")
+      ManualSendAReportIndexPage.clickAccounts()
+
+      When("They confirm the account has a number and continue")
+      AccountHaveNumberPage.selectYesAndContinue()
+
+      Then("They are on the account number type page")
+      AccountNumberTypePage.checkPage()
+
+      When("They select IBAN and continue")
+      AccountNumberTypePage.selectAccountNumberType(TestData.iban)
+
+      Then("They land directly on the account closed page, skipping the unbuilt account number page")
+      AccountClosedPage.checkPage()
+
+      When("They select no on the account closed page and continue")
+      AccountClosedPage.selectYesAndContinue()
+
+      And("They select a currency and continue")
+      AccountCurrencyPage.selectCurrencyAndContinue()
+
+      And("They select no on the account undocumented page and continue")
+      AccountUndocumentedPage.selectNoAndContinue()
+
+      And("They select no on the account dormant page and continue")
+      AccountDormantPage.selectNoAndContinue()
+
+      And("They confirm the account was opened in the year and continue")
+      AccountYearOpenedPage.selectYesAndContinue()
+
+      And("They select yes on the joint account page and continue")
+      AccountJointAccountPage.selectYesAndContinue()
+
+      And("They enter a valid number of joint holders and continue")
+      AccountJointHoldersPage.enterNumberAndContinue("2")
+
+      Then("The account type page is bypassed, as AcctNumberType is auto-set to CRS1101")
+      AccountTypePage.checkPageIsBypassed()
+    }
+
   }
 }

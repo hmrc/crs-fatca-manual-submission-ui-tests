@@ -22,4 +22,9 @@ object AccountClosedPage extends BasePage {
 
   override val pageUrl: String = baseUrlManualSub + "/manual/account/closed"
 
+  def checkPage(): this.type = {
+    onPage(pageUrl)
+    checkH1("Is the account closed?")
+    this
+  }
 }

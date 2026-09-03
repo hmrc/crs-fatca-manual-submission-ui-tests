@@ -17,7 +17,6 @@
 package uk.gov.hmrc.ui.pages.manual.accountholder
 
 import org.openqa.selenium.By
-import uk.gov.hmrc.selenium.webdriver.Driver
 import uk.gov.hmrc.ui.pages.BasePage
 
 object AccountHolderIndividualNamePage extends BasePage {
