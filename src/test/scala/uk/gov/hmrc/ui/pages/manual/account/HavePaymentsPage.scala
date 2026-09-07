@@ -28,7 +28,7 @@ object HavePaymentsPage extends BasePage {
     checkH1(s"Were any payments made to this account, a payee or an owner in ${TestData.reportingYear}")
     this
   }
-  def checkPageCRS(): this.type = {
+  def checkPageCRS(): this.type   = {
     onPage(pageUrl)
     checkH1(s"Were any payments made to this account in ${TestData.reportingYear}")
     this
