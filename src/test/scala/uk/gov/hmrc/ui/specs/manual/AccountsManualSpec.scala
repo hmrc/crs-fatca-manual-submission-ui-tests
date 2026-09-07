@@ -100,6 +100,19 @@ class AccountsManualSpec extends BaseSpec with ManualJourneyHelper {
 
       When("They select a currency and enter a valid amount and continue")
       AccountBalancePage.selectCurrencyAndAmount("100.50")
+
+      Then("They land in have payments page")
+      HavePaymentsPage.checkPageFATCA()
+
+      And("They need to mention if any payments made to this account, select Yes and continue")
+      HavePaymentsPage.selectYesAndContinue()
+
+      And("The User is on Payments Type page")
+      PaymentsTypePage.checkPage()
+
+      And("They also need to specify the payments type for this account, select Dividends and proceed")
+      PaymentsTypePage.selectTypeOfPaymentsAndContinue("DividendsFATCA")
+
     }
 
     Scenario(
@@ -151,6 +164,12 @@ class AccountsManualSpec extends BaseSpec with ManualJourneyHelper {
 
       When("They select Depository account and continue")
       AccountTypePage.selectAccountTypeAndContinue("Depository")
+
+      Then("They lands on have payments page")
+      HavePaymentsPage.checkPageCRS()
+
+      And("They need to select Yes or No and Continue")
+      HavePaymentsPage.selectYesAndContinue()
     }
 
     Scenario(
@@ -202,6 +221,15 @@ class AccountsManualSpec extends BaseSpec with ManualJourneyHelper {
 
       When("They select Custodial account and continue")
       AccountTypePage.selectAccountTypeAndContinue("Custodial")
+
+      Then("They lands on have payments page")
+      HavePaymentsPage.checkPageCRS()
+
+      And("They need to select Yes or No and Continue")
+      HavePaymentsPage.selectYesAndContinue()
+
+      Then("Then have to choose the what type of payments were these for this account")
+      PaymentsTypePage.selectTypeOfPaymentsAndContinue("InterestCRS")
     }
 
     Scenario(
@@ -261,6 +289,16 @@ class AccountsManualSpec extends BaseSpec with ManualJourneyHelper {
 
       When("They select Cash value insurance contract or annuity contract and continue")
       AccountTypePage.selectAccountTypeAndContinue("Cash value insurance")
+
+      Then("They lands on have payments page")
+      HavePaymentsPage.checkPageCRS()
+
+      And("They need to select Yes or No and Continue")
+      HavePaymentsPage.selectYesAndContinue()
+
+      Then("Then have to choose the what type of payments were these for this account")
+      PaymentsTypePage.selectTypeOfPaymentsAndContinue("GrossProceedsOrRedemptionsCRS")
+
     }
 
     Scenario(
@@ -306,6 +344,12 @@ class AccountsManualSpec extends BaseSpec with ManualJourneyHelper {
 
       Then("The account type page is bypassed, as AcctNumberType is auto-set to CRS1101")
       AccountTypePage.checkPageIsBypassed()
+
+      Then("They lands on have payments page")
+      HavePaymentsPage.checkPageCRS()
+
+      And("They need to select Yes or No and Continue")
+      HavePaymentsPage.selectYesAndContinue()
     }
 
     Scenario(
@@ -354,6 +398,12 @@ class AccountsManualSpec extends BaseSpec with ManualJourneyHelper {
 
       Then("The account type page is bypassed, as AcctNumberType is auto-set to CRS1101")
       AccountTypePage.checkPageIsBypassed()
+
+      Then("They lands on have payments page")
+      HavePaymentsPage.checkPageCRS()
+
+      And("They need to select Yes or No and Continue")
+      HavePaymentsPage.selectYesAndContinue()
     }
 
   }
