@@ -23,13 +23,13 @@ object PaymentsTypePage extends BasePage {
 
   override val pageUrl: String = baseUrlManualSub + "/manual/account/payments-type"
 
-  private val dividendsRadio: By                   = By.cssSelector("input[value='FATCA501']")
-  private val dividendsCRS: By                     = By.cssSelector("input[value='CRS501']")
-  private val interestRadio: By                    = By.cssSelector("input[value='FATCA502']")
-  private val interestCRS: By                      = By.cssSelector("input[value='CRS502']")
-  private val grossProceedsOrRedemptionssRadio: By = By.cssSelector("input[value='FATCA503']")
-  private val grossProceedsOrRedemptionsCrs: By    = By.cssSelector("input[value='CRS503']")
-  private val otherRadio: By                       = By.cssSelector("input[value='FATCA504']")
+  private val dividendsFatcaRadio: By                   = By.cssSelector("input[value='FATCA501']")
+  private val dividendsCRSRadio: By                     = By.cssSelector("input[value='CRS501']")
+  private val interestFATCARadio: By                    = By.cssSelector("input[value='FATCA502']")
+  private val interestCRSRadio: By                      = By.cssSelector("input[value='CRS502']")
+  private val grossProceedsOrRedemptionssFATCARadio: By = By.cssSelector("input[value='FATCA503']")
+  private val grossProceedsOrRedemptionsCrsRadio: By    = By.cssSelector("input[value='CRS503']")
+  private val otherRadio: By                            = By.cssSelector("input[value='FATCA504']")
 
   def checkPage(): this.type = {
     onPage(pageUrl)
@@ -40,14 +40,14 @@ object PaymentsTypePage extends BasePage {
   def selectTypeOfPaymentsAndContinue(typeOfPayment: String): this.type = {
     onPage(pageUrl)
     click(typeOfPayment match {
-      case "Dividends"                     => dividendsRadio
-      case "DividendsCRS"                  => dividendsCRS
-      case "Interest"                      => interestRadio
-      case "InterestCRS"                   => interestCRS
-      case "GrossProceedsOrRedemptions"    => grossProceedsOrRedemptionssRadio
-      case "GrossProceedsOrRedemptionsCRS" => grossProceedsOrRedemptionsCrs
-      case "Other"                         => otherRadio
-      case other                           => throw new IllegalArgumentException(s"Unknown type of payments")
+      case "DividendsFATCA"                  => dividendsFatcaRadio
+      case "DividendsCRS"                    => dividendsCRSRadio
+      case "InterestFATCA"                   => interestFATCARadio
+      case "InterestCRS"                     => interestCRSRadio
+      case "GrossProceedsOrRedemptionsFATCA" => grossProceedsOrRedemptionssFATCARadio
+      case "GrossProceedsOrRedemptionsCRS"   => grossProceedsOrRedemptionsCrsRadio
+      case "Other"                           => otherRadio
+      case other                             => throw new IllegalArgumentException(s"Unknown type of payments")
     })
     click(submitButtonId)
     this

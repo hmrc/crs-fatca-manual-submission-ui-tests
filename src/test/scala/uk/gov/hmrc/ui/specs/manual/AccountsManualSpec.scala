@@ -111,7 +111,7 @@ class AccountsManualSpec extends BaseSpec with ManualJourneyHelper {
       PaymentsTypePage.checkPage()
 
       And("They also need to specify the payments type for this account, select Dividends and proceed")
-      PaymentsTypePage.selectTypeOfPaymentsAndContinue("Dividends")
+      PaymentsTypePage.selectTypeOfPaymentsAndContinue("DividendsFATCA")
 
     }
 
