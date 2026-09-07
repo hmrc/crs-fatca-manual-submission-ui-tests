@@ -23,13 +23,13 @@ object PaymentsTypePage extends BasePage {
 
   override val pageUrl: String = baseUrlManualSub + "/manual/account/payments-type"
 
-  private val dividendsFatcaRadio: By                   = By.cssSelector("input[value='FATCA501']")
-  private val dividendsCRSRadio: By                     = By.cssSelector("input[value='CRS501']")
-  private val interestFATCARadio: By                    = By.cssSelector("input[value='FATCA502']")
-  private val interestCRSRadio: By                      = By.cssSelector("input[value='CRS502']")
+  private val dividendsFatcaRadio: By                  = By.cssSelector("input[value='FATCA501']")
+  private val dividendsCRSRadio: By                    = By.cssSelector("input[value='CRS501']")
+  private val interestFATCARadio: By                   = By.cssSelector("input[value='FATCA502']")
+  private val interestCRSRadio: By                     = By.cssSelector("input[value='CRS502']")
   private val grossProceedsOrRedemptionsFATCARadio: By = By.cssSelector("input[value='FATCA503']")
-  private val grossProceedsOrRedemptionsCrsRadio: By    = By.cssSelector("input[value='CRS503']")
-  private val otherRadio: By                            = By.cssSelector("input[value='FATCA504']")
+  private val grossProceedsOrRedemptionsCrsRadio: By   = By.cssSelector("input[value='CRS503']")
+  private val otherRadio: By                           = By.cssSelector("input[value='FATCA504']")
 
   def checkPage(): this.type = {
     onPage(pageUrl)
