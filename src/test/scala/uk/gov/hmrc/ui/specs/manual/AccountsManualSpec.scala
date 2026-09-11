@@ -113,6 +113,12 @@ class AccountsManualSpec extends BaseSpec with ManualJourneyHelper {
       And("They also need to specify the payments type for this account, select Dividends and proceed")
       PaymentsTypePage.selectTypeOfPaymentsAndContinue("DividendsFATCA")
 
+      Then("They are on the payments amount page")
+      PaymentsAmountPage.checkPage("dividends")
+
+      When("They select a currency and enter a valid amount and continue")
+      PaymentsAmountPage.selectCurrencyAndAmount("100.50")
+
     }
 
     Scenario(
@@ -170,6 +176,13 @@ class AccountsManualSpec extends BaseSpec with ManualJourneyHelper {
 
       And("They need to select Yes or No and Continue")
       HavePaymentsPage.selectYesAndContinue()
+
+      Then("They land directly on the payments amount page, skipping payments type")
+      PaymentsAmountPage.checkPage("interest")
+
+      When("They select a currency and enter a valid amount and continue")
+      PaymentsAmountPage.selectCurrencyAndAmount("250.75")
+
     }
 
     Scenario(
@@ -230,6 +243,13 @@ class AccountsManualSpec extends BaseSpec with ManualJourneyHelper {
 
       Then("Then have to choose the what type of payments were these for this account")
       PaymentsTypePage.selectTypeOfPaymentsAndContinue("InterestCRS")
+
+      Then("They are on the payments amount page")
+      PaymentsAmountPage.checkPage("interest")
+
+      When("They select a currency and enter a valid amount and continue")
+      PaymentsAmountPage.selectCurrencyAndAmount("500")
+
     }
 
     Scenario(
@@ -299,6 +319,12 @@ class AccountsManualSpec extends BaseSpec with ManualJourneyHelper {
       Then("Then have to choose the what type of payments were these for this account")
       PaymentsTypePage.selectTypeOfPaymentsAndContinue("GrossProceedsOrRedemptionsCRS")
 
+      Then("They are on the payments amount page")
+      PaymentsAmountPage.checkPage("gross proceeds or redemptions")
+
+      When("They select a currency and enter a valid amount and continue")
+      PaymentsAmountPage.selectCurrencyAndAmount("1000")
+
     }
 
     Scenario(
@@ -350,6 +376,13 @@ class AccountsManualSpec extends BaseSpec with ManualJourneyHelper {
 
       And("They need to select Yes or No and Continue")
       HavePaymentsPage.selectYesAndContinue()
+
+      Then("They land directly on the payments amount page, skipping payments type")
+      PaymentsAmountPage.checkPage("interest")
+
+      When("They select a currency and enter a valid amount and continue")
+      PaymentsAmountPage.selectCurrencyAndAmount("300")
+
     }
 
     Scenario(
@@ -404,6 +437,12 @@ class AccountsManualSpec extends BaseSpec with ManualJourneyHelper {
 
       And("They need to select Yes or No and Continue")
       HavePaymentsPage.selectYesAndContinue()
+
+      Then("They land directly on the payments amount page, skipping payments type")
+      PaymentsAmountPage.checkPage("interest")
+
+      When("They select a currency and enter a valid amount and continue")
+      PaymentsAmountPage.selectCurrencyAndAmount("450")
     }
 
   }
