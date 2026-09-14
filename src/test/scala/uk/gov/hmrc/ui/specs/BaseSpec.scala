@@ -31,17 +31,17 @@ trait BaseSpec
     with ScreenshotOnFailure
     with MongoTestUtils {
 
-  def commonJourneySetUp(): Unit = {
-    Given("Mongo is clean")
-    cleanUserAnswersCollection()
-  }
-
   override def beforeEach(): Unit = {
     startBrowser()
     commonJourneySetUp()
   }
 
-//  override def afterEach(): Unit =
-//    quitBrowser()
+  def commonJourneySetUp(): Unit = {
+    Given("Mongo is clean")
+    cleanUserAnswersCollection()
+  }
+
+  override def afterEach(): Unit =
+    quitBrowser()
 
 }
