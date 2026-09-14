@@ -54,6 +54,15 @@ class AccountHolderManualSpec extends BaseSpec with ManualJourneyHelper {
       When("They enter a valid first and last name and continue")
       AccountHolderIndividualNamePage.enterNameAndContinue("Sarah", "Smith")
 
+      Then("Navigate the account holder to have date of birth page")
+      AccountHolderIndividualHaveDoB.checkPage()
+
+      And("Select Yes or No on Date of birth for the account holder")
+      AccountHolderIndividualHaveDoB.selectYesAndContinue()
+
+      Then("They enter a valid date of birth and continue")
+      AccountHolderIndividualD0B.enterDateOfBirth()
+
     }
 
     Scenario(
@@ -83,6 +92,15 @@ class AccountHolderManualSpec extends BaseSpec with ManualJourneyHelper {
 
       When("They enter a valid first and last name and continue")
       AccountHolderIndividualNamePage.enterNameAndContinue("Sarah", "Smith")
+
+      Then("Navigate the account holder to have date of birth page")
+      AccountHolderIndividualHaveDoB.checkPage()
+
+      And("Select Yes or No on Date of birth for the account holder")
+      AccountHolderIndividualHaveDoB.selectYesAndContinue()
+
+      Then("They enter a valid date of birth and continue")
+      AccountHolderIndividualD0B.enterDateOfBirth()
     }
 
     Scenario(
