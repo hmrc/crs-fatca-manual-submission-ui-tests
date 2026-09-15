@@ -63,6 +63,11 @@ class AccountHolderManualSpec extends BaseSpec with ManualJourneyHelper {
       Then("They enter a valid date of birth and continue")
       AccountHolderIndividualD0B.enterDateOfBirth()
 
+      Then("They are on the have place of birth page")
+      IndividualHavePlaceOfBirthPage.checkPage()
+
+      When("They select Yes and continue")
+      IndividualHavePlaceOfBirthPage.selectYesAndContinue()
     }
 
     Scenario(
@@ -101,6 +106,18 @@ class AccountHolderManualSpec extends BaseSpec with ManualJourneyHelper {
 
       Then("They enter a valid date of birth and continue")
       AccountHolderIndividualD0B.enterDateOfBirth()
+
+      Then("They are on the have place of birth page")
+      IndividualHavePlaceOfBirthPage.checkPage()
+
+      When("They select No and continue")
+      IndividualHavePlaceOfBirthPage.selectNoAndContinue()
+
+      Then("They are on the where are they based page")
+      WhereAreTheyBasedPage.checkPage()
+
+      When("They select Yes and continue")
+      WhereAreTheyBasedPage.selectYesAndContinue()
     }
 
     Scenario(
