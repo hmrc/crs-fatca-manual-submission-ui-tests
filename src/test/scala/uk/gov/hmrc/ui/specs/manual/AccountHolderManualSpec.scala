@@ -21,6 +21,7 @@ import uk.gov.hmrc.ui.pages.manual.*
 import uk.gov.hmrc.ui.pages.manual.accountholder.*
 import uk.gov.hmrc.ui.specs.BaseSpec
 import uk.gov.hmrc.ui.specs.tags.*
+import uk.gov.hmrc.ui.utils.TestData
 
 class AccountHolderManualSpec extends BaseSpec with ManualJourneyHelper {
 
@@ -68,6 +69,7 @@ class AccountHolderManualSpec extends BaseSpec with ManualJourneyHelper {
 
       When("They select Yes and continue")
       IndividualHavePlaceOfBirthPage.selectYesAndContinue()
+
     }
 
     Scenario(
@@ -76,7 +78,7 @@ class AccountHolderManualSpec extends BaseSpec with ManualJourneyHelper {
       SoloTests
     ) {
       Given("The user has reached the manual task list as FATCA")
-      navigateToTaskList("FATCA")
+      navigateToTaskListFatcaRoute("FATCA")
 
       // TODO: Replace direct navigation below with the click-through once
       // ManualSendAReportIndexPage.clickAccountHolder() is implemented.
@@ -118,6 +120,12 @@ class AccountHolderManualSpec extends BaseSpec with ManualJourneyHelper {
 
       When("They select Yes and continue")
       WhereAreTheyBasedPage.selectYesAndContinue()
+
+      Then("They are on UK postcode page")
+      AccountHolderUKPostcode.checkPage()
+
+      When("They enter the postcode and search for the address")
+      AccountHolderUKPostcode.enterPostcodeAndContinueForAddress(TestData.postcodeSingleAddressEnv)
     }
 
     Scenario(
@@ -126,7 +134,7 @@ class AccountHolderManualSpec extends BaseSpec with ManualJourneyHelper {
       SoloTests
     ) {
       Given("The user has reached the manual task list as FATCA")
-      navigateToTaskList("FATCA")
+      navigateToTaskListFatcaRoute("FATCA")
 
       // TODO: Replace direct navigation below with the click-through once
       // ManualSendAReportIndexPage.clickAccountHolder() is implemented.

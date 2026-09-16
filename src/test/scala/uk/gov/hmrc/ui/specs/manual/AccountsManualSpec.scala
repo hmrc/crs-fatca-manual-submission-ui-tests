@@ -33,7 +33,7 @@ class AccountsManualSpec extends BaseSpec with ManualJourneyHelper {
       SoloTests
     ) {
       Given("The user has reached the manual task list as FATCA")
-      navigateToTaskList("FATCA")
+      navigateToTaskListFatcaRoute("FATCA")
 
       When("They open the accounts task")
       ManualSendAReportIndexPage.clickAccounts()
@@ -81,7 +81,7 @@ class AccountsManualSpec extends BaseSpec with ManualJourneyHelper {
       SoloTests
     ) {
       Given("The user has reached the manual task list as FATCA")
-      navigateToTaskList("FATCA")
+      navigateToTaskListFatcaRoute("FATCA")
 
       When("They open the accounts task")
       ManualSendAReportIndexPage.clickAccounts()

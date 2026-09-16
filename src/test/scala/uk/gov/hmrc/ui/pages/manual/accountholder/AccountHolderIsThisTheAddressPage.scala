@@ -14,20 +14,17 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.ui.pages.manual.sponsor
+package uk.gov.hmrc.ui.pages.manual.accountholder
 
-import uk.gov.hmrc.ui.pages.*
-import uk.gov.hmrc.ui.pages.manual.*
+import uk.gov.hmrc.ui.pages.BasePage
 
-trait SponsorJourneyHelper extends ManualJourneyHelper {
+object AccountHolderIsThisTheAddressPage extends BasePage {
 
-  def navigateToWhereAreTheyBased(): Unit = {
-    navigateToTaskListFatcaRoute("FATCA")
-    ManualSendAReportIndexPage.clickSponsorDetails()
-    HaveASponsorPage.selectYesAndContinue()
-    SponsorNamePage.enterSponsorNameAndContinue()
-    SponsorGiinPage.checkLabelForSponsor()
-    SponsorGiinPage.enterGiinAndContinue()
-    SponsorWhereBasedPage.checkPage()
+  override val pageUrl: String = baseUrlManualSub + "/manual/account-holder/is-this-the-address"
+
+  def checkPage(): this.type = {
+    onPage(pageUrl)
+    checkH1("Is this the address for")
+    this
   }
 }

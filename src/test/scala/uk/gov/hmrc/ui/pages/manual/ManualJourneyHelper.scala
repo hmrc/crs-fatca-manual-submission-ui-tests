@@ -26,7 +26,21 @@ trait ManualJourneyHelper {
     YourFisPage.clickOnSecondManageReports()
     ManageReportsPage.clickFillInOnlineManualReport()
     reportType match {
-      case "CRS"   => CrsOrFatcaPage.selectReportType("CRS")
+      case "CRS" => CrsOrFatcaPage.selectReportType("CRS")
+      case other => throw new IllegalArgumentException(s"Unknown report type: $other")
+    }
+    ReportingDetailsYearPage.enterYearAndContinue()
+    TypeOfReportPage.selectReportWithInformationAndContinue()
+    ReportCheckAnswersPage.confirmAndSend()
+    ManualSendAReportIndexPage.checkDynamicPage()
+  }
+
+  def navigateToTaskListFatcaRoute(reportType: String): Unit = {
+    AuthLoginPage.loginAsBasic()
+    FiManagementPage.clickManageYourFinancialInstitutions()
+    YourFisPage.clickOnThirdManageReports()
+    ManageReportsPage.clickFillInOnlineManualReport()
+    reportType match {
       case "FATCA" => CrsOrFatcaPage.selectReportType("FATCA")
       case other   => throw new IllegalArgumentException(s"Unknown report type: $other")
     }
