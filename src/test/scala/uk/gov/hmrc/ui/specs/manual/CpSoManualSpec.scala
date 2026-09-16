@@ -32,7 +32,7 @@ class CpSoManualSpec extends BaseSpec with ManualJourneyHelper {
       SoloTests
     ) {
       Given("The user has reached the manual task list as FATCA")
-      navigateToTaskList("FATCA")
+      navigateToTaskListFatcaRoute("FATCA")
 
       // TODO: Replace direct navigation below with the click-through once
       // /manual/cp-so/account-holder is implemented.
@@ -62,7 +62,7 @@ class CpSoManualSpec extends BaseSpec with ManualJourneyHelper {
       SoloTests
     ) {
       Given("The user has reached the manual task list as FATCA")
-      navigateToTaskList("FATCA")
+      navigateToTaskListFatcaRoute("FATCA")
 
       // TODO: Replace direct navigation below with the click-through once
       // /manual/cp-so/account-holder is implemented.

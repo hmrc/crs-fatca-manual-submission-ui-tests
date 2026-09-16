@@ -23,6 +23,7 @@ object YourFisPage extends BasePage {
   override val pageUrl: String    = baseUrlFi + "/your-fis"
   val manageReportsLink: By       = By.xpath("//a[contains(@href, 'manage-reports-for')]")
   val secondManageReportsLink: By = By.xpath("//a[contains(@href, 'manage-reports-for-2025?fiId=TES683373339')]")
+  val thirdManageReportsLink: By  = By.xpath("//a[contains(@href, 'manage-reports-for-2025?fiId=TES683373303')]")
 
   def checkPage(): Unit =
     onPage(pageUrl)
@@ -35,6 +36,11 @@ object YourFisPage extends BasePage {
   def clickOnSecondManageReports(): Unit = {
     onPage(pageUrl)
     click(secondManageReportsLink)
+  }
+
+  def clickOnThirdManageReports(): Unit = {
+    onPage(pageUrl)
+    click(thirdManageReportsLink)
   }
 
 }
