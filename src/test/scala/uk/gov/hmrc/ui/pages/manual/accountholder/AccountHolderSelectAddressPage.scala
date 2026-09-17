@@ -22,7 +22,7 @@ import uk.gov.hmrc.ui.pages.BasePage
 object AccountHolderSelectAddressPage extends BasePage {
 
   override val pageUrl: String = baseUrlManualSub + "/manual/account-holder/select-address"
-  
+
   val enterAddressLink: By = By.linkText("enter the address manually")
 
   def checkPage(): this.type = {
@@ -30,11 +30,11 @@ object AccountHolderSelectAddressPage extends BasePage {
     checkH1("What is the address for")
     this
   }
-  
+
   def enterAddressManually(): this.type = {
     onPage()
     click(enterAddressLink)
     this
-    
+
   }
 }
