@@ -125,7 +125,20 @@ class AccountHolderManualSpec extends BaseSpec with ManualJourneyHelper {
       AccountHolderUKPostcode.checkPage()
 
       When("They enter the postcode and search for the address")
-      AccountHolderUKPostcode.enterPostcodeAndContinueForAddress(TestData.postcodeSingleAddressEnv)
+      AccountHolderUKPostcode.enterPostcodeAndContinueForAddress(TestData.postcodeMultipleAddress)
+
+      Then("They lands on the multiple addresses page for the given postcode")
+      AccountHolderSelectAddressPage.checkPage()
+
+      When("They select the enter address manually link")
+      AccountHolderSelectAddressPage.enterAddressManually()
+
+      Then("They will take to address-uk page to enter the address manually")
+      AccountHolderAddressUKPage.checkPage()
+
+      And("They can enter the address manually")
+      AccountHolderAddressUKPage.enterAddressUK()
+
     }
 
     Scenario(
