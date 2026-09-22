@@ -21,12 +21,11 @@ import uk.gov.hmrc.ui.pages.BasePage
 object AccountChangePaymentsPage extends BasePage {
 
   override val pageUrl: String = baseUrlManualSub + "/manual/account/change-payments"
-  
+
   def checkAndContine(): this.type = {
     onPage(pageUrl)
     click(submitButtonId)
     this
   }
-  
 
 }

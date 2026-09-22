@@ -18,8 +18,8 @@ package uk.gov.hmrc.ui.pages.manual.account
 
 import uk.gov.hmrc.ui.pages.BasePage
 
-object AccountChangePaymentsAmountPage extends BasePage{
-  
+object AccountChangePaymentsAmountPage extends BasePage {
+
   override val pageUrl: String = baseUrlManualSub + "/manual/account/change-payments-amount"
 
   def checkPage(): this.type = {
