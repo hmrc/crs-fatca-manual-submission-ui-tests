@@ -20,27 +20,17 @@ import uk.gov.hmrc.ui.pages.*
 
 trait ManualJourneyHelper {
 
-  def navigateToTaskList(reportType: String): Unit = {
+  def journeyToYourFis(): Unit                  = {
     AuthLoginPage.loginAsBasic()
     FiManagementPage.clickManageYourFinancialInstitutions()
-    YourFisPage.clickOnSecondManageReports()
-    ManageReportsPage.clickFillInOnlineManualReport()
-    reportType match {
-      case "CRS" => CrsOrFatcaPage.selectReportType("CRS")
-      case other => throw new IllegalArgumentException(s"Unknown report type: $other")
-    }
-    ReportingDetailsYearPage.enterYearAndContinue()
-    TypeOfReportPage.selectReportWithInformationAndContinue()
-    ReportCheckAnswersPage.confirmAndSend()
-    ManualSendAReportIndexPage.checkDynamicPage()
   }
+  def selectTheSuitableFI(yourFI: String): Unit =
+    YourFisPage.clickOnManageReports(yourFI)
 
-  def navigateToTaskListFatcaRoute(reportType: String): Unit = {
-    AuthLoginPage.loginAsBasic()
-    FiManagementPage.clickManageYourFinancialInstitutions()
-    YourFisPage.clickOnThirdManageReports()
+  def navigateToTaskList(reportType: String): Unit = {
     ManageReportsPage.clickFillInOnlineManualReport()
     reportType match {
+      case "CRS"   => CrsOrFatcaPage.selectReportType("CRS")
       case "FATCA" => CrsOrFatcaPage.selectReportType("FATCA")
       case other   => throw new IllegalArgumentException(s"Unknown report type: $other")
     }
@@ -49,4 +39,5 @@ trait ManualJourneyHelper {
     ReportCheckAnswersPage.confirmAndSend()
     ManualSendAReportIndexPage.checkDynamicPage()
   }
+
 }

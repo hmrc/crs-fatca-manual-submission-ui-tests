@@ -17,7 +17,7 @@
 package uk.gov.hmrc.ui.specs
 
 import uk.gov.hmrc.ui.pages.*
-import uk.gov.hmrc.ui.pages.elections.{CrsCarfGrossProceedsPage, CrsCarfGrossProceedsUnderCrsPage, CrsContractsPage, CrsDormantAccountsPage, CrsThresholdsPage, ElectionsCheckAnswersPage, ElectionsSentPage, FatcaThresholdsPage, FatcaUSTreasuryRegulationsPage, ManageElectionsPage}
+import uk.gov.hmrc.ui.pages.elections.*
 import uk.gov.hmrc.ui.specs.tags.*
 
 class FiManageReportsSpec extends BaseSpec {
@@ -32,7 +32,7 @@ class FiManageReportsSpec extends BaseSpec {
       FiManagementPage.clickManageYourFinancialInstitutions()
 
       When("The user clicks manage reports for an FI")
-      YourFisPage.clickOnManageReports()
+      YourFisPage.clickOnManageReports("FifthFI")
 
       Then("The user is on the manage reports page")
       ManageReportsPage
@@ -68,7 +68,7 @@ class FiManageReportsSpec extends BaseSpec {
       FiManagementPage.clickManageYourFinancialInstitutions()
 
       When("The user clicks manage reports for an FI")
-      YourFisPage.clickOnManageReports()
+      YourFisPage.clickOnManageReports("FourthFI")
 
       Then("The user is on the manage reports page")
       ManageReportsPage.onManageReportsPage()
@@ -102,7 +102,7 @@ class FiManageReportsSpec extends BaseSpec {
       FiManagementPage.clickManageYourFinancialInstitutions()
 
       When("The user clicks manage reports for an FI")
-      YourFisPage.clickOnSecondManageReports()
+      YourFisPage.clickOnManageReports("FirstFI")
 
       ManageReportsPage.selectReportingYear("2022")
 
@@ -144,7 +144,7 @@ class FiManageReportsSpec extends BaseSpec {
       FiManagementPage.clickManageYourFinancialInstitutions()
 
       When("The user clicks manage reports for an FI")
-      YourFisPage.clickOnSecondManageReports()
+      YourFisPage.clickOnManageReports("FirstFI")
 
       And("The user navigates to the 2026 reporting year")
       ManageReportsPage.selectReportingYear("2026")
@@ -192,7 +192,7 @@ class FiManageReportsSpec extends BaseSpec {
       FiManagementPage.clickManageYourFinancialInstitutions()
 
       When("The user clicks manage reports for an FI")
-      YourFisPage.clickOnSecondManageReports()
+      YourFisPage.clickOnManageReports("FirstFI")
 
       And("The user navigates to the 2026 reporting year")
       ManageReportsPage.selectReportingYear("2026")
@@ -243,7 +243,7 @@ class FiManageReportsSpec extends BaseSpec {
       FiManagementPage.clickManageYourFinancialInstitutions()
 
       When("The user clicks manage reports for an FI")
-      YourFisPage.clickOnSecondManageReports()
+      YourFisPage.clickOnManageReports("FirstFI")
 
       And("The user navigates to the 2026 reporting year")
       ManageReportsPage.selectReportingYear("2026")
@@ -282,7 +282,7 @@ class FiManageReportsSpec extends BaseSpec {
       FiManagementPage.clickManageYourFinancialInstitutions()
 
       When("The user clicks manage reports for an FI")
-      YourFisPage.clickOnSecondManageReports()
+      YourFisPage.clickOnManageReports("FirstFI")
 
       And("The user navigates to the 2026 reporting year")
       ManageReportsPage.selectReportingYear("2026")
@@ -326,7 +326,7 @@ class FiManageReportsSpec extends BaseSpec {
       FiManagementPage.clickManageYourFinancialInstitutions()
 
       When("The user clicks manage reports for an FI")
-      YourFisPage.clickOnManageReports()
+      YourFisPage.clickOnManageReports("FirstFI")
 
       And("The user clicks the view or make elections link")
       ManageReportsPage.clickViewOrMakeElectionsForFI()

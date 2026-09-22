@@ -33,7 +33,7 @@ class FilerCategoryManualSpec extends BaseSpec {
       FiManagementPage.clickManageYourFinancialInstitutions()
 
       When("The user clicks manage reports for an FI")
-      YourFisPage.clickOnSecondManageReports()
+      YourFisPage.clickOnManageReports("FourthFI")
 
       And("The user clicks 'filling in an online form for manual reporting'")
       ManageReportsPage.clickFillInOnlineManualReport()

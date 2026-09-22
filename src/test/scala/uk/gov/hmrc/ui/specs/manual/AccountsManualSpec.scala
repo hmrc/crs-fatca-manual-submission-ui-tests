@@ -33,7 +33,9 @@ class AccountsManualSpec extends BaseSpec with ManualJourneyHelper {
       SoloTests
     ) {
       Given("The user has reached the manual task list as FATCA")
-      navigateToTaskListFatcaRoute("FATCA")
+      journeyToYourFis()
+      selectTheSuitableFI("FourthFI")
+      navigateToTaskList("FATCA")
 
       When("They open the accounts task")
       ManualSendAReportIndexPage.clickAccounts()
@@ -57,6 +59,8 @@ class AccountsManualSpec extends BaseSpec with ManualJourneyHelper {
       SoloTests
     ) {
       Given("The user has reached the manual task list as CRS")
+      journeyToYourFis()
+      selectTheSuitableFI("FirstFI")
       navigateToTaskList("CRS")
 
       When("They open the accounts task")
@@ -81,7 +85,9 @@ class AccountsManualSpec extends BaseSpec with ManualJourneyHelper {
       SoloTests
     ) {
       Given("The user has reached the manual task list as FATCA")
-      navigateToTaskListFatcaRoute("FATCA")
+      journeyToYourFis()
+      selectTheSuitableFI("FourthFI")
+      navigateToTaskList("FATCA")
 
       When("They open the accounts task")
       ManualSendAReportIndexPage.clickAccounts()
@@ -117,7 +123,16 @@ class AccountsManualSpec extends BaseSpec with ManualJourneyHelper {
       PaymentsAmountPage.checkPage("dividends")
 
       When("They select a currency and enter a valid amount and continue")
-      PaymentsAmountPage.selectCurrencyAndAmount("100.50")
+      PaymentsAmountPage.selectOtherCurrencyAmount("596.89")
+
+      Then("They land on account payments page")
+      AccountPaymentsPage.checkPage()
+
+      And("The account payments page should contains the list of payments made to this account")
+      AccountPaymentsPage.checkPaymentSummaryListContains("596.89 USD dividends")
+
+      When("They don't want to add any more payments they can select no and continue")
+      AccountPaymentsPage.selectNoAndContinue()
 
     }
 
@@ -127,6 +142,8 @@ class AccountsManualSpec extends BaseSpec with ManualJourneyHelper {
       SoloTests
     ) {
       Given("The user has reached the manual task list as CRS")
+      journeyToYourFis()
+      selectTheSuitableFI("FirstFI")
       navigateToTaskList("CRS")
 
       When("They open the accounts task")
@@ -183,6 +200,24 @@ class AccountsManualSpec extends BaseSpec with ManualJourneyHelper {
       When("They select a currency and enter a valid amount and continue")
       PaymentsAmountPage.selectCurrencyAndAmount("250.75")
 
+      Then("They land on account payments page")
+      AccountPaymentsPage.checkPage()
+
+      And("The account payments page should contains the list of payments made to this account")
+      AccountPaymentsPage.checkPaymentSummaryListContains("250.75 GBP interest")
+
+      When("They want to remove the payment made on that account")
+      AccountPaymentsPage.removeThePayment("250.75_GBP_interest")
+
+      Then("They land on account remove payment page")
+      AccountRemovePaymentPage.checkPage("250.75 GBP interest")
+
+      And("Select Yes to remove payment type")
+      AccountRemovePaymentPage.selectYesAndContinue()
+
+      Then("They will get back to account payments page with no list of payments")
+      AccountPaymentsPage.checkRemovedPaymentText()
+
     }
 
     Scenario(
@@ -191,6 +226,8 @@ class AccountsManualSpec extends BaseSpec with ManualJourneyHelper {
       SoloTests
     ) {
       Given("The user has reached the manual task list as CRS")
+      journeyToYourFis()
+      selectTheSuitableFI("FirstFI")
       navigateToTaskList("CRS")
 
       When("They open the accounts task")
@@ -248,7 +285,28 @@ class AccountsManualSpec extends BaseSpec with ManualJourneyHelper {
       PaymentsAmountPage.checkPage("interest")
 
       When("They select a currency and enter a valid amount and continue")
-      PaymentsAmountPage.selectCurrencyAndAmount("500")
+      PaymentsAmountPage.selectOtherCurrencyAmount("500")
+
+      Then("They land on account payments page")
+      AccountPaymentsPage.checkPage()
+
+      And("They want to add more payments, select yes and continue")
+      AccountPaymentsPage.selectYesAndContinue()
+
+      Then("They are on payment-type page again and can select payment type")
+      PaymentsTypePage.selectTypeOfPaymentsAndContinue("GrossProceedsOrRedemptionsCRS")
+
+      Then("They are on the payments amount page")
+      PaymentsAmountPage.checkPage("gross proceeds or redemptions")
+
+      When("They select a currency and enter a valid amount and continue")
+      PaymentsAmountPage.selectCurrencyAndAmount("120.56")
+
+      Then("They land on account payments page")
+      AccountPaymentsPage.checkPageWithTwoPayments()
+
+      When("They don't want to add any more payments they can select no and continue")
+      AccountPaymentsPage.selectNoAndContinue()
 
     }
 
@@ -258,6 +316,8 @@ class AccountsManualSpec extends BaseSpec with ManualJourneyHelper {
       SoloTests
     ) {
       Given("The user has reached the manual task list as CRS")
+      journeyToYourFis()
+      selectTheSuitableFI("FifthFI")
       navigateToTaskList("CRS")
 
       When("They open the accounts task")
@@ -317,14 +377,19 @@ class AccountsManualSpec extends BaseSpec with ManualJourneyHelper {
       HavePaymentsPage.selectYesAndContinue()
 
       Then("Then have to choose the what type of payments were these for this account")
-      PaymentsTypePage.selectTypeOfPaymentsAndContinue("GrossProceedsOrRedemptionsCRS")
+      PaymentsTypePage.selectTypeOfPaymentsAndContinue("OtherCrs")
 
       Then("They are on the payments amount page")
-      PaymentsAmountPage.checkPage("gross proceeds or redemptions")
+      PaymentsAmountPage.checkPage("other")
 
       When("They select a currency and enter a valid amount and continue")
       PaymentsAmountPage.selectCurrencyAndAmount("1000")
 
+      Then("They lands on account payments page")
+      AccountPaymentsPage.checkPage()
+
+      When("They don't want to add any more payments they can select no and continue")
+      AccountPaymentsPage.selectNoAndContinue()
     }
 
     Scenario(
@@ -333,6 +398,8 @@ class AccountsManualSpec extends BaseSpec with ManualJourneyHelper {
       SoloTests
     ) {
       Given("The user has reached the manual task list as CRS")
+      journeyToYourFis()
+      selectTheSuitableFI("ThirdFI")
       navigateToTaskList("CRS")
 
       When("They open the accounts task")
@@ -383,6 +450,21 @@ class AccountsManualSpec extends BaseSpec with ManualJourneyHelper {
       When("They select a currency and enter a valid amount and continue")
       PaymentsAmountPage.selectCurrencyAndAmount("300")
 
+      Then("They lands on account payments page")
+      AccountPaymentsPage.checkPage()
+
+      And("They would like to change the payment made to this account")
+      AccountPaymentsPage.changeThePayment("300_GBP_interest")
+
+      Then("They lands on change payments amount page")
+      AccountChangePaymentsAmountPage.checkPage()
+
+      And("They want to continue without making any change")
+      AccountChangePaymentsAmountPage.submitPage()
+
+      Then("They lands on account change payments page and continue")
+      AccountChangePaymentsPage.checkAndContine()
+
     }
 
     Scenario(
@@ -391,6 +473,8 @@ class AccountsManualSpec extends BaseSpec with ManualJourneyHelper {
       SoloTests
     ) {
       Given("The user has reached the manual task list as CRS")
+      journeyToYourFis()
+      selectTheSuitableFI("FirstFI")
       navigateToTaskList("CRS")
 
       When("They open the accounts task")
@@ -443,6 +527,12 @@ class AccountsManualSpec extends BaseSpec with ManualJourneyHelper {
 
       When("They select a currency and enter a valid amount and continue")
       PaymentsAmountPage.selectCurrencyAndAmount("450")
+
+      Then("They lands on account payments page")
+      AccountPaymentsPage.checkPage()
+
+      And("They can continue journey without adding any more payments")
+      AccountPaymentsPage.selectNoAndContinue()
     }
 
   }

@@ -37,6 +37,7 @@ object TestData {
   val accountIdentifier       = "ACC-12345"
   val currencyGbp             = "British Pound Sterling (GBP)"
   val residentForTax          = "United States"
+  val currencyUSD             = "United States Dollar (USD)"
 
   private val env: String =
     System.getProperty("environment", "local").toLowerCase
