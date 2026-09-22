@@ -39,6 +39,14 @@ object PaymentsAmountPage extends BasePage {
     this
   }
 
+  def selectOtherCurrencyAmount(amount: String): this.type = {
+    onPage(pageUrl)
+    selectOtherCurrency()
+    sendKeys(amountInput, amount)
+    click(submitButtonId)
+    this
+  }
+
   def enterAmountAndContinue(amount: String): this.type = {
     onPage(pageUrl)
     sendKeys(amountInput, amount)

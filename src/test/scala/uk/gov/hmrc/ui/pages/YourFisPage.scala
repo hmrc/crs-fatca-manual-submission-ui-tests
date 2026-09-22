@@ -21,26 +21,35 @@ import org.openqa.selenium.By
 object YourFisPage extends BasePage {
 
   override val pageUrl: String    = baseUrlFi + "/your-fis"
-  val manageReportsLink: By       = By.xpath("//a[contains(@href, 'manage-reports-for')]")
+  val manageReportsLink: By       = By.xpath("//a[contains(@href, 'manage-reports-for-2025?fiId=TES683373304')]")
   val secondManageReportsLink: By = By.xpath("//a[contains(@href, 'manage-reports-for-2025?fiId=TES683373339')]")
   val thirdManageReportsLink: By  = By.xpath("//a[contains(@href, 'manage-reports-for-2025?fiId=TES683373303')]")
+  val fourthManageReportsLink: By = By.xpath("//a[contains(@href, 'manage-reports-for-2025?fiId=TES683373300')]")
+  val fifthManageReportsLink: By  = By.xpath("//a[contains(@href, 'manage-reports-for-2025?fiId=TES683373301')]")
 
   def checkPage(): Unit =
     onPage(pageUrl)
 
-  def clickOnManageReports(): Unit = {
-    onPage(pageUrl)
-    click(manageReportsLink)
-  }
+  def clickOnManageReports(yourFi: String): Unit =
+    yourFi match {
+      case "FifthFI" =>
+        click(manageReportsLink)
 
-  def clickOnSecondManageReports(): Unit = {
-    onPage(pageUrl)
-    click(secondManageReportsLink)
-  }
+      case "FirstFI" =>
+        click(secondManageReportsLink)
 
-  def clickOnThirdManageReports(): Unit = {
-    onPage(pageUrl)
-    click(thirdManageReportsLink)
-  }
+      case "FourthFI" =>
+        click(thirdManageReportsLink)
+
+      case "SecondFI" =>
+        click(fourthManageReportsLink)
+
+      case "ThirdFI" =>
+        click(fifthManageReportsLink)
+
+      case "other" =>
+        throw new IllegalArgumentException(s"Invalid Fi : $yourFi")
+
+    }
 
 }

@@ -14,22 +14,17 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.ui.pages.manual.sponsor
+package uk.gov.hmrc.ui.pages.manual.account
 
-import uk.gov.hmrc.ui.pages.*
-import uk.gov.hmrc.ui.pages.manual.*
+import uk.gov.hmrc.ui.pages.BasePage
 
-trait SponsorJourneyHelper extends ManualJourneyHelper {
+object AccountChangePaymentsAmountPage extends BasePage{
+  
+  override val pageUrl: String = baseUrlManualSub + "/manual/account/change-payments-amount"
 
-  def navigateToWhereAreTheyBased(): Unit = {
-    journeyToYourFis()
-    selectTheSuitableFI("FourthFI")
-    navigateToTaskList("FATCA")
-    ManualSendAReportIndexPage.clickSponsorDetails()
-    HaveASponsorPage.selectYesAndContinue()
-    SponsorNamePage.enterSponsorNameAndContinue()
-    SponsorGiinPage.checkLabelForSponsor()
-    SponsorGiinPage.enterGiinAndContinue()
-    SponsorWhereBasedPage.checkPage()
+  def checkPage(): this.type = {
+    onPage(pageUrl)
+    this
   }
+
 }

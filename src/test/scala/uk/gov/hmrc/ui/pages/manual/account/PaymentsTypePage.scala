@@ -29,7 +29,8 @@ object PaymentsTypePage extends BasePage {
   private val interestCRSRadio: By                     = By.cssSelector("input[value='CRS502']")
   private val grossProceedsOrRedemptionsFATCARadio: By = By.cssSelector("input[value='FATCA503']")
   private val grossProceedsOrRedemptionsCrsRadio: By   = By.cssSelector("input[value='CRS503']")
-  private val otherRadio: By                           = By.cssSelector("input[value='FATCA504']")
+  private val otherCRSRadio: By                        = By.cssSelector("input[value='CRS504']")
+  private val otherFATCARadio: By                      = By.cssSelector("input[value='FATCA504']")
 
   def checkPage(): this.type = {
     onPage(pageUrl)
@@ -46,7 +47,8 @@ object PaymentsTypePage extends BasePage {
       case "InterestCRS"                     => interestCRSRadio
       case "GrossProceedsOrRedemptionsFATCA" => grossProceedsOrRedemptionsFATCARadio
       case "GrossProceedsOrRedemptionsCRS"   => grossProceedsOrRedemptionsCrsRadio
-      case "Other"                           => otherRadio
+      case "OtherFatca"                      => otherFATCARadio
+      case "OtherCrs"                        => otherCRSRadio
       case other                             => throw new IllegalArgumentException(s"Unknown type of payments")
     })
     click(submitButtonId)

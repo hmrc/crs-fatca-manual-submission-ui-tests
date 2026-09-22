@@ -36,10 +36,13 @@ trait BasePage extends BrowserDriver with Matchers with IdGenerators with PageOb
   val submitButtonId: By       = By.id("submit")
   val backLinkText: By         = By.linkText("Back")
   val pageHeader: By           = By.tagName("h1")
+  val tempPageHeader: By       = By.tagName("h3")
   val yesRadioId: By           = By.id("value")
   val noRadioId: By            = By.id("value-no")
 
-  def removeCountryId(country: String): By = By.id(s"remove-country-$country")
+  def removeCountryId(country: String): By         = By.id(s"remove-country-$country")
+  def changePaymentLink(changePayment: String): By = By.id(s"change_$changePayment")
+  def removePaymentLink(removePayment: String): By = By.id(s"remove_$removePayment")
 
   def clickOnBackLink(): Unit = {
     onPage()
@@ -86,6 +89,9 @@ trait BasePage extends BrowserDriver with Matchers with IdGenerators with PageOb
   def checkH1(h1: String): Assertion =
     getText(pageHeader) should include(h1)
 
+  def checkH3(h3: String): Assertion =
+    getText(tempPageHeader) should include(h3)
+
   def waitUntilVisible(locator: By): Unit =
     fluentWait.until(ExpectedConditions.visibilityOfElementLocated(locator))
 
@@ -131,6 +137,9 @@ trait BasePage extends BrowserDriver with Matchers with IdGenerators with PageOb
     js.executeScript(s"document.getElementById('$selectId').style.display = 'block';")
     new Select(Driver.instance.findElement(By.id(selectId))).selectByVisibleText(visibleText)
   }
+
+  def selectOtherCurrency(): Unit =
+    selectFromAutocomplete("currency-select", TestData.currencyUSD)
 
   case class PageNotFoundException(message: String) extends Exception(message)
 }

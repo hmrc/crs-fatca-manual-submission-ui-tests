@@ -14,22 +14,17 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.ui.pages.manual.sponsor
+package uk.gov.hmrc.ui.pages.manual.account
 
-import uk.gov.hmrc.ui.pages.*
-import uk.gov.hmrc.ui.pages.manual.*
+import uk.gov.hmrc.ui.pages.BasePage
 
-trait SponsorJourneyHelper extends ManualJourneyHelper {
+object AccountRemovePaymentPage extends BasePage {
 
-  def navigateToWhereAreTheyBased(): Unit = {
-    journeyToYourFis()
-    selectTheSuitableFI("FourthFI")
-    navigateToTaskList("FATCA")
-    ManualSendAReportIndexPage.clickSponsorDetails()
-    HaveASponsorPage.selectYesAndContinue()
-    SponsorNamePage.enterSponsorNameAndContinue()
-    SponsorGiinPage.checkLabelForSponsor()
-    SponsorGiinPage.enterGiinAndContinue()
-    SponsorWhereBasedPage.checkPage()
+  override val pageUrl: String = baseUrlManualSub + "/manual/account/remove-payment"
+
+  def checkPage(paymentType: String): this.type = {
+    onPage(pageUrl)
+    checkH1(s"Are you sure you want to remove this $paymentType payment for this account?")
+    this
   }
 }
