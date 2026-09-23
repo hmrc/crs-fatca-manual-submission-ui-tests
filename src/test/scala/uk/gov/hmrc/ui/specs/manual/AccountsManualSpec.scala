@@ -126,7 +126,7 @@ class AccountsManualSpec extends BaseSpec with ManualJourneyHelper {
       PaymentsAmountPage.selectOtherCurrencyAmount("596.89")
 
       Then("They land on account payments page")
-      AccountPaymentsPage.checkPage()
+      AccountPaymentsPage.checkPageFatca()
 
       And("The account payments page should contains the list of payments made to this account")
       AccountPaymentsPage.checkPaymentSummaryListContains("596.89 USD dividends")
@@ -463,7 +463,7 @@ class AccountsManualSpec extends BaseSpec with ManualJourneyHelper {
       AccountChangePaymentsAmountPage.submitPage()
 
       Then("They lands on account change payments page and continue")
-      AccountChangePaymentsPage.checkAndContine()
+      AccountChangePaymentsPage.checkAndContinue()
 
     }
 

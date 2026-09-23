@@ -32,6 +32,11 @@ object AccountPaymentsPage extends BasePage {
     this
   }
 
+  def checkPageFatca(): this.type = {
+    checkH1("You have added 1 payment made to this account, a payee or an owner")
+    this
+  }
+
   def checkPageWithTwoPayments(): this.type = {
     checkH1("You have added 2 payments made to this account")
     this

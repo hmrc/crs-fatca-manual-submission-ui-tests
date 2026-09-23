@@ -22,9 +22,9 @@ object AccountChangePaymentsPage extends BasePage {
 
   override val pageUrl: String = baseUrlManualSub + "/manual/account/change-payments"
 
-  def checkAndContine(): this.type = {
+  def checkAndContinue(): this.type = {
     onPage(pageUrl)
-    click(submitButtonId)
+    selectNoAndContinue()
     this
   }
 
