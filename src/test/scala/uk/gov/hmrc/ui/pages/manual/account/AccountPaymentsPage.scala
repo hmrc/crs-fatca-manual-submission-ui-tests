@@ -28,17 +28,20 @@ object AccountPaymentsPage extends BasePage {
   val removeLink: By         = By.linkText("Remove")
 
   def checkPage(): this.type = {
-    checkH1("You have added 1 payment made to this account")
+    onPage(pageUrl)
+    waitForStableText(pageHeader) should include("You have added 1 payment made to this account")
     this
   }
 
   def checkPageFatca(): this.type = {
-    checkH1("You have added 1 payment made to this account, a payee or an owner")
+    onPage(pageUrl)
+    waitForStableText(pageHeader) should include("You have added 1 payment made to this account")
     this
   }
 
   def checkPageWithTwoPayments(): this.type = {
-    checkH1("You have added 2 payments made to this account")
+    onPage(pageUrl)
+    waitForStableText(pageHeader) should include("You have added 2 payments made to this account")
     this
   }
 
@@ -49,7 +52,8 @@ object AccountPaymentsPage extends BasePage {
   }
 
   def checkPaymentSummaryListContains(text: String): this.type = {
-    getText(paymentSummaryList) should include(text)
+    onPage(pageUrl)
+    waitForStableText(paymentSummaryList) should include(text)
     this
   }
 
@@ -62,5 +66,4 @@ object AccountPaymentsPage extends BasePage {
     onPage(pageUrl)
     click(removePaymentLink(removePayment))
   }
-
 }
