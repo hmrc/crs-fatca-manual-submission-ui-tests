@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.ui.pages.manual.accountholder
+package uk.gov.hmrc.ui.pages.manual.controllingpersonandsubstantialowners
 
 import uk.gov.hmrc.ui.pages.BasePage
 
-object AccountHolderIndividualD0B extends BasePage {
+object CpSoIndividualD0B extends BasePage {
 
-  override val pageUrl: String = baseUrlManualSub + "/manual/account-holder/individual-date-of-birth"
+  override val pageUrl: String = baseUrlManualSub + "/manual/cp-so/individual-date-of-birth"
 
 }

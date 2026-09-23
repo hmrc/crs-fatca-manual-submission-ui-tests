@@ -39,6 +39,9 @@ trait BasePage extends BrowserDriver with Matchers with IdGenerators with PageOb
   val tempPageHeader: By       = By.tagName("h3")
   val yesRadioId: By           = By.id("value")
   val noRadioId: By            = By.id("value-no")
+  val dayInputId: By           = By.id("value.day")
+  val monthInputId: By         = By.id("value.month")
+  val yearInputId: By          = By.id("value.year")
 
   def removeCountryId(country: String): By         = By.id(s"remove-country-$country")
   def changePaymentLink(changePayment: String): By = By.id(s"change_$changePayment")
@@ -140,6 +143,14 @@ trait BasePage extends BrowserDriver with Matchers with IdGenerators with PageOb
 
   def selectOtherCurrency(): Unit =
     selectFromAutocomplete("currency-select", TestData.currencyUSD)
+
+  def enterDateOfBirth(day: String = "12", month: String = "12", year: String = "1989"): Unit = {
+    onPage()
+    sendKeys(dayInputId, day)
+    sendKeys(monthInputId, month)
+    sendKeys(yearInputId, year)
+    click(submitButtonId)
+  }
 
   case class PageNotFoundException(message: String) extends Exception(message)
 }
