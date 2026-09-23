@@ -81,6 +81,12 @@ class CpSoManualSpec extends BaseSpec with ManualJourneyHelper {
 
       When("They select Organisation and continue")
       CpSoIndividualOrOrganisationPage.selectOrganisationAndContinue()
+
+      Then("They see the organisation name page")
+      CpSoOrganisationNamePage.checkPage()
+
+      When("They enter a valid organisation name and continue")
+      CpSoOrganisationNamePage.enterNameAndContinue("ABC Corp")
     }
 
     Scenario(
