@@ -38,6 +38,9 @@ object TestData {
   val currencyGbp             = "British Pound Sterling (GBP)"
   val residentForTax          = "United States"
   val currencyUSD             = "United States Dollar (USD)"
+  val firstName               = "Sarah"
+  val lastName                = "Smith"
+  val cpsoOrgName             = "ABC Corp"
 
   private val env: String =
     System.getProperty("environment", "local").toLowerCase

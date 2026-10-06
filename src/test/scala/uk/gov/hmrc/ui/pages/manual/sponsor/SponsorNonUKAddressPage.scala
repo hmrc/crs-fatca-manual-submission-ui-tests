@@ -16,30 +16,10 @@
 
 package uk.gov.hmrc.ui.pages.manual.sponsor
 
-import org.openqa.selenium.By
 import uk.gov.hmrc.ui.pages.BasePage
 
 object SponsorNonUKAddressPage extends BasePage {
 
   override val pageUrl: String = baseUrlManualSub + "/manual/sponsor/address-non-uk"
 
-  val addressLineOne: By = By.id("addressLine1")
-  val addressLineTwo: By = By.id("addressLine2")
-  val city: By           = By.id("addressLine3")
-  val region: By         = By.id("addressLine4")
-  val postcode: By       = By.id("postcode")
-
-  def enterAddressNonUK(): Unit = {
-    onPage(pageUrl)
-    sendKeys(addressLineOne, "42 Test Street")
-    sendKeys(addressLineTwo, "Test Town")
-    sendKeys(city, "Test City")
-    sendKeys(region, "Test Region")
-    sendKeys(postcode, "TE57 1PC")
-    selectCountry("Japan")
-    click(submitButtonId)
-  }
-
-  def selectCountry(countryName: String): Unit =
-    selectFromAutocomplete("country-select", countryName)
 }

@@ -14,13 +14,14 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.ui.pages.manual.accountholder
+package uk.gov.hmrc.ui.pages.manual.controllingpersonandsubstantialowners
 
 import uk.gov.hmrc.ui.pages.BasePage
+import uk.gov.hmrc.ui.utils.TestData
 
-object AccountHolderAddressUKPage extends BasePage {
+object CpSoAddressUKPage extends BasePage {
 
-  override val pageUrl: String = baseUrlManualSub + "/manual/account-holder/address-uk"
+  override val pageUrl: String = baseUrlManualSub + "/manual/cp-so/address-uk"
 
   def checkPage(): this.type = {
     onPage(pageUrl)
@@ -28,4 +29,9 @@ object AccountHolderAddressUKPage extends BasePage {
     this
   }
 
+  def checkOrgPage(): this.type = {
+    onPage(pageUrl)
+    checkH1(s"What is the registered address for ${TestData.cpsoOrgName}?")
+    this
+  }
 }

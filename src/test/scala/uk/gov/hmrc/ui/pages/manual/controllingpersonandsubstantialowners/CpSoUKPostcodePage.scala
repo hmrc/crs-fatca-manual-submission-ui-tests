@@ -14,17 +14,34 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.ui.pages.manual.accountholder
+package uk.gov.hmrc.ui.pages.manual.controllingpersonandsubstantialowners
 
+import org.openqa.selenium.By
 import uk.gov.hmrc.ui.pages.BasePage
+import uk.gov.hmrc.ui.utils.TestData
 
-object AccountHolderAddressUKPage extends BasePage {
+object CpSoUKPostcodePage extends BasePage {
 
-  override val pageUrl: String = baseUrlManualSub + "/manual/account-holder/address-uk"
+  override val pageUrl: String = baseUrlManualSub + "/manual/cp-so/uk-postcode"
+
+  val postcodeInput: By   = By.id("value")
+  val manualEntryLink: By = By.linkText("Or enter the address manually")
 
   def checkPage(): this.type = {
     onPage(pageUrl)
-    checkH1("What is the registered address for")
+    checkH1(s"What is the postcode for ${TestData.firstName} ${TestData.lastName}?")
+    this
+  }
+
+  def checkOrgPage(): this.type = {
+    onPage(pageUrl)
+    checkH1(s"What is the postcode for ${TestData.cpsoOrgName}?")
+    this
+  }
+
+  def enterAddressManually(): this.type = {
+    onPage(pageUrl)
+    click(manualEntryLink)
     this
   }
 

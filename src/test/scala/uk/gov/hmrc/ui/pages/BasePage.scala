@@ -24,6 +24,7 @@ import uk.gov.hmrc.selenium.component.PageObject
 import uk.gov.hmrc.selenium.webdriver.Driver
 import uk.gov.hmrc.ui.conf.TestConfiguration
 import uk.gov.hmrc.ui.driver.BrowserDriver
+import uk.gov.hmrc.ui.pages.manual.sponsor.SponsorNonUKAddressPage.{click, sendKeys}
 import uk.gov.hmrc.ui.utils.{IdGenerators, TestData}
 
 import java.time.Duration
@@ -42,6 +43,14 @@ trait BasePage extends BrowserDriver with Matchers with IdGenerators with PageOb
   val dayInputId: By           = By.id("value.day")
   val monthInputId: By         = By.id("value.month")
   val yearInputId: By          = By.id("value.year")
+  val addressLineOne: By       = By.id("addressLine1")
+  val addressLineTwo: By       = By.id("addressLine2")
+  val cityNonUK: By            = By.id("addressLine3")
+  val city: By                 = By.id("city")
+  val regionNonUK: By          = By.id("addressLine4")
+  val region: By               = By.id("county")
+  val postcodeNonUK: By        = By.id("postcode")
+  val postcode: By             = By.id("postCode")
 
   def removeCountryId(country: String): By         = By.id(s"remove-country-$country")
   def changePaymentLink(changePayment: String): By = By.id(s"change_$changePayment")
@@ -58,11 +67,6 @@ trait BasePage extends BrowserDriver with Matchers with IdGenerators with PageOb
     this
   }
 
-  def onPage(url: String = this.pageUrl): this.type = {
-    fluentWait.until(ExpectedConditions.urlToBe(url))
-    this
-  }
-
   def selectYesAndContinue(): Unit = {
     checkDynamicPage()
     click(yesRadioId)
@@ -73,15 +77,6 @@ trait BasePage extends BrowserDriver with Matchers with IdGenerators with PageOb
     onPageContaining(pageUrl)
     this
   }
-
-  def onPageContaining(urlPart: String): this.type = {
-    fluentWait.until(ExpectedConditions.urlContains(urlPart))
-    this
-  }
-
-  private def fluentWait: Wait[WebDriver] = new FluentWait[WebDriver](Driver.instance)
-    .withTimeout(Duration.ofSeconds(15))
-    .pollingEvery(Duration.ofMillis(200))
 
   def selectNoAndContinue(): Unit = {
     checkDynamicPage()
@@ -97,6 +92,10 @@ trait BasePage extends BrowserDriver with Matchers with IdGenerators with PageOb
 
   def waitUntilVisible(locator: By): Unit =
     fluentWait.until(ExpectedConditions.visibilityOfElementLocated(locator))
+
+  private def fluentWait: Wait[WebDriver] = new FluentWait[WebDriver](Driver.instance)
+    .withTimeout(Duration.ofSeconds(15))
+    .pollingEvery(Duration.ofMillis(200))
 
   def waitWith(timeoutSeconds: Int): FluentWait[WebDriver] =
     new FluentWait[WebDriver](Driver.instance)
@@ -115,6 +114,11 @@ trait BasePage extends BrowserDriver with Matchers with IdGenerators with PageOb
         .replace("/elections/crs/", "/elections/crs/change-")
         .replace("/elections/fatca/", "/elections/fatca/change-")
     )
+    this
+  }
+
+  def onPageContaining(urlPart: String): this.type = {
+    fluentWait.until(ExpectedConditions.urlContains(urlPart))
     this
   }
 
@@ -151,6 +155,36 @@ trait BasePage extends BrowserDriver with Matchers with IdGenerators with PageOb
     sendKeys(yearInputId, year)
     click(submitButtonId)
   }
+
+  def onPage(url: String = this.pageUrl): this.type = {
+    fluentWait.until(ExpectedConditions.urlToBe(url))
+    this
+  }
+
+  def enterAddressNonUK(): Unit = {
+    onPage(pageUrl)
+    sendKeys(addressLineOne, "42 Test Street")
+    sendKeys(addressLineTwo, "Test Town")
+    sendKeys(cityNonUK, "Test City")
+    sendKeys(regionNonUK, "Test Region")
+    sendKeys(postcodeNonUK, "TE57 1PC")
+    selectCountry("Japan")
+    click(submitButtonId)
+  }
+
+  def enterAddressUK(): Unit = {
+    onPage(pageUrl)
+    sendKeys(addressLineOne, "42 Test Street")
+    sendKeys(addressLineTwo, "Test Town")
+    sendKeys(city, "Test City")
+    sendKeys(region, "Test Region")
+    sendKeys(postcode, "TE57 1PC")
+    selectCountry("United Kingdom")
+    click(submitButtonId)
+  }
+
+  def selectCountry(countryName: String): Unit =
+    selectFromAutocomplete("country-select", countryName)
 
   case class PageNotFoundException(message: String) extends Exception(message)
 }
