@@ -72,6 +72,24 @@ class AccountHolderManualSpec extends BaseSpec with ManualJourneyHelper {
       When("They select Yes and continue")
       IndividualHavePlaceOfBirthPage.selectYesAndContinue()
 
+      Then("They lands on individual place of birth page")
+      AccountHolderIndividualPlaceOfBirthPage.checkPage()
+
+      And("They enter the Individual place of birth")
+      AccountHolderIndividualPlaceOfBirthPage.enterPlaceOfBirthAndContinue("city", "Region", "Japan")
+
+      Then("They are on the where are they based page")
+      WhereAreTheyBasedPage.checkPage()
+
+      When("They select No and continue")
+      WhereAreTheyBasedPage.selectNoAndContinue()
+
+      Then("They lands on addressNon-UK page")
+      AccountHolderAddressNonUKPage.checkPage()
+
+      When("They enter the non UK address and continue")
+      AccountHolderAddressNonUKPage.enterAddressNonUK()
+
     }
 
     Scenario(
@@ -142,7 +160,6 @@ class AccountHolderManualSpec extends BaseSpec with ManualJourneyHelper {
 
       And("They can enter the address manually")
       AccountHolderAddressUKPage.enterAddressUK()
-
     }
 
     Scenario(
