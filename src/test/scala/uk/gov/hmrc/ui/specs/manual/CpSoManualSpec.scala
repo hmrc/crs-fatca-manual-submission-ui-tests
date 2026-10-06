@@ -87,6 +87,25 @@ class CpSoManualSpec extends BaseSpec with ManualJourneyHelper {
 
       When("They enter a valid organisation name and continue")
       CpSoOrganisationNamePage.enterNameAndContinue("ABC Corp")
+
+      Then("They need to provide the details of Where are they based")
+      CpSoWhereAreTheyBasedPage.checkOrgPage()
+
+      When("They select yes to enter UK address")
+      CpSoWhereAreTheyBasedPage.selectYesAndContinue()
+
+      Then("They will see the UK Postcode page")
+      CpSoUKPostcodePage.checkOrgPage()
+
+      When("They want to enter the address manually, they can use the link")
+      CpSoUKPostcodePage.enterAddressManually()
+
+      Then("They will see the address UK page")
+      CpSoAddressUKPage.checkOrgPage()
+
+      When("They enter the address manually and select Save and continue")
+      CpSoAddressUKPage.enterAddressUK()
+
     }
 
     Scenario(

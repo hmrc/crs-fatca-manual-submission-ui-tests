@@ -14,18 +14,22 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.ui.pages.manual.accountholder
+package uk.gov.hmrc.ui.pages.manual.controllingpersonandsubstantialowners
 
 import uk.gov.hmrc.ui.pages.BasePage
+import uk.gov.hmrc.ui.utils.TestData
 
-object AccountHolderAddressUKPage extends BasePage {
+object CpSoWhereAreTheyBasedPage extends BasePage {
 
-  override val pageUrl: String = baseUrlManualSub + "/manual/account-holder/address-uk"
+  override val pageUrl: String = baseUrlManualSub + "/manual/cp-so/where-are-they-based"
 
   def checkPage(): this.type = {
-    onPage(pageUrl)
-    checkH1("What is the registered address for")
+    checkH1(s"Is ${TestData.firstName} ${TestData.lastName} based in the UK, Jersey, Guernsey or the Isle of Man?")
     this
   }
 
+  def checkOrgPage(): this.type = {
+    checkH1(s"Is ${TestData.cpsoOrgName} based in the UK, Jersey, Guernsey or the Isle of Man?")
+    this
+  }
 }
