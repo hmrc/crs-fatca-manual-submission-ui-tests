@@ -56,6 +56,26 @@ class CpSoManualSpec extends BaseSpec with ManualJourneyHelper {
       When("They enter a valid first and last name and continue")
       CpSoIndividualNamePage.enterNameAndContinue("Sarah", "Smith")
 
+      Then("They see the have date of birth page with FATCA wording")
+      CpSoIndividualHaveDoB.checkPageForFatca()
+
+      When("They select Yes and continue")
+      CpSoIndividualHaveDoB.selectYesAndContinue()
+
+      Then("They are taken to the date of birth page")
+      CpSoIndividualD0B.checkPage()
+
+      When("They enter a valid date of birth and continue")
+      CpSoIndividualD0B.enterDateOfBirth()
+
+      Then("They see the have place of birth page")
+      CpSoIndividualHavePlaceOfBirthPage.checkPage()
+
+      When("They select Yes and continue")
+      CpSoIndividualHavePlaceOfBirthPage.selectYesAndContinue()
+
+      And("They enter the Individual place of birth")
+      CpSoIndividualPlaceOfBirthPage.enterPlaceOfBirthAndContinue("city", "Region", "Japan")
     }
 
     Scenario(
@@ -128,6 +148,54 @@ class CpSoManualSpec extends BaseSpec with ManualJourneyHelper {
 
       When("They enter a valid first and last name and continue")
       CpSoIndividualNamePage.enterNameAndContinue("Sarah", "Smith")
+
+      Then("They see the have date of birth page with CRS wording")
+      CpSoIndividualHaveDoB.checkPageForCrs()
+
+      When("They select Yes and continue")
+      CpSoIndividualHaveDoB.selectYesAndContinue()
+
+      Then("They are taken to the date of birth page")
+      CpSoIndividualD0B.checkPage()
+
+      When("They enter a valid date of birth and continue")
+      CpSoIndividualD0B.enterDateOfBirth()
+
+      Then("They see the have place of birth page")
+      CpSoIndividualHavePlaceOfBirthPage.checkPage()
+
+      When("They select Yes and continue")
+      CpSoIndividualHavePlaceOfBirthPage.selectYesAndContinue()
+
+      And("They enter the Individual place of birth")
+      CpSoIndividualPlaceOfBirthPage.enterPlaceOfBirthAndContinue("city", "Region", "Japan")
+    }
+
+    Scenario(
+      "CP-SO - No to date of birth goes to have place of birth (FATCA)",
+      ManualSubmissionTests,
+      SoloTests
+    ) {
+      Given("The user has reached the manual task list as FATCA")
+      journeyToYourFis()
+      selectTheSuitableFI("FourthFI")
+      navigateToTaskList("FATCA")
+
+      When("They navigate directly to the individual or organisation page")
+      CpSoIndividualOrOrganisationPage.goToPage()
+
+      And("They select Individual and enter a valid name")
+      CpSoIndividualOrOrganisationPage.selectIndividualAndContinue()
+      CpSoIndividualNamePage.enterNameAndContinue("Sarah", "Smith")
+
+      Then("They see the have date of birth page")
+      CpSoIndividualHaveDoB.checkPageForFatca()
+
+      When("They select No and continue")
+      CpSoIndividualHaveDoB.selectNoAndContinue()
+
+      Then("They see the have place of birth page")
+      CpSoIndividualHavePlaceOfBirthPage.checkPage()
     }
 
     Scenario(
