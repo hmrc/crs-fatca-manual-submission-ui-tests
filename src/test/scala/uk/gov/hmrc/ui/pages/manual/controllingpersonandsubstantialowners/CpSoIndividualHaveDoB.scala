@@ -18,13 +18,19 @@ package uk.gov.hmrc.ui.pages.manual.controllingpersonandsubstantialowners
 
 import uk.gov.hmrc.ui.pages.BasePage
 
-object CpSoIndividualD0B extends BasePage {
+object CpSoIndividualHaveDoB extends BasePage {
 
-  override val pageUrl: String = baseUrlManualSub + "/manual/cp-so/individual-date-of-birth"
+  override val pageUrl: String = baseUrlManualSub + "/manual/cp-so/individual-have-date-of-birth"
 
-  def checkPage(): this.type = {
+  def checkPageForCrs(): this.type = {
     onPage(pageUrl)
-    checkH1("What is the date of birth for")
+    checkH1("Date of birth for the controlling person")
+    this
+  }
+
+  def checkPageForFatca(): this.type = {
+    onPage(pageUrl)
+    checkH1("Date of birth for the substantial owner")
     this
   }
 }
