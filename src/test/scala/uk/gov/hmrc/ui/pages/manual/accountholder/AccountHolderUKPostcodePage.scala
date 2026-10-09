@@ -19,7 +19,7 @@ package uk.gov.hmrc.ui.pages.manual.accountholder
 import org.openqa.selenium.By
 import uk.gov.hmrc.ui.pages.BasePage
 
-object AccountHolderUKPostcode extends BasePage {
+object AccountHolderUKPostcodePage extends BasePage {
 
   override val pageUrl: String = baseUrlManualSub + "/manual/account-holder/uk-postcode"
 
