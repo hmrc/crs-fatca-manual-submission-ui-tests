@@ -79,10 +79,10 @@ class AccountHolderManualSpec extends BaseSpec with ManualJourneyHelper {
       AccountHolderIndividualPlaceOfBirthPage.enterPlaceOfBirthAndContinue("city", "Region", "Japan")
 
       Then("They are on the where are they based page")
-      WhereAreTheyBasedPage.checkPage()
+      AccountHolderWhereAreTheyBasedPage.checkPage()
 
       When("They select No and continue")
-      WhereAreTheyBasedPage.selectNoAndContinue()
+      AccountHolderWhereAreTheyBasedPage.selectNoAndContinue()
 
       Then("They lands on addressNon-UK page")
       AccountHolderAddressNonUKPage.checkPage()
@@ -138,16 +138,16 @@ class AccountHolderManualSpec extends BaseSpec with ManualJourneyHelper {
       IndividualHavePlaceOfBirthPage.selectNoAndContinue()
 
       Then("They are on the where are they based page")
-      WhereAreTheyBasedPage.checkPage()
+      AccountHolderWhereAreTheyBasedPage.checkPage()
 
       When("They select Yes and continue")
-      WhereAreTheyBasedPage.selectYesAndContinue()
+      AccountHolderWhereAreTheyBasedPage.selectYesAndContinue()
 
       Then("They are on UK postcode page")
-      AccountHolderUKPostcode.checkPage()
+      AccountHolderUKPostcodePage.checkPage()
 
       When("They enter the postcode and search for the address")
-      AccountHolderUKPostcode.enterPostcodeAndContinueForAddress(TestData.postcodeMultipleAddress)
+      AccountHolderUKPostcodePage.enterPostcodeAndContinueForAddress(TestData.postcodeMultipleAddress)
 
       Then("They lands on the multiple addresses page for the given postcode")
       AccountHolderSelectAddressPage.checkPage()
@@ -185,6 +185,79 @@ class AccountHolderManualSpec extends BaseSpec with ManualJourneyHelper {
 
       When("They select Organisation and continue")
       AccountHolderIndividualOrOrganisationPage.selectOrganisationAndContinue()
+
+      And("They provide the organisation Name and continue")
+      AccountHolderOrganisationNamePage.enterFatcaAccountHolderName()
+
+      Then("They are on organisation FATCA type page")
+      AccountHolderOrgFatcaTypePage.checkPage()
+
+      And("They selects the organisation FATCA type and continue")
+      AccountHolderOrgFatcaTypePage.selectAccountHolderType("specifiedPerson")
+
+      Then("They will lands on where are they based page")
+      AccountHolderWhereAreTheyBasedPage.checkPage()
+
+      When("They select no on where are they based and continue ")
+      AccountHolderWhereAreTheyBasedPage.selectNoAndContinue()
+
+      Then("They lands on address non uk page ")
+      AccountHolderAddressNonUKPage.checkPage()
+
+      And("They provides the address non uk and continue")
+      AccountHolderAddressNonUKPage.enterAddressNonUK()
+    }
+
+    Scenario(
+      "Account Holder - selecting Organisation continues the journey - CRS",
+      ManualSubmissionTests,
+      SoloTests
+    ) {
+      Given("The user has reached the manual task list as CRS")
+      journeyToYourFis()
+      selectTheSuitableFI("ThirdFI")
+      navigateToTaskList("CRS")
+
+      // TODO: Replace direct navigation below with the click-through once
+      // ManualSendAReportIndexPage.clickAccountHolder() is implemented.
+      When("They navigate directly to the individual or organisation page")
+      AccountHolderIndividualOrOrganisationPage.goToPage()
+
+      //      When("They open the account holder task")
+      //      ManualSendAReportIndexPage.clickAccountHolder()
+
+      Then("They are on the individual or organisation page")
+      AccountHolderIndividualOrOrganisationPage.checkPage()
+
+      When("They select Organisation and continue")
+      AccountHolderIndividualOrOrganisationPage.selectOrganisationAndContinue()
+
+      And("They provide the organisation Name and continue")
+      AccountHolderOrganisationNamePage.enterCrsAccountHolderName()
+
+      Then("They are on organisation CRS type page")
+      AccountHolderOrgCrsTypePage.checkPage()
+
+      And("They selects the organisation CRS type and continue")
+      AccountHolderOrgCrsTypePage.selectAccountHolderType("crsReportable")
+
+      Then("They will lands on where are they based page")
+      AccountHolderWhereAreTheyBasedPage.checkPage()
+
+      When("They select yes on where are they based and continue ")
+      AccountHolderWhereAreTheyBasedPage.selectYesAndContinue()
+
+      Then("They lands on UK postcode page")
+      AccountHolderUKPostcodePage.checkPage()
+
+      When("They enter the postcode and search for the address")
+      AccountHolderUKPostcodePage.enterPostcodeAndContinueForAddress(TestData.postcodeSingleAddress)
+
+      Then("They lands on Is this your address page")
+      AccountHolderIsThisTheAddressPage.checkPage()
+
+      When("They select the address Yes and continue")
+      AccountHolderIsThisTheAddressPage.selectYesAndContinue()
     }
   }
 }

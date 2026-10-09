@@ -18,7 +18,7 @@ package uk.gov.hmrc.ui.pages.manual.accountholder
 
 import uk.gov.hmrc.ui.pages.BasePage
 
-object WhereAreTheyBasedPage extends BasePage {
+object AccountHolderWhereAreTheyBasedPage extends BasePage {
 
   override val pageUrl: String = baseUrlManualSub + "/manual/account-holder/where-are-they-based"
 
