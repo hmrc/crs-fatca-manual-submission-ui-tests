@@ -51,6 +51,12 @@ class AccountsManualSpec extends BaseSpec with ManualJourneyHelper {
 
       When("They select IBAN and continue")
       AccountNumberTypePage.selectAccountNumberType(TestData.iban)
+
+      Then("They see the account number page")
+      AccountNumberPage.checkPage()
+
+      When("They enter a valid IBAN and continue")
+      AccountNumberPage.enterNumberAndContinue("GB33BUKB20201555555555")
     }
 
     Scenario(
@@ -77,6 +83,12 @@ class AccountsManualSpec extends BaseSpec with ManualJourneyHelper {
 
       When("They select SEMP and continue")
       AccountNumberTypePage.selectAccountNumberType(TestData.semp)
+
+      Then("They see the account number page")
+      AccountNumberPage.checkPage()
+
+      When("They enter a valid account number and continue")
+      AccountNumberPage.enterNumberAndContinue("ABC123")
     }
 
     Scenario(
@@ -329,15 +341,16 @@ class AccountsManualSpec extends BaseSpec with ManualJourneyHelper {
       Then("They are on the account number type page")
       AccountNumberTypePage.checkPage()
 
-      // /manual/account/number is not yet built, so selecting a non-IBAN/SEMP number type
-      // here skips straight to /manual/account/closed.
-      // TODO: confirm TestData holds a constant for OECD605 ("Any other type of account
-      // number or identification number") — using the literal label text as a placeholder.
-
       When("They select 'Any other type of account number or identification number' and continue")
       AccountNumberTypePage.selectAccountNumberType("Any other")
 
-      Then("They land directly on the account closed page, skipping the unbuilt account number page")
+      Then("They see the account number page")
+      AccountNumberPage.checkPage()
+
+      When("They enter a valid account number and continue")
+      AccountNumberPage.enterNumberAndContinue("ABC123")
+
+      Then("They land on the account closed page")
       AccountClosedPage.checkPage()
 
       When("They select no on the account closed page and continue")
@@ -414,7 +427,13 @@ class AccountsManualSpec extends BaseSpec with ManualJourneyHelper {
       When("They select IBAN and continue")
       AccountNumberTypePage.selectAccountNumberType(TestData.iban)
 
-      Then("They land directly on the account closed page, skipping the unbuilt account number page")
+      Then("They see the account number page")
+      AccountNumberPage.checkPage()
+
+      When("They enter a valid IBAN and continue")
+      AccountNumberPage.enterNumberAndContinue("GB33BUKB20201555555555")
+
+      Then("They land on the account closed page")
       AccountClosedPage.checkPage()
 
       When("They select no on the account closed page and continue")
@@ -489,7 +508,13 @@ class AccountsManualSpec extends BaseSpec with ManualJourneyHelper {
       When("They select IBAN and continue")
       AccountNumberTypePage.selectAccountNumberType(TestData.iban)
 
-      Then("They land directly on the account closed page, skipping the unbuilt account number page")
+      Then("They see the account number page")
+      AccountNumberPage.checkPage()
+
+      When("They enter a valid IBAN and continue")
+      AccountNumberPage.enterNumberAndContinue("GB33BUKB20201555555555")
+
+      Then("They land on the account closed page")
       AccountClosedPage.checkPage()
 
       When("They select no on the account closed page and continue")
