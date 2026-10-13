@@ -45,4 +45,11 @@ object CpSoUKPostcodePage extends BasePage {
     this
   }
 
+  def enterPostcodeAndFindAddress(): this.type = {
+    onPage(pageUrl)
+    sendKeys(postcodeInput, TestData.postCode)
+    click(submitButtonId)
+    this
+  }
+
 }
