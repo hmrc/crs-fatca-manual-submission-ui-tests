@@ -169,6 +169,41 @@ class CpSoManualSpec extends BaseSpec with ManualJourneyHelper {
 
       And("They enter the Individual place of birth")
       CpSoIndividualPlaceOfBirthPage.enterPlaceOfBirthAndContinue("city", "Region", "Japan")
+
+      Then("They see the controlling person type page")
+      CpSoControllingPersonTypePage.checkPage()
+
+      When("They select more than one controlling person type and continue")
+      CpSoControllingPersonTypePage.selectTypesAndContinue(
+        "Ownership of a legal person",
+        "Settlor of a trust",
+        "Trustee of a trust"
+      )
+
+      Then("They see the self-certification page")
+      CpSoSelfCertificationPage.checkPage()
+
+      When("They select Yes and continue")
+      CpSoSelfCertificationPage.selectSelfCertificationAndContinue("Yes")
+
+      Then("They see the where are they based page")
+      CpSoWhereAreTheyBasedPage.checkPage()
+
+      When("They select Yes to say they are based in the UK and continue")
+      CpSoWhereAreTheyBasedPage.selectYesAndContinue()
+
+      Then("They see the UK postcode page")
+      CpSoUKPostcodePage.checkPage()
+
+      When("They enter a postcode and find the address")
+      CpSoUKPostcodePage.enterPostcodeAndFindAddress()
+
+      Then("They see the select address page")
+      CpSoSelectAddressPage.checkPage()
+
+      When("They select an address and continue")
+      CpSoSelectAddressPage.selectFirstAddressAndContinue()
+
     }
 
     Scenario(

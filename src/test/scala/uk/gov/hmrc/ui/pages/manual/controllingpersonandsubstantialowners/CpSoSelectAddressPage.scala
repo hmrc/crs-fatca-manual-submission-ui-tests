@@ -24,11 +24,19 @@ object CpSoSelectAddressPage extends BasePage {
 
   override val pageUrl: String = baseUrlManualSub + "/manual/cp-so/select-address"
 
-  val manualEntryLink: By = By.linkText("enter the address manually")
+  val manualEntryLink: By   = By.linkText("enter the address manually")
+  val firstAddressRadio: By = By.id("value")
 
   def checkPage(): this.type = {
     onPage(pageUrl)
     checkH1(s"What is the address for ${TestData.firstName} ${TestData.lastName}?")
+    this
+  }
+
+  def selectFirstAddressAndContinue(): this.type = {
+    onPage(pageUrl)
+    click(firstAddressRadio)
+    click(submitButtonId)
     this
   }
 }
