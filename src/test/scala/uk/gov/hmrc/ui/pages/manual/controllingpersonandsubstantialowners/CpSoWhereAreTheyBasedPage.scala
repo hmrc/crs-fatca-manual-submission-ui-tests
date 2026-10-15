@@ -24,11 +24,13 @@ object CpSoWhereAreTheyBasedPage extends BasePage {
   override val pageUrl: String = baseUrlManualSub + "/manual/cp-so/where-are-they-based"
 
   def checkPage(): this.type = {
+    onPage(pageUrl)
     checkH1(s"Is ${TestData.firstName} ${TestData.lastName} based in the UK, Jersey, Guernsey or the Isle of Man?")
     this
   }
 
   def checkOrgPage(): this.type = {
+    onPage(pageUrl)
     checkH1(s"Is ${TestData.cpsoOrgName} based in the UK, Jersey, Guernsey or the Isle of Man?")
     this
   }

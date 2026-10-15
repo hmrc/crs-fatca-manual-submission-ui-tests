@@ -28,7 +28,7 @@ class AccountHolderManualSpec extends BaseSpec with ManualJourneyHelper {
   Feature("CRS/FATCA Manual - Account Holder individual name") {
 
     Scenario(
-      "Account Holder - selecting Individual continues the journey - CRS",
+      "Account Holder - selecting Individual continues the journey - CRS (account number route)",
       ManualSubmissionTests,
       SoloTests
     ) {
@@ -37,13 +37,15 @@ class AccountHolderManualSpec extends BaseSpec with ManualJourneyHelper {
       selectTheSuitableFI("FirstFI")
       navigateToTaskList("CRS")
 
-      // TODO: Replace direct navigation below with the click-through once
-      // ManualSendAReportIndexPage.clickAccountHolder() is implemented.
-      When("They navigate directly to the individual or organisation page")
-      AccountHolderIndividualOrOrganisationPage.goToPage()
+      /** // TODO: Replace direct navigation below with the click-through once //
+        * ManualSendAReportIndexPage.clickAccountHolder() is implemented. When("They navigate directly to the individual
+        * or organisation page") AccountHolderIndividualOrOrganisationPage.goToPage()
+        *
+        * // When("They open the account holder task") // ManualSendAReportIndexPage.clickAccountHolder()
+        */
 
-      //      When("They open the account holder task")
-      //      ManualSendAReportIndexPage.clickAccountHolder()
+      When("They add an account using the account number route, open the account holders task and select the account")
+      AccountHolderAccountPage.reachIndividualOrOrganisationPageByNumber()
 
       Then("They are on the individual or organisation page")
       AccountHolderIndividualOrOrganisationPage.checkPage()
@@ -93,7 +95,7 @@ class AccountHolderManualSpec extends BaseSpec with ManualJourneyHelper {
     }
 
     Scenario(
-      "Account Holder - selecting Individual continues the journey - FATCA",
+      "Account Holder - selecting Individual continues the journey - FATCA (account identifier route)",
       ManualSubmissionTests,
       SoloTests
     ) {
@@ -102,13 +104,17 @@ class AccountHolderManualSpec extends BaseSpec with ManualJourneyHelper {
       selectTheSuitableFI("FourthFI")
       navigateToTaskList("FATCA")
 
-      // TODO: Replace direct navigation below with the click-through once
-      // ManualSendAReportIndexPage.clickAccountHolder() is implemented.
-      When("They navigate directly to the individual or organisation page")
-      AccountHolderIndividualOrOrganisationPage.goToPage()
+      /** // TODO: Replace direct navigation below with the click-through once //
+        * ManualSendAReportIndexPage.clickAccountHolder() is implemented. When("They navigate directly to the individual
+        * or organisation page") AccountHolderIndividualOrOrganisationPage.goToPage()
+        *
+        * // When("They open the account holder task") // ManualSendAReportIndexPage.clickAccountHolder()
+        */
 
-      //      When("They open the account holder task")
-      //      ManualSendAReportIndexPage.clickAccountHolder()
+      When(
+        "They add an account using the account identifier route, open the account holders task and select the account"
+      )
+      AccountHolderAccountPage.reachIndividualOrOrganisationPageByIdentifier()
 
       Then("They are on the individual or organisation page")
       AccountHolderIndividualOrOrganisationPage.checkPage()
@@ -163,7 +169,7 @@ class AccountHolderManualSpec extends BaseSpec with ManualJourneyHelper {
     }
 
     Scenario(
-      "Account Holder - selecting Organisation continues the journey - CRS/FATCA",
+      "Account Holder - selecting Organisation continues the journey - FATCA (account number route)",
       ManualSubmissionTests,
       SoloTests
     ) {
@@ -172,13 +178,15 @@ class AccountHolderManualSpec extends BaseSpec with ManualJourneyHelper {
       selectTheSuitableFI("FourthFI")
       navigateToTaskList("FATCA")
 
-      // TODO: Replace direct navigation below with the click-through once
-      // ManualSendAReportIndexPage.clickAccountHolder() is implemented.
-      When("They navigate directly to the individual or organisation page")
-      AccountHolderIndividualOrOrganisationPage.goToPage()
+      /** // TODO: Replace direct navigation below with the click-through once //
+        * ManualSendAReportIndexPage.clickAccountHolder() is implemented. When("They navigate directly to the individual
+        * or organisation page") AccountHolderIndividualOrOrganisationPage.goToPage()
+        *
+        * // When("They open the account holder task") // ManualSendAReportIndexPage.clickAccountHolder()
+        */
 
-      //      When("They open the account holder task")
-      //      ManualSendAReportIndexPage.clickAccountHolder()
+      When("They add an account using the account number route, open the account holders task and select the account")
+      AccountHolderAccountPage.reachIndividualOrOrganisationPageByNumber()
 
       Then("They are on the individual or organisation page")
       AccountHolderIndividualOrOrganisationPage.checkPage()
@@ -209,7 +217,7 @@ class AccountHolderManualSpec extends BaseSpec with ManualJourneyHelper {
     }
 
     Scenario(
-      "Account Holder - selecting Organisation continues the journey - CRS",
+      "Account Holder - selecting Organisation continues the journey - CRS (account identifier route)",
       ManualSubmissionTests,
       SoloTests
     ) {
@@ -218,13 +226,17 @@ class AccountHolderManualSpec extends BaseSpec with ManualJourneyHelper {
       selectTheSuitableFI("ThirdFI")
       navigateToTaskList("CRS")
 
-      // TODO: Replace direct navigation below with the click-through once
-      // ManualSendAReportIndexPage.clickAccountHolder() is implemented.
-      When("They navigate directly to the individual or organisation page")
-      AccountHolderIndividualOrOrganisationPage.goToPage()
+      /** // TODO: Replace direct navigation below with the click-through once //
+        * ManualSendAReportIndexPage.clickAccountHolder() is implemented. When("They navigate directly to the individual
+        * or organisation page") AccountHolderIndividualOrOrganisationPage.goToPage()
+        *
+        * // When("They open the account holder task") // ManualSendAReportIndexPage.clickAccountHolder()
+        */
 
-      //      When("They open the account holder task")
-      //      ManualSendAReportIndexPage.clickAccountHolder()
+      When(
+        "They add an account using the account identifier route, open the account holders task and select the account"
+      )
+      AccountHolderAccountPage.reachIndividualOrOrganisationPageByIdentifier()
 
       Then("They are on the individual or organisation page")
       AccountHolderIndividualOrOrganisationPage.checkPage()
@@ -259,5 +271,43 @@ class AccountHolderManualSpec extends BaseSpec with ManualJourneyHelper {
       When("They select the address Yes and continue")
       AccountHolderIsThisTheAddressPage.selectYesAndContinue()
     }
+
+    Scenario(
+      "Account Holder - Account Holders link with no accounts shows the accounts held page - CRS",
+      ManualSubmissionTests,
+      SoloTests
+    ) {
+      Given("The user has reached the manual task list as CRS and has not added any accounts")
+      journeyToYourFis()
+      selectTheSuitableFI("FirstFI")
+      navigateToTaskList("CRS")
+
+      When("They select the Account holders link")
+      AccountHolderAccountPage.clickAccountHolders()
+
+      Then("They see the accounts held page with only the back to send a report link")
+      AccountHolderAccountPage.checkNoAccountsState("CRS")
+    }
+
+    Scenario(
+      "Account Holder - back to send a report link returns to the task list when no accounts - FATCA",
+      ManualSubmissionTests,
+      SoloTests
+    ) {
+      Given("The user has reached the manual task list as FATCA and has not added any accounts")
+      journeyToYourFis()
+      selectTheSuitableFI("FourthFI")
+      navigateToTaskList("FATCA")
+
+      When("They select the Account holders link")
+      AccountHolderAccountPage.clickAccountHolders()
+
+      Then("They see the accounts held page with FATCA wording on the back link")
+      AccountHolderAccountPage.checkNoAccountsState("FATCA")
+
+      When("They select the back to send a report link")
+      AccountHolderAccountPage.clickBackToSendAReport()
+    }
+
   }
 }
