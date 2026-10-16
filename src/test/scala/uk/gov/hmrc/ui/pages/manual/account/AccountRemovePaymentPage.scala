@@ -20,7 +20,7 @@ import uk.gov.hmrc.ui.pages.BasePage
 
 object AccountRemovePaymentPage extends BasePage {
 
-  override val pageUrl: String = baseUrlManualSub + "/manual/account/remove-payment"
+  override val pageUrl: String = baseUrlManualSub + "/manual/account/change-remove-payment"
 
   def checkPage(paymentType: String): this.type = {
     onPage(pageUrl)

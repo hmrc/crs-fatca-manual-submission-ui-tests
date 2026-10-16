@@ -28,4 +28,10 @@ object AccountChangePaymentsPage extends BasePage {
     this
   }
 
+  def checkRemovedPaymentText(): this.type = {
+    onPage(pageUrl)
+    checkH3("250.75 GBP interest payment removed.")
+    this
+  }
+
 }
