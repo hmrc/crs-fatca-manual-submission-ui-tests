@@ -228,7 +228,7 @@ class AccountsManualSpec extends BaseSpec with ManualJourneyHelper {
       AccountRemovePaymentPage.selectYesAndContinue()
 
       Then("They will get back to account payments page with no list of payments")
-      AccountPaymentsPage.checkRemovedPaymentText()
+      AccountChangePaymentsPage.checkRemovedPaymentText()
 
     }
 
