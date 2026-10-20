@@ -92,6 +92,29 @@ class AccountHolderManualSpec extends BaseSpec with ManualJourneyHelper {
       When("They enter the non UK address and continue")
       AccountHolderAddressNonUKPage.enterAddressNonUK()
 
+      Then("CRS asks whether a valid self-certification was provided")
+      AccountHolderSelfCertificationPage.checkPage()
+
+      When("They select Yes and continue")
+      AccountHolderSelfCertificationPage.selectSelfCertificationAndContinue("Yes")
+
+      Then("They are on the resident for tax page")
+      AccountHolderResidentForTaxPage.checkPage()
+
+      When("They select the country they are resident for tax and continue")
+      AccountHolderResidentForTaxPage.selectCountryAndContinue("Japan")
+
+      Then("CRS asks whether they have a tax identification number")
+      AccountHolderHaveIdentificationNumberPage.checkPage()
+
+      When("They select Yes and continue")
+      AccountHolderHaveIdentificationNumberPage.selectYesAndContinue()
+
+      Then("They are on the tax identification number page for that country")
+      AccountHolderIdentificationNumberPage.checkPageForCountry("Japan")
+
+      When("They enter a tax identification number and continue")
+      AccountHolderIdentificationNumberPage.enterTinAndContinue("1234567890")
     }
 
     Scenario(
@@ -166,6 +189,18 @@ class AccountHolderManualSpec extends BaseSpec with ManualJourneyHelper {
 
       And("They can enter the address manually")
       AccountHolderAddressUKPage.enterAddressUK()
+
+      Then("They are on the resident for tax page")
+      AccountHolderResidentForTaxPage.checkPage()
+
+      When("They select a non-US country they are resident for tax and continue")
+      AccountHolderResidentForTaxPage.selectCountryAndContinue("Japan")
+
+      Then("They are on the tax identification number page for that country")
+      AccountHolderIdentificationNumberPage.checkPageForCountry("Japan")
+
+      When("They enter a tax identification number and continue")
+      AccountHolderIdentificationNumberPage.enterTinAndContinue("123456789")
     }
 
     Scenario(
@@ -214,6 +249,18 @@ class AccountHolderManualSpec extends BaseSpec with ManualJourneyHelper {
 
       And("They provides the address non uk and continue")
       AccountHolderAddressNonUKPage.enterAddressNonUK()
+
+      Then("They are on the resident for tax page")
+      AccountHolderResidentForTaxPage.checkPage()
+
+      When("They select the United States and continue")
+      AccountHolderResidentForTaxPage.selectCountryAndContinue("United States")
+
+      Then("They are on the tax identification number page for the United States")
+      AccountHolderIdentificationNumberPage.checkPageForCountry("United States")
+
+      When("They enter a valid US tax identification number and continue")
+      AccountHolderIdentificationNumberPage.enterTinAndContinue("123-45-6789")
     }
 
     Scenario(
@@ -270,6 +317,30 @@ class AccountHolderManualSpec extends BaseSpec with ManualJourneyHelper {
 
       When("They select the address Yes and continue")
       AccountHolderIsThisTheAddressPage.selectYesAndContinue()
+
+      Then("CRS asks whether a valid self-certification was provided")
+      AccountHolderSelfCertificationPage.checkPage()
+
+      When("They select Yes and continue")
+      AccountHolderSelfCertificationPage.selectSelfCertificationAndContinue("Yes")
+
+      Then("They are on the resident for tax page")
+      AccountHolderResidentForTaxPage.checkPage()
+
+      When("They select the country they are resident for tax and continue")
+      AccountHolderResidentForTaxPage.selectCountryAndContinue("United Kingdom")
+
+      Then("CRS asks whether they have a tax identification number")
+      AccountHolderHaveIdentificationNumberPage.checkPage()
+
+      When("They select Yes and continue")
+      AccountHolderHaveIdentificationNumberPage.selectYesAndContinue()
+
+      Then("They are on the tax identification number page for that country")
+      AccountHolderIdentificationNumberPage.checkPageForCountry("United Kingdom")
+
+      When("They enter a tax identification number and continue")
+      AccountHolderIdentificationNumberPage.enterTinAndContinue("1234567890")
     }
 
     Scenario(
