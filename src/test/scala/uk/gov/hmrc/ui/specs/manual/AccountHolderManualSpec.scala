@@ -45,7 +45,7 @@ class AccountHolderManualSpec extends BaseSpec with ManualJourneyHelper {
         */
 
       When("They add an account using the account number route, open the account holders task and select the account")
-      AccountHolderAccountPage.reachIndividualOrOrganisationPageByNumber()
+      AccountHolderAccountPage.reachIndividualOrOrganisationPageByDebtOrEquityNumber()
 
       Then("They are on the individual or organisation page")
       AccountHolderIndividualOrOrganisationPage.checkPage()
@@ -91,6 +91,12 @@ class AccountHolderManualSpec extends BaseSpec with ManualJourneyHelper {
 
       When("They enter the non UK address and continue")
       AccountHolderAddressNonUKPage.enterAddressNonUK()
+
+      Then("The Debt or equity account means they are asked whether to provide the equity interest type")
+      AccountHolderProvideEquityInterestTypePage.checkPage()
+
+      When("They select No and continue")
+      AccountHolderProvideEquityInterestTypePage.selectNoAndContinue()
 
       Then("CRS asks whether a valid self-certification was provided")
       AccountHolderSelfCertificationPage.checkPage()
@@ -283,7 +289,7 @@ class AccountHolderManualSpec extends BaseSpec with ManualJourneyHelper {
       When(
         "They add an account using the account identifier route, open the account holders task and select the account"
       )
-      AccountHolderAccountPage.reachIndividualOrOrganisationPageByIdentifier()
+      AccountHolderAccountPage.reachIndividualOrOrganisationPageByDebtOrEquityIdentifier()
 
       Then("They are on the individual or organisation page")
       AccountHolderIndividualOrOrganisationPage.checkPage()
@@ -317,6 +323,18 @@ class AccountHolderManualSpec extends BaseSpec with ManualJourneyHelper {
 
       When("They select the address Yes and continue")
       AccountHolderIsThisTheAddressPage.selectYesAndContinue()
+
+      Then("The Debt or equity account means they are asked whether to provide the equity interest type")
+      AccountHolderProvideEquityInterestTypePage.checkPage()
+
+      When("They select Yes and continue")
+      AccountHolderProvideEquityInterestTypePage.selectYesAndContinue()
+
+      Then("They are on the equity interest type page")
+      AccountHolderEquityInterestTypePage.checkPage()
+
+      When("They select more than one equity interest type and continue")
+      AccountHolderEquityInterestTypePage.selectTypesAndContinue("Settlor of a trust", "Beneficiary of a trust")
 
       Then("CRS asks whether a valid self-certification was provided")
       AccountHolderSelfCertificationPage.checkPage()
