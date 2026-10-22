@@ -88,6 +88,52 @@ object AccountHolderAccountPage extends BasePage {
     selectFirstAccountAndContinue()
   }
 
+  /** Debt or equity (CRS1104) accounts An account with this type is what makes CRS ask /provide-equity-interest-type
+    * after the address page. Both routes share the same tail after the number / identifier page, so it lives in one
+    * private method. Only IBAN / SEMP skip the account type page, so the number route uses "Any other" here.
+    */
+
+  private def completeAccountAsDebtOrEquity(): Unit = {
+    AccountClosedPage.selectNoAndContinue()
+    AccountBalancePage.selectCurrencyAndAmount("100")
+    AccountUndocumentedPage.selectNoAndContinue()
+    AccountDormantPage.selectNoAndContinue()
+    AccountYearOpenedPage.selectYesAndContinue()
+    AccountJointAccountPage.selectNoAndContinue()
+    AccountTypePage.selectAccountTypeAndContinue("Debt or equity")
+  }
+
+  def addDebtOrEquityAccountByNumber(): this.type = {
+    ManualSendAReportIndexPage.clickAccounts()
+    AccountHaveNumberPage.selectYesAndContinue()
+    AccountNumberTypePage.selectAccountNumberType("Any other")
+    AccountNumberPage.enterNumberAndContinue("ABC123")
+    completeAccountAsDebtOrEquity()
+    goToTaskList()
+  }
+
+  def addDebtOrEquityAccountByIdentifier(): this.type = {
+    ManualSendAReportIndexPage.clickAccounts()
+    AccountHaveNumberPage.selectNoAndContinue()
+    AccountIdentifierPage.enterIdentifierAndContinue()
+    completeAccountAsDebtOrEquity()
+    goToTaskList()
+  }
+
+  def reachIndividualOrOrganisationPageByDebtOrEquityNumber(): this.type = {
+    addDebtOrEquityAccountByNumber()
+    goToPage()
+    checkAccountsListed()
+    selectFirstAccountAndContinue()
+  }
+
+  def reachIndividualOrOrganisationPageByDebtOrEquityIdentifier(): this.type = {
+    addDebtOrEquityAccountByIdentifier()
+    goToPage()
+    checkAccountsListed()
+    selectFirstAccountAndContinue()
+  }
+
   /* Direct navigation to /manual/account-holder/account (stand-in for clicking the Account Holders link) */
 
   def goToPage(): this.type = {
