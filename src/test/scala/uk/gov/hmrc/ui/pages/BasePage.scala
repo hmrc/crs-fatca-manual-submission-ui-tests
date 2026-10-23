@@ -53,6 +53,7 @@ trait BasePage extends BrowserDriver with Matchers with IdGenerators with PageOb
   val postcode: By             = By.id("postCode")
 
   def removeCountryId(country: String): By         = By.id(s"remove-country-$country")
+  def changeCountryId(country: String): By         = By.id(s"Change-country-$country")
   def changePaymentLink(changePayment: String): By = By.id(s"change_$changePayment")
   def removePaymentLink(removePayment: String): By = By.id(s"remove_$removePayment")
 

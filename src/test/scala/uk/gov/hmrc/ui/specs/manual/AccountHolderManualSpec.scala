@@ -121,6 +121,22 @@ class AccountHolderManualSpec extends BaseSpec with ManualJourneyHelper {
 
       When("They enter a tax identification number and continue")
       AccountHolderIdentificationNumberPage.enterTinAndContinue("1234567890")
+
+      Then("They lands on tax resident countries page")
+      AccountHolderTaxResidentCountriesPage.checkPage()
+
+      When("They click remove link to remove country")
+      AccountHolderTaxResidentCountriesPage.removeCountry("Japan")
+
+      Then("They will be navigated to remove tax resident country page")
+      AccountHolderRemoveTaxResidentCountryPage.checkPage()
+
+      When("They select yes and continue")
+      AccountHolderRemoveTaxResidentCountryPage.selectYesAndContinue()
+
+      Then("They will lands again on tax resident countries page")
+      AccountHolderTaxResidentCountriesPage.checkPageForNoAddedCountries()
+
     }
 
     Scenario(
@@ -207,6 +223,21 @@ class AccountHolderManualSpec extends BaseSpec with ManualJourneyHelper {
 
       When("They enter a tax identification number and continue")
       AccountHolderIdentificationNumberPage.enterTinAndContinue("123456789")
+
+      Then("They lands on tax resident countries page")
+      AccountHolderTaxResidentCountriesPage.checkPage()
+
+      When("They click remove link to remove country")
+      AccountHolderTaxResidentCountriesPage.removeCountry("Japan")
+
+      Then("They will be navigated to remove tax resident country page")
+      AccountHolderRemoveTaxResidentCountryPage.checkPage()
+
+      When("They select no and continue")
+      AccountHolderRemoveTaxResidentCountryPage.selectNoAndContinue()
+
+      Then("They will lands again on tax resident countries page")
+      AccountHolderTaxResidentCountriesPage.selectNoAndContinue()
     }
 
     Scenario(
