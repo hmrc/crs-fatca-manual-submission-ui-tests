@@ -17,6 +17,7 @@
 package uk.gov.hmrc.ui.pages.manual.accountholder
 
 import uk.gov.hmrc.ui.pages.BasePage
+import uk.gov.hmrc.ui.utils.TestData
 
 object AccountHolderTaxResidentCountriesPage extends BasePage {
 
@@ -24,7 +25,23 @@ object AccountHolderTaxResidentCountriesPage extends BasePage {
 
   def checkPage(): this.type = {
     onPage(pageUrl)
-    checkH1("")
+    checkH1(s"You have added 1 country where ${TestData.firstName} ${TestData.lastName} is resident for tax")
     this
+  }
+
+  def checkPageForNoAddedCountries(): this.type = {
+    onPage(pageUrl)
+    checkH1(s"You have not added any countries where ${TestData.firstName} ${TestData.lastName} is resident for tax")
+    this
+  }
+
+  def changeCountry(country: String): Unit = {
+    onPage(pageUrl)
+    click(changeCountryId(country))
+  }
+
+  def removeCountry(country: String): Unit = {
+    onPage(pageUrl)
+    click(removeCountryId(country))
   }
 }

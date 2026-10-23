@@ -21,4 +21,10 @@ import uk.gov.hmrc.ui.pages.BasePage
 object AccountHolderRemoveTaxResidentCountryPage extends BasePage {
 
   override val pageUrl: String = baseUrlManualSub + "/manual/account-holder/remove-tax-resident-country"
+
+  def checkPage(): this.type = {
+    onPage(pageUrl)
+    checkH1("Are you sure you want to remove")
+    this
+  }
 }
