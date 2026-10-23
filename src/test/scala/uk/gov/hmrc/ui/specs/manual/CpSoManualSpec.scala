@@ -21,6 +21,7 @@ import uk.gov.hmrc.ui.pages.manual.*
 import uk.gov.hmrc.ui.pages.manual.controllingpersonandsubstantialowners.*
 import uk.gov.hmrc.ui.specs.BaseSpec
 import uk.gov.hmrc.ui.specs.tags.*
+import uk.gov.hmrc.ui.utils.TestData
 
 class CpSoManualSpec extends BaseSpec with ManualJourneyHelper {
 
@@ -76,6 +77,34 @@ class CpSoManualSpec extends BaseSpec with ManualJourneyHelper {
 
       And("They enter the Individual place of birth")
       CpSoIndividualPlaceOfBirthPage.enterPlaceOfBirthAndContinue("city", "Region", "Japan")
+
+      Then("They need to provide the details of Where are they based")
+      CpSoWhereAreTheyBasedPage.checkPage()
+
+      When("They select yes to enter UK address")
+      CpSoWhereAreTheyBasedPage.selectYesAndContinue()
+
+      Then("They will see the UK Postcode page")
+      CpSoUKPostcodePage.checkPage()
+
+      When("They enter the address and click find address")
+      CpSoUKPostcodePage.enterPostcodeAndFindAddress(TestData.postcodeMultipleAddressEnv)
+
+      And("They select the first address and continue")
+      CpSoSelectAddressPage.selectFirstAddressAndContinue()
+
+      Then("They lands on resident for tax page")
+      CpSoResidentForTaxPage.checkPage()
+
+      When("They enter the resident country for tax and continue")
+      CpSoResidentForTaxPage.addResidentForTaxCountry(TestData.residentForTax)
+
+      Then("They lands on tax identification number page")
+      CpSoIdentificationNumberPage.checkPage()
+
+      When("They enter the tax identification number and continue")
+      CpSoIdentificationNumberPage.enterIdentificationAndContinue("123-45-6789")
+
     }
 
     Scenario(
@@ -196,13 +225,25 @@ class CpSoManualSpec extends BaseSpec with ManualJourneyHelper {
       CpSoUKPostcodePage.checkPage()
 
       When("They enter a postcode and find the address")
-      CpSoUKPostcodePage.enterPostcodeAndFindAddress()
+      CpSoUKPostcodePage.enterPostcodeAndFindAddress(TestData.postcodeMultipleAddressEnv)
 
       Then("They see the select address page")
       CpSoSelectAddressPage.checkPage()
 
       When("They select an address and continue")
       CpSoSelectAddressPage.selectFirstAddressAndContinue()
+
+      Then("They lands on resident for tax page")
+      CpSoResidentForTaxPage.checkPage()
+
+      When("They enter the resident country for tax and continue")
+      CpSoResidentForTaxPage.addResidentForTaxCountry(TestData.residentForTax)
+
+      Then("They lands on have identification number page")
+      CpSoHaveIdentificationPage.checkPage()
+
+      When("They select no and continue")
+      CpSoHaveIdentificationPage.selectNoAndContinue()
 
     }
 
