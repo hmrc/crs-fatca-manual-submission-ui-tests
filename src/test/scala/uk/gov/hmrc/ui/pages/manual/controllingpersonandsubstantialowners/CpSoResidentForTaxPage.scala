@@ -22,7 +22,7 @@ import uk.gov.hmrc.ui.utils.TestData
 object CpSoResidentForTaxPage extends BasePage {
 
   override val pageUrl: String = baseUrlManualSub + "/manual/cp-so/resident-for-tax"
-  
+
   def checkPage(): this.type = {
     onPage(pageUrl)
     checkH1(s"Where is ${TestData.firstName} ${TestData.lastName} resident for tax?")
