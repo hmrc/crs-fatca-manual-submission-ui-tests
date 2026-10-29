@@ -29,6 +29,12 @@ object CpSoResidentForTaxPage extends BasePage {
     this
   }
 
+  def checkPageForOrganisation(): this.type = {
+    onPage(pageUrl)
+    checkH1("Where is ABC Corp resident for tax?")
+    this
+  }
+
   def addResidentForTaxCountry(country: String = TestData.residentForTax): Unit = {
     onPage(pageUrl)
     selectCountry(country)

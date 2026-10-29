@@ -105,6 +105,27 @@ class CpSoManualSpec extends BaseSpec with ManualJourneyHelper {
       When("They enter the tax identification number and continue")
       CpSoIdentificationNumberPage.enterIdentificationAndContinue("123-45-6789")
 
+      Then("They enter the tax resident countries page")
+      CpSoTaxResidentCountriesPage.checkPage()
+
+      When("They click on change link to change the tax resident country")
+      CpSoTaxResidentCountriesPage.changeCountry(TestData.residentForTax)
+
+      Then("They enter change resident for tax page")
+      CpSoChangeResidentForTaxPage.checkPage()
+
+      And("They want to continue with the same country")
+      CpSoChangeResidentForTaxPage.submitPage()
+
+      And("With the same identification number")
+      CpSoChangeIdentificationNumberPage.enterIdentificationAndContinue("123-45-6789")
+
+      Then("They enters again to tax resident countries page")
+      CpSoChangeTaxResidentCountriesPage.checkPage()
+
+      And("If they don't want to add another country they can continue to check answers page")
+      CpSoChangeTaxResidentCountriesPage.selectNoAndContinue()
+
     }
 
     Scenario(
@@ -154,6 +175,30 @@ class CpSoManualSpec extends BaseSpec with ManualJourneyHelper {
 
       When("They enter the address manually and select Save and continue")
       CpSoAddressUKPage.enterAddressUK()
+
+      Then("They enter resident for tax page")
+      CpSoResidentForTaxPage.checkPageForOrganisation()
+
+      When("They enter the resident for tax and continue")
+      CpSoResidentForTaxPage.addResidentForTaxCountry(TestData.residentForTax)
+
+      And("They enter the tax idenfication number")
+      CpSoIdentificationNumberPage.enterIdentificationAndContinue("123-45-6789")
+
+      Then("They lands on tax resident countries page")
+      CpSoTaxResidentCountriesPage.checkPageForOrganisation()
+
+      When("They click on Remove link to remove the country")
+      CpSoTaxResidentCountriesPage.removeCountry(TestData.residentForTax)
+
+      Then("They enter remove tax resident country page")
+      CpSoChangeRemoveTaxResidentCountryPage.checkPage()
+
+      And("If they select Yes and continue")
+      CpSoChangeRemoveTaxResidentCountryPage.selectYesAndContinue()
+
+      Then("They enter to again to tax resident countries page")
+      CpSoChangeTaxResidentCountriesPage.checkPageWithNoAddedCountries()
 
     }
 
@@ -244,6 +289,12 @@ class CpSoManualSpec extends BaseSpec with ManualJourneyHelper {
 
       When("They select no and continue")
       CpSoHaveIdentificationPage.selectNoAndContinue()
+
+      Then("They lands on tax resident countries page")
+      CpSoTaxResidentCountriesPage.checkPage()
+
+      And("If they don't want to add another country")
+      CpSoTaxResidentCountriesPage.selectNoAndContinue()
 
     }
 
