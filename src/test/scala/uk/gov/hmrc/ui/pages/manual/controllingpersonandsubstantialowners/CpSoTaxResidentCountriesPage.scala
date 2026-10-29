@@ -17,11 +17,31 @@
 package uk.gov.hmrc.ui.pages.manual.controllingpersonandsubstantialowners
 
 import uk.gov.hmrc.ui.pages.BasePage
+import uk.gov.hmrc.ui.utils.TestData
 
 object CpSoTaxResidentCountriesPage extends BasePage {
 
   override val pageUrl: String = baseUrlManualSub + "/manual/cp-so/tax-resident-countries"
 
-  def checkPage(): this.type =
+  def checkPage(): this.type = {
     onPage(pageUrl)
+    checkH1(s"You have added 1 country where ${TestData.firstName} ${TestData.lastName} is resident for tax")
+    this
+  }
+
+  def checkPageForOrganisation(): this.type = {
+    onPage(pageUrl)
+    checkH1("You have added 1 country where ABC Corp is resident for tax")
+    this
+  }
+
+  def changeCountry(country: String): Unit = {
+    onPage(pageUrl)
+    click(changeCountryId(country))
+  }
+
+  def removeCountry(country: String): Unit = {
+    onPage(pageUrl)
+    click(removeCountryId(country))
+  }
 }
