@@ -16,7 +16,6 @@
 
 package uk.gov.hmrc.ui.pages.manual.accountholder
 
-import org.openqa.selenium.By
 import uk.gov.hmrc.ui.pages.BasePage
 
 object AccountHolderHaveIdentificationNumberPage extends BasePage {
