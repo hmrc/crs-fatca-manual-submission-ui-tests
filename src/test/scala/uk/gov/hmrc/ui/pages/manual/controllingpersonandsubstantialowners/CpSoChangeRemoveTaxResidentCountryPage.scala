@@ -28,5 +28,5 @@ object CpSoChangeRemoveTaxResidentCountryPage extends BasePage {
     checkH1(s"Are you sure you want to remove the ${TestData.residentForTax} as a tax-resident country for ABC Corp")
     this
   }
-  
+
 }
