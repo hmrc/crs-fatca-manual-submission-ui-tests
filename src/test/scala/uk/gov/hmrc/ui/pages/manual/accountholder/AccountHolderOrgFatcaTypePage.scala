@@ -24,10 +24,10 @@ object AccountHolderOrgFatcaTypePage extends BasePage {
 
   override val pageUrl: String = baseUrlManualSub + "/manual/account-holder/organisation-fatca-type"
 
-  private val ownerDocumentedRadio: By  = By.cssSelector("input[name='value'][value='ownerDocumented']")
-  private val passiveRadio: By          = By.cssSelector("input[name='value'][value='passive']")
-  private val nonParticipatingRadio: By = By.cssSelector("input[name='value'][value='nonParticipating']")
-  private val specifiedPersonRadio: By  = By.cssSelector("input[name='value'][value='specifiedPerson']")
+  val ownerDocumentedRadio: By  = By.cssSelector("input[name='value'][value='FATCA101']")
+  val passiveRadio: By          = By.cssSelector("input[name='value'][value='FATCA102']")
+  val nonParticipatingRadio: By = By.cssSelector("input[name='value'][value='FATCA103']")
+  val specifiedPersonRadio: By  = By.cssSelector("input[name='value'][value='FATCA104']")
 
   def checkPage(): this.type = {
     onPage(pageUrl)
