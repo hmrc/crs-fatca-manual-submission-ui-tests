@@ -18,6 +18,7 @@ package uk.gov.hmrc.ui.specs.manual
 
 import uk.gov.hmrc.ui.pages.*
 import uk.gov.hmrc.ui.pages.manual.*
+import uk.gov.hmrc.ui.pages.manual.accountholder.*
 import uk.gov.hmrc.ui.pages.manual.controllingpersonandsubstantialowners.*
 import uk.gov.hmrc.ui.specs.BaseSpec
 import uk.gov.hmrc.ui.specs.tags.*
@@ -37,13 +38,8 @@ class CpSoManualSpec extends BaseSpec with ManualJourneyHelper {
       selectTheSuitableFI("FourthFI")
       navigateToTaskList("FATCA")
 
-      // TODO: Replace direct navigation below with the click-through once
-      // /manual/cp-so/account-holder is implemented.
-      When("They navigate directly to the individual or organisation page")
-      CpSoIndividualOrOrganisationPage.goToPage()
-
-      //      When("They open the cp-so account holder task")
-      //      ManualSendAReportIndexPage.clickCpSoAccountHolder()
+      When("They add an eligible account holder, open the substantial owners task and select the account holder")
+      CpSoAccountHolderPage.reachCpSoJourney("FATCA")
 
       Then("They see the individual or organisation page")
       CpSoIndividualOrOrganisationPage.checkPage()
@@ -138,13 +134,8 @@ class CpSoManualSpec extends BaseSpec with ManualJourneyHelper {
       selectTheSuitableFI("FourthFI")
       navigateToTaskList("FATCA")
 
-      // TODO: Replace direct navigation below with the click-through once
-      // /manual/cp-so/account-holder is implemented.
-      When("They navigate directly to the individual or organisation page")
-      CpSoIndividualOrOrganisationPage.goToPage()
-
-      //      When("They open the cp-so account holder task")
-      //      ManualSendAReportIndexPage.clickCpSoAccountHolder()
+      When("They add an eligible account holder, open the substantial owners task and select the account holder")
+      CpSoAccountHolderPage.reachCpSoJourney("FATCA")
 
       Then("They see the individual or organisation page")
       CpSoIndividualOrOrganisationPage.checkPage()
@@ -212,10 +203,8 @@ class CpSoManualSpec extends BaseSpec with ManualJourneyHelper {
       selectTheSuitableFI("FirstFI")
       navigateToTaskList("CRS")
 
-      // TODO: Replace direct navigation below once the CRS route into this
-      // page (via /manual/cp-so/account-holder) is implemented.
-      When("They navigate directly to the individual name page")
-      CpSoIndividualNamePage.goToPage()
+      When("They add an eligible account holder, open the controlling persons task and select the account holder")
+      CpSoAccountHolderPage.reachCpSoJourney("CRS")
 
       Then("They see the individual name page with CRS wording")
       CpSoIndividualNamePage.checkHeadingForCrs()
@@ -308,8 +297,8 @@ class CpSoManualSpec extends BaseSpec with ManualJourneyHelper {
       selectTheSuitableFI("FourthFI")
       navigateToTaskList("FATCA")
 
-      When("They navigate directly to the individual or organisation page")
-      CpSoIndividualOrOrganisationPage.goToPage()
+      When("They add an eligible account holder, open the substantial owners task and select the account holder")
+      CpSoAccountHolderPage.reachCpSoJourney("FATCA")
 
       And("They select Individual and enter a valid name")
       CpSoIndividualOrOrganisationPage.selectIndividualAndContinue()
@@ -335,8 +324,6 @@ class CpSoManualSpec extends BaseSpec with ManualJourneyHelper {
       selectTheSuitableFI("FirstFI")
       navigateToTaskList("CRS")
 
-      // TODO: Replace direct navigation below once the CRS route into this
-      // page (via /manual/cp-so/account-holder) is implemented.
       When("They navigate directly to the individual or organisation page")
       CpSoIndividualOrOrganisationPage.goToPage()
 
@@ -344,5 +331,97 @@ class CpSoManualSpec extends BaseSpec with ManualJourneyHelper {
       PageNotFoundPage.checkPage()
     }
 
+    Scenario(
+      "CP-SO account holder - no account holders shows the empty state and back link (CRS)",
+      ManualSubmissionTests,
+      SoloTests
+    ) {
+      Given("The user has reached the manual task list as CRS with no account holders")
+      journeyToYourFis()
+      selectTheSuitableFI("FirstFI")
+      navigateToTaskList("CRS")
+
+      When("They go to the CP/SO account holder page")
+      CpSoAccountHolderPage.goToPage()
+
+      Then("They see the empty state with the add an account holder and back links")
+      CpSoAccountHolderPage.checkEmptyState("CRS")
+
+      When("They click the back to send a CRS report link")
+      CpSoAccountHolderPage.clickBackToSendAReport()
+    }
+
+    Scenario(
+      "CP-SO account holder - no account holders shows the empty state and add link (FATCA)",
+      ManualSubmissionTests,
+      SoloTests
+    ) {
+      Given("The user has reached the manual task list as FATCA with no account holders")
+      journeyToYourFis()
+      selectTheSuitableFI("FourthFI")
+      navigateToTaskList("FATCA")
+
+      When("They go to the CP/SO account holder page")
+      CpSoAccountHolderPage.goToPage()
+
+      Then("They see the empty state")
+      CpSoAccountHolderPage.checkEmptyState("FATCA")
+
+      /** uncomment the below lines after the implementation of ticket DAC6-4524
+        *
+        * When("They click the add an account holder link") CpSoAccountHolderPage.clickAddAnAccountHolder()
+        *
+        * Then("They are taken to the account holder pages") CpSoAccountHolderPage.checkOnAccountHolderPages()
+        */
+
+    }
+
+    Scenario(
+      "CP-SO account holder - CRS account holder type CRS102 is not eligible",
+      ManualSubmissionTests,
+      SoloTests
+    ) {
+      Given("The user has added a CRS102 organisation account holder")
+      journeyToYourFis()
+      selectTheSuitableFI("FirstFI")
+      navigateToTaskList("CRS")
+      AccountHolderAccountPage.reachIndividualOrOrganisationPageByNumber()
+      AccountHolderIndividualOrOrganisationPage.selectOrganisationAndContinue()
+      AccountHolderOrganisationNamePage.enterCrsAccountHolderName()
+      AccountHolderOrgCrsTypePage.checkPage()
+      AccountHolderOrgCrsTypePage.selectAccountHolderType("crsReportable")
+      AccountHolderWhereAreTheyBasedPage.checkPage()
+
+      When("They return to the task list and open the controlling persons task")
+      AccountHolderAccountPage.goToTaskList()
+      CpSoAccountHolderPage.goToPage()
+
+      Then("The account holder is not listed, so they see the empty state")
+      CpSoAccountHolderPage.checkEmptyState("CRS")
+    }
+
+    Scenario(
+      "CP-SO account holder - FATCA account holder type FATCA104 is not eligible",
+      ManualSubmissionTests,
+      SoloTests
+    ) {
+      Given("The user has added a FATCA104 organisation account holder")
+      journeyToYourFis()
+      selectTheSuitableFI("FourthFI")
+      navigateToTaskList("FATCA")
+      AccountHolderAccountPage.reachIndividualOrOrganisationPageByNumber()
+      AccountHolderIndividualOrOrganisationPage.selectOrganisationAndContinue()
+      AccountHolderOrganisationNamePage.enterFatcaAccountHolderName()
+      AccountHolderOrgFatcaTypePage.checkPage()
+      AccountHolderOrgFatcaTypePage.selectAccountHolderType("specifiedPerson")
+      AccountHolderWhereAreTheyBasedPage.checkPage()
+
+      When("They return to the task list and open the substantial owners task")
+      AccountHolderAccountPage.goToTaskList()
+      CpSoAccountHolderPage.goToPage()
+
+      Then("The account holder is not listed, so they see the empty state")
+      CpSoAccountHolderPage.checkEmptyState("FATCA")
+    }
   }
 }

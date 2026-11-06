@@ -24,10 +24,9 @@ object AccountHolderOrgCrsTypePage extends BasePage {
 
   override val pageUrl: String = baseUrlManualSub + "/manual/account-holder/organisation-crs-type"
 
-  private val passiveWithMultiplePersonsRadio: By =
-    By.cssSelector("input[name='value'][value='passiveWithMultiplePersons']")
-  private val crsReportableRadio: By              = By.cssSelector("input[name='value'][value='crsReportable']")
-  private val passiveCrsPersonRadio: By           = By.cssSelector("input[name='value'][value='passiveCrsPerson']")
+  val passiveWithMultiplePersonsRadio: By = By.cssSelector("input[name='value'][value='CRS101']")
+  val crsReportableRadio: By              = By.cssSelector("input[name='value'][value='CRS102']")
+  val passiveCrsPersonRadio: By           = By.cssSelector("input[name='value'][value='CRS103']")
 
   def checkPage(): this.type = {
     onPage(pageUrl)
