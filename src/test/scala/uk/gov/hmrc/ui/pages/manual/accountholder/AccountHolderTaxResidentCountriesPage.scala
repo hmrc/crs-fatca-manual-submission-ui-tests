@@ -35,6 +35,18 @@ object AccountHolderTaxResidentCountriesPage extends BasePage {
     this
   }
 
+  def checkPageForFATCAOrg(): this.type = {
+    onPage(pageUrl)
+    checkH1(s"You have added 1 country where ${TestData.fatcaAccountHolderName} is resident for tax")
+    this
+  }
+
+  def checkPageForCRSOrg(): this.type = {
+    onPage(pageUrl)
+    checkH1(s"You have added 1 country where ${TestData.crsAccountHolderName} is resident for tax")
+    this
+  }
+
   def changeCountry(country: String): Unit = {
     onPage(pageUrl)
     click(changeCountryId(country))
