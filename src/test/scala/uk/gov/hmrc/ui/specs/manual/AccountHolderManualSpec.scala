@@ -233,11 +233,15 @@ class AccountHolderManualSpec extends BaseSpec with ManualJourneyHelper {
       Then("They will be navigated to remove tax resident country page")
       AccountHolderRemoveTaxResidentCountryPage.checkPage()
 
-      When("They select no and continue")
+      When("They select no and continue to tax resident countries page")
       AccountHolderRemoveTaxResidentCountryPage.selectNoAndContinue()
 
-      Then("They will lands again on tax resident countries page")
+      And("They select No on tax resident countries page")
       AccountHolderTaxResidentCountriesPage.selectNoAndContinue()
+
+      Then("They lands on check answers page")
+      AccountHolderCheckAnswersPage.checkPage()
+
     }
 
     Scenario(
@@ -298,6 +302,15 @@ class AccountHolderManualSpec extends BaseSpec with ManualJourneyHelper {
 
       When("They enter a valid US tax identification number and continue")
       AccountHolderIdentificationNumberPage.enterTinAndContinue("123-45-6789")
+
+      Then("They lands on tax resident countries page")
+      AccountHolderTaxResidentCountriesPage.checkPageForFATCAOrg()
+
+      When("They select No on tax resident countries page")
+      AccountHolderTaxResidentCountriesPage.selectNoAndContinue()
+
+      Then("They lands on check answers page")
+      AccountHolderCheckAnswersPage.checkPage()
     }
 
     Scenario(
@@ -390,6 +403,15 @@ class AccountHolderManualSpec extends BaseSpec with ManualJourneyHelper {
 
       When("They enter a tax identification number and continue")
       AccountHolderIdentificationNumberPage.enterTinAndContinue("1234567890")
+
+      Then("They lands on tax resident countries page")
+      AccountHolderTaxResidentCountriesPage.checkPageForCRSOrg()
+
+      When("They select No on tax resident countries page")
+      AccountHolderTaxResidentCountriesPage.selectNoAndContinue()
+
+      Then("They lands on check answers page")
+      AccountHolderCheckAnswersPage.checkPage()
     }
 
     Scenario(
