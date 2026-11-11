@@ -48,7 +48,7 @@ class FilerCategoryManualSpec extends BaseSpec {
       TypeOfReportPage.selectReportWithInformationAndContinue()
 
       And("They save and continue on the check answers page")
-      ReportCheckAnswersPage.confirmAndSend()
+      ReportCheckAnswersPage.clickCreateDraft()
 
       When("They open the Filer-category task")
       ManualSendAReportIndexPage.clickFilerCategory()

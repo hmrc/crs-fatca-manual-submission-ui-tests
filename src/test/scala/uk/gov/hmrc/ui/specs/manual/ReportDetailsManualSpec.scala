@@ -60,8 +60,14 @@ class ReportDetailsManualSpec extends BaseSpec {
       Then("They are on the check your report details page for the FI")
       ReportCheckAnswersPage.checkPage()
 
-      And("They save and continue")
-      ReportCheckAnswersPage.confirmAndSend()
+      And("The warning text is displayed")
+      ReportCheckAnswersPage.checkWarningText()
+
+      And("The button reads 'Create draft'")
+      ReportCheckAnswersPage.checkButtonText()
+
+      When("They click 'Create draft'")
+      ReportCheckAnswersPage.clickCreateDraft()
 
       Then("They are on the manual send a report task list page")
       ManualSendAReportIndexPage.checkDynamicPage()
