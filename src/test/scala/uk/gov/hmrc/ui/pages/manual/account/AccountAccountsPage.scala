@@ -27,6 +27,5 @@ object AccountAccountsPage extends BasePage {
     checkH1("You have added 1 account")
     this
   }
-  
-  
+
 }
