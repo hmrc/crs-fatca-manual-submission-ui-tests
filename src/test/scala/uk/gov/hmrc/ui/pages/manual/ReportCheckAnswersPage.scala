@@ -17,6 +17,7 @@
 package uk.gov.hmrc.ui.pages.manual
 
 import org.openqa.selenium.By
+import uk.gov.hmrc.selenium.webdriver.Driver
 import uk.gov.hmrc.ui.pages.BasePage
 import uk.gov.hmrc.ui.utils.TestData
 
@@ -27,6 +28,10 @@ object ReportCheckAnswersPage extends BasePage {
   val changeCrsOrFatcaLink: By   = By.cssSelector("a[href*='change-crs-or-fatca']")
   val changeYearLink: By         = By.cssSelector("a[href*='change-year']")
   val changeTypeOfReportLink: By = By.cssSelector("a[href*='change-type-of-report']")
+  val warningText: By            = By.cssSelector(".govuk-warning-text__text")
+
+  val warningLine1 = "You will not be able to change these details after creating the draft."
+  val warningLine2 = "To use different details later, you must create a new draft."
 
   def checkPage(): this.type = {
     checkDynamicPage()
@@ -34,7 +39,21 @@ object ReportCheckAnswersPage extends BasePage {
     this
   }
 
-  def confirmAndSend(): Unit = {
+  def checkWarningText(): this.type = {
+    onPage(pageUrl)
+    val text = Driver.instance.findElement(warningText).getText
+    assert(text.contains(warningLine1))
+    assert(text.contains(warningLine2))
+    this
+  }
+
+  def checkButtonText(): this.type = {
+    onPage(pageUrl)
+    assert(Driver.instance.findElement(submitButtonId).getText.trim == "Create draft")
+    this
+  }
+
+  def clickCreateDraft(): Unit = {
     onPage(pageUrl)
     click(submitButtonId)
   }

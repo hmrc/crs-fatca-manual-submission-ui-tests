@@ -36,7 +36,7 @@ trait ManualJourneyHelper {
     }
     ReportingDetailsYearPage.enterYearAndContinue()
     TypeOfReportPage.selectReportWithInformationAndContinue()
-    ReportCheckAnswersPage.confirmAndSend()
+    ReportCheckAnswersPage.clickCreateDraft()
     ManualSendAReportIndexPage.checkDynamicPage()
   }
 
