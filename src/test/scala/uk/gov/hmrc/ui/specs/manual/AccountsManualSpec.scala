@@ -146,6 +146,15 @@ class AccountsManualSpec extends BaseSpec with ManualJourneyHelper {
       When("They don't want to add any more payments they can select no and continue")
       AccountPaymentsPage.selectNoAndContinue()
 
+      Then("They lands on check answers page")
+      AccountCheckAnswersPage.checkPage()
+
+      When("They select continues on check answers page")
+      AccountCheckAnswersPage.submitPage()
+
+      Then("They lands on accounts page and display number of accounts created")
+      AccountAccountsPage.checkPage()
+
     }
 
     Scenario(
@@ -229,6 +238,18 @@ class AccountsManualSpec extends BaseSpec with ManualJourneyHelper {
 
       Then("They will get back to account payments page with no list of payments")
       AccountChangePaymentsPage.checkRemovedPaymentText()
+
+      And("They select No option to add any payments and continue")
+      AccountChangePaymentsPage.selectNoAndContinue()
+
+      Then("They navigated to check answers page")
+      AccountCheckAnswersPage.checkPage()
+
+      When("They select Continue on check answers page")
+      AccountCheckAnswersPage.submitPage()
+
+      Then("They lands on account page with one account added in the list")
+      AccountAccountsPage.checkPage()
 
     }
 
@@ -320,6 +341,12 @@ class AccountsManualSpec extends BaseSpec with ManualJourneyHelper {
       When("They don't want to add any more payments they can select no and continue")
       AccountPaymentsPage.selectNoAndContinue()
 
+      And("They continue on check answers page")
+      AccountCheckAnswersPage.submitPage()
+
+      Then("They lands on accounts page with one account added to the list ")
+      AccountAccountsPage.checkPage()
+
     }
 
     Scenario(
@@ -403,6 +430,13 @@ class AccountsManualSpec extends BaseSpec with ManualJourneyHelper {
 
       When("They don't want to add any more payments they can select no and continue")
       AccountPaymentsPage.selectNoAndContinue()
+
+      And("They continue on check answers page")
+      AccountCheckAnswersPage.submitPage()
+
+      Then("They lands on accounts page with one account added to the list ")
+      AccountAccountsPage.checkPage()
+
     }
 
     Scenario(
@@ -484,6 +518,12 @@ class AccountsManualSpec extends BaseSpec with ManualJourneyHelper {
       Then("They lands on account change payments page and continue")
       AccountChangePaymentsPage.checkAndContinue()
 
+      And("When they continue on check answers page")
+      AccountCheckAnswersPage.submitPage()
+
+      Then("They lands on accounts page with one account added to the list ")
+      AccountAccountsPage.checkPage()
+
     }
 
     Scenario(
@@ -558,6 +598,31 @@ class AccountsManualSpec extends BaseSpec with ManualJourneyHelper {
 
       And("They can continue journey without adding any more payments")
       AccountPaymentsPage.selectNoAndContinue()
+
+      Then("They lands on check answers page")
+      AccountCheckAnswersPage.checkPage()
+
+      And("When they continue on check answers page")
+      AccountCheckAnswersPage.submitPage()
+
+      Then("They lands on accounts page with one account added to the list ")
+      AccountAccountsPage.checkPage()
+
+      When("They select to remove the account link")
+      AccountAccountsPage.removeAccount("GB33BUKB20201555555555")
+
+      Then("They lands on Account remove account page with options")
+      AccountRemoveAccountPage.checkPage()
+
+      When("They select Yes option to remove account")
+      AccountRemoveAccountPage.selectYesAndContinue()
+
+      Then("They will again navigated to accounts page with no accounts added as H1")
+      AccountAccountsPage.checkPageForNoAccounts()
+
+      And("The notification banner about removed account displayed")
+      AccountAccountsPage.notificationBanner()
+
     }
 
   }

@@ -43,6 +43,7 @@ object TestData {
   val cpsoOrgName             = "ABC Corp"
   val crsAccountHolderName    = "CRSAccountHolder"
   val fatcaAccountHolderName  = "FATCAAccountHodlerName"
+  val iBANAccount             = "GB33BUKB20201555555555"
 
   private val env: String =
     System.getProperty("environment", "local").toLowerCase
