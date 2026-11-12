@@ -518,7 +518,7 @@ class AccountsManualSpec extends BaseSpec with ManualJourneyHelper {
       Then("They lands on account change payments page and continue")
       AccountChangePaymentsPage.checkAndContinue()
 
-      And("They continue on check answers page")
+      And("When they continue on check answers page")
       AccountCheckAnswersPage.submitPage()
 
       Then("They lands on accounts page with one account added to the list ")
@@ -601,6 +601,27 @@ class AccountsManualSpec extends BaseSpec with ManualJourneyHelper {
 
       Then("They lands on check answers page")
       AccountCheckAnswersPage.checkPage()
+
+      And("When they continue on check answers page")
+      AccountCheckAnswersPage.submitPage()
+
+      Then("They lands on accounts page with one account added to the list ")
+      AccountAccountsPage.checkPage()
+
+      When("They select to remove the account link")
+      AccountAccountsPage.removeAccount("GB33BUKB20201555555555")
+
+      Then("They lands on Account remove account page with options")
+      AccountRemoveAccountPage.checkPage()
+
+      When("They select Yes option to remove account")
+      AccountRemoveAccountPage.selectYesAndContinue()
+
+      Then("They will again navigated to accounts page with no accounts added as H1")
+      AccountAccountsPage.checkPageForNoAccounts()
+
+      And("The notification banner about removed account displayed")
+      AccountAccountsPage.notificationBanner()
 
     }
 

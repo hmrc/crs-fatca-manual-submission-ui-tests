@@ -17,6 +17,7 @@
 package uk.gov.hmrc.ui.pages.manual.account
 
 import uk.gov.hmrc.ui.pages.BasePage
+import uk.gov.hmrc.ui.utils.TestData
 
 object AccountAccountsPage extends BasePage {
 
@@ -26,6 +27,28 @@ object AccountAccountsPage extends BasePage {
     onPage(pageUrl)
     checkH1("You have added 1 account")
     this
+  }
+
+  def checkPageForNoAccounts(): this.type = {
+    onPage(pageUrl)
+    checkH1("You have not added any accounts")
+    this
+  }
+
+  def notificationBanner(): this.type = {
+    onPage(pageUrl)
+    checkH3(s"Account ${TestData.iBANAccount} removed")
+    this
+  }
+
+  def changeAccount(account: String): Unit = {
+    onPage(pageUrl)
+    click(changeAccountLink(account))
+  }
+
+  def removeAccount(account: String): Unit = {
+    onPage(pageUrl)
+    click(removeAccountLink(account))
   }
 
 }
