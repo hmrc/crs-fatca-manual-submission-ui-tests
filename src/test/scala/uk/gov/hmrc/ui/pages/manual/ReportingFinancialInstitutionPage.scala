@@ -24,10 +24,11 @@ object ReportingFinancialInstitutionPage extends BasePage {
 
   override val pageUrl: String = baseUrlManualSub + "/manual/reporting-financial-institution"
 
-  val h2Question: By   = By.cssSelector("h2.govuk-heading-m")
-  val yesRadio: By     = By.id("value")
-  val noRadio: By      = By.id("value-no")
-  val taskListLink: By = By.linkText("Reporting financial institution details")
+  val h2Question: By     = By.cssSelector("h2.govuk-heading-m")
+  val yesRadio: By       = By.id("value")
+  val noRadio: By        = By.id("value-no")
+  val taskListLink: By   = By.linkText("Reporting financial institution details")
+  val taskListStatus: By = By.id("financial-institution-1-status")
 
   val notinValue: String = "Not provided. We’ll use ‘NOTIN’ in your report"
 
@@ -44,6 +45,20 @@ object ReportingFinancialInstitutionPage extends BasePage {
 
   def checkReturnedToSendAReport(): this.type = {
     onPageContaining("/manual/send-a-report")
+    this
+  }
+
+  // Task list status (/manual/send-a-report) of the "Reporting financial institution details" section
+  def checkTaskListStatus(expected: String): this.type = {
+    onPageContaining("/manual/send-a-report")
+    val actual = getText(taskListStatus).trim
+    assert(actual == expected, s"Expected the reporting financial institution status '$expected' but found '$actual'")
+    this
+  }
+
+  // The page has no Continue when the GIIN is missing, so go back to the task list directly
+  def goToTaskList(): this.type = {
+    Driver.instance.get(baseUrlManualSub + "/manual/send-a-report")
     this
   }
 
