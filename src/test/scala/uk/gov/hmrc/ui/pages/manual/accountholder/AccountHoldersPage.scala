@@ -60,6 +60,7 @@ object AccountHoldersPage extends BasePage {
     AccountHaveNumberPage.selectYesAndContinue()
     AccountNumberTypePage.selectAccountNumberType(TestData.iban)
     AccountNumberPage.enterNumberAndContinue(number)
+    AccountClosedPage.checkPage()
     AccountHolderAccountPage.goToTaskList()
     this
   }

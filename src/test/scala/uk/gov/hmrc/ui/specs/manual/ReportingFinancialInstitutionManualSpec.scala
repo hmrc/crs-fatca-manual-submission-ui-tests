@@ -26,7 +26,7 @@ class ReportingFinancialInstitutionManualSpec extends BaseSpec with ManualJourne
   Feature("CRS/FATCA Manual - Check the reporting financial institution details") {
 
     Scenario(
-      "CRS - FI is the User shows no TIN rows and the registered UTR paragraph",
+      "CRS - FI is the User shows no TIN rows and the registered UTR paragraph, status Incomplete then Completed after Yes",
       ManualSubmissionTests,
       SoloTests
     ) {
@@ -34,6 +34,9 @@ class ReportingFinancialInstitutionManualSpec extends BaseSpec with ManualJourne
       journeyToYourFis()
       selectTheSuitableFI("FirstFI")
       navigateToTaskList("CRS")
+
+      And("The reporting financial institution status is Incomplete before it is opened")
+      ReportingFinancialInstitutionPage.checkTaskListStatus("Incomplete")
 
       When("They open the reporting financial institution task")
       ReportingFinancialInstitutionPage.openFromTaskList()
@@ -54,9 +57,16 @@ class ReportingFinancialInstitutionManualSpec extends BaseSpec with ManualJourne
 
       Then("They are returned to the send a report page")
       ReportingFinancialInstitutionPage.checkReturnedToSendAReport()
+
+      And("The reporting financial institution status is Completed")
+      ReportingFinancialInstitutionPage.checkTaskListStatus("Completed")
     }
 
-    Scenario("CRS - Trust URN is shown and the answer Yes is saved", ManualSubmissionTests, SoloTests) {
+    Scenario(
+      "CRS - Trust URN is shown and the answer Yes sets the status to Completed",
+      ManualSubmissionTests,
+      SoloTests
+    ) {
       Given("The user has reached the manual task list as CRS")
       journeyToYourFis()
       selectTheSuitableFI("ThirdFI")
@@ -79,6 +89,9 @@ class ReportingFinancialInstitutionManualSpec extends BaseSpec with ManualJourne
 
       Then("They are returned to the send a report page")
       ReportingFinancialInstitutionPage.checkReturnedToSendAReport()
+
+      And("The reporting financial institution status is Completed")
+      ReportingFinancialInstitutionPage.checkTaskListStatus("Completed")
     }
 
     Scenario(
@@ -140,7 +153,11 @@ class ReportingFinancialInstitutionManualSpec extends BaseSpec with ManualJourne
       ReportingFinancialInstitutionPage.checkQuestion("Second FI")
     }
 
-    Scenario("FATCA - GIIN is shown with the question", ManualSubmissionTests, SoloTests) {
+    Scenario(
+      "FATCA - GIIN is shown with the question, Yes sets the status to Completed and changing to No sets it to Incomplete. After checkQuestion (Second FI)",
+      ManualSubmissionTests,
+      SoloTests
+    ) {
       Given("The user has reached the manual task list as FATCA")
       journeyToYourFis()
       selectTheSuitableFI("SecondFI")
@@ -155,9 +172,29 @@ class ReportingFinancialInstitutionManualSpec extends BaseSpec with ManualJourne
       ReportingFinancialInstitutionPage.checkNameAndAddress("Second FI")
       ReportingFinancialInstitutionPage.checkRow("Global Intermediary Identification Number", "98096B.00000.LE.555")
       ReportingFinancialInstitutionPage.checkQuestion("Second FI")
+
+      When("They select Yes and continue")
+      ReportingFinancialInstitutionPage.selectYesAndContinue()
+
+      Then("They are returned to the send a report page and the status is Completed")
+      ReportingFinancialInstitutionPage.checkReturnedToSendAReport()
+      ReportingFinancialInstitutionPage.checkTaskListStatus("Completed")
+
+      When("They open the task again, select No and continue")
+      ReportingFinancialInstitutionPage.openFromTaskList()
+      ReportingFinancialInstitutionPage.checkPage("Second FI")
+      ReportingFinancialInstitutionPage.selectNoAndContinue()
+
+      Then("They are returned to the send a report page and the status is Incomplete")
+      ReportingFinancialInstitutionPage.checkReturnedToSendAReport()
+      ReportingFinancialInstitutionPage.checkTaskListStatus("Incomplete")
     }
 
-    Scenario("FATCA - no GIIN shows the must-provide text and hides the question", ManualSubmissionTests, SoloTests) {
+    Scenario(
+      "FATCA - no GIIN shows the must-provide text, hides the question and the status stays Incomplete",
+      ManualSubmissionTests,
+      SoloTests
+    ) {
       Given("The user has reached the manual task list as FATCA")
       journeyToYourFis()
       selectTheSuitableFI("FifthFI")
@@ -171,6 +208,12 @@ class ReportingFinancialInstitutionManualSpec extends BaseSpec with ManualJourne
       ReportingFinancialInstitutionPage.checkMustProvideGiinLink("Fifth FI")
       ReportingFinancialInstitutionPage.checkRow("GIIN", "Not provided")
       ReportingFinancialInstitutionPage.checkQuestionHidden()
+
+      When("They go back to the send a report page")
+      ReportingFinancialInstitutionPage.goToTaskList()
+
+      Then("The reporting financial institution status is Incomplete")
+      ReportingFinancialInstitutionPage.checkTaskListStatus("Incomplete")
     }
   }
 }
