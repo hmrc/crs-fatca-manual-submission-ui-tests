@@ -40,4 +40,10 @@ trait ManualJourneyHelper {
     ManualSendAReportIndexPage.checkDynamicPage()
   }
 
+  def reachTaskList(regime: String): Unit = {
+    journeyToYourFis()
+    selectTheSuitableFI(if (regime == "CRS") "FirstFI" else "FourthFI")
+    navigateToTaskList(regime)
+  }
+
 }

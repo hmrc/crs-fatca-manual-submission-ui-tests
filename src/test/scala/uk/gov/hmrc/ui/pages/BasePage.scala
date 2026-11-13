@@ -59,6 +59,23 @@ trait BasePage extends BrowserDriver with Matchers with IdGenerators with PageOb
   def changeAccountLink(account: String): By       = By.id(s"change-account-$account")
   def removeAccountLink(account: String): By       = By.id(s"remove-account-$account")
 
+  private def fluentWait: Wait[WebDriver] = new FluentWait[WebDriver](Driver.instance)
+    .withTimeout(Duration.ofSeconds(15))
+    .pollingEvery(Duration.ofMillis(200))
+
+  def waitUntilVisible(locator: By): Unit =
+    fluentWait.until(ExpectedConditions.visibilityOfElementLocated(locator))
+
+  def waitWith(timeoutSeconds: Int): FluentWait[WebDriver] =
+    new FluentWait[WebDriver](Driver.instance)
+      .withTimeout(Duration.ofSeconds(timeoutSeconds))
+      .pollingEvery(Duration.ofMillis(200))
+
+  def waitForStableText(locator: By): String = {
+    fluentWait.until(ExpectedConditions.refreshed(ExpectedConditions.visibilityOfElementLocated(locator)))
+    getText(locator)
+  }
+
   def clickOnBackLink(): Unit = {
     onPage()
     click(backLinkText)
@@ -93,14 +110,6 @@ trait BasePage extends BrowserDriver with Matchers with IdGenerators with PageOb
   def checkH3(h3: String): Assertion =
     getText(tempPageHeader) should include(h3)
 
-  def waitUntilVisible(locator: By): Unit =
-    fluentWait.until(ExpectedConditions.visibilityOfElementLocated(locator))
-
-  def waitWith(timeoutSeconds: Int): FluentWait[WebDriver] =
-    new FluentWait[WebDriver](Driver.instance)
-      .withTimeout(Duration.ofSeconds(timeoutSeconds))
-      .pollingEvery(Duration.ofMillis(200))
-
   def selectNoAndContinueFromChange(): Unit = {
     checkChangeDynamicPage()
     click(noRadioId)
@@ -130,9 +139,13 @@ trait BasePage extends BrowserDriver with Matchers with IdGenerators with PageOb
   def isElementPresent(locator: By): Boolean =
     !Driver.instance.findElements(locator).isEmpty
 
-  def waitForStableText(locator: By): String = {
-    fluentWait.until(ExpectedConditions.refreshed(ExpectedConditions.visibilityOfElementLocated(locator)))
-    getText(locator)
+  def selectCountry(countryName: String): Unit =
+    selectFromAutocomplete("country-select", countryName)
+
+  def selectFromAutocomplete(selectId: String, visibleText: String): Unit = {
+    val js = Driver.instance.asInstanceOf[JavascriptExecutor]
+    js.executeScript(s"document.getElementById('$selectId').style.display = 'block';")
+    new Select(Driver.instance.findElement(By.id(selectId))).selectByVisibleText(visibleText)
   }
 
   def selectCurrency(): Unit =
@@ -175,19 +188,5 @@ trait BasePage extends BrowserDriver with Matchers with IdGenerators with PageOb
     fluentWait.until(ExpectedConditions.urlToBe(url))
     this
   }
-
-  private def fluentWait: Wait[WebDriver] = new FluentWait[WebDriver](Driver.instance)
-    .withTimeout(Duration.ofSeconds(15))
-    .pollingEvery(Duration.ofMillis(200))
-
-  def selectCountry(countryName: String): Unit =
-    selectFromAutocomplete("country-select", countryName)
-
-  def selectFromAutocomplete(selectId: String, visibleText: String): Unit = {
-    val js = Driver.instance.asInstanceOf[JavascriptExecutor]
-    js.executeScript(s"document.getElementById('$selectId').style.display = 'block';")
-    new Select(Driver.instance.findElement(By.id(selectId))).selectByVisibleText(visibleText)
-  }
-
   case class PageNotFoundException(message: String) extends Exception(message)
 }
