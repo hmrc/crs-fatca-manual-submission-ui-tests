@@ -36,6 +36,7 @@ object AccountHolderAccountPage extends BasePage {
   val checkboxInputs: By     = By.cssSelector(".govuk-checkboxes__input")
   val accountHoldersLink: By = By.linkText("Account holders")
   val firstAccountLabel: By  = By.xpath("(//label[contains(@class,'govuk-checkboxes__label')])[1]")
+  val addAnAccountButton: By = By.cssSelector("a.govuk-button[href*='/manual/accounts/add-account']")
 
   def labelFor(text: String): By =
     By.xpath(s"//label[contains(@class,'govuk-checkboxes__label')][normalize-space()='$text']")
@@ -44,11 +45,6 @@ object AccountHolderAccountPage extends BasePage {
     By.xpath(s"//label[contains(@class,'govuk-checkboxes__label')][normalize-space()='$text']/preceding-sibling::input")
 
   val defaultIbanNumber: String = "GB33BUKB20201555555555"
-
-  /** journey helpers: an account must exist before this page (and anything after it) can be reached --- Adds one
-    * account via the account-number route (have number = Yes, IBAN), then returns to the task list Adds one account via
-    * the identifier route (have number = No), then returns to the task list
-    */
 
   def addAccountByNumber(number: String = defaultIbanNumber): this.type = {
     ManualSendAReportIndexPage.clickAccounts()
@@ -65,10 +61,6 @@ object AccountHolderAccountPage extends BasePage {
     goToTaskList()
   }
 
-  /** Account number route: add an account by number, go to /account-holder/account, verify it is listed, tick it and
-    * continue -> /individual-or-organisation
-    */
-
   def reachIndividualOrOrganisationPageByNumber(): this.type = {
     addAccountByNumber()
     goToPage()
@@ -77,21 +69,12 @@ object AccountHolderAccountPage extends BasePage {
     selectAccountAndContinue(defaultIbanNumber)
   }
 
-  /** Account identifier route: same journey, but the account is added via have number = No -> identifier. The checkbox
-    * label is whatever identifier the identifier page enters, so the first checkbox is ticked.
-    */
-
   def reachIndividualOrOrganisationPageByIdentifier(): this.type = {
     addAccountByIdentifier()
     goToPage()
     checkAccountsListed()
     selectFirstAccountAndContinue()
   }
-
-  /** Debt or equity (CRS1104) accounts An account with this type is what makes CRS ask /provide-equity-interest-type
-    * after the address page. Both routes share the same tail after the number / identifier page, so it lives in one
-    * private method. Only IBAN / SEMP skip the account type page, so the number route uses "Any other" here.
-    */
 
   private def completeAccountAsDebtOrEquity(): Unit = {
     AccountClosedPage.selectNoAndContinue()
@@ -133,8 +116,6 @@ object AccountHolderAccountPage extends BasePage {
     checkAccountsListed()
     selectFirstAccountAndContinue()
   }
-
-  /* Direct navigation to /manual/account-holder/account (stand-in for clicking the Account Holders link) */
 
   def goToPage(): this.type = {
     Driver.instance.get(pageUrl)
@@ -224,6 +205,17 @@ object AccountHolderAccountPage extends BasePage {
   def clickBackToSendAReport(): this.type = {
     click(backToReportLink)
     onPageContaining("/manual/send-a-report")
+    this
+  }
+
+  def clickAddAnAccountLink(): this.type = {
+    click(addAccountLink)
+    this
+  }
+
+  def clickAddAnAccountButton(): this.type = {
+    onPage(baseUrlManualSub + "/manual/accounts")
+    click(addAnAccountButton)
     this
   }
 }

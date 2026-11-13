@@ -37,15 +37,28 @@ class AccountHolderManualSpec extends BaseSpec with ManualJourneyHelper {
       selectTheSuitableFI("FirstFI")
       navigateToTaskList("CRS")
 
-      /** // TODO: Replace direct navigation below with the click-through once //
-        * ManualSendAReportIndexPage.clickAccountHolder() is implemented. When("They navigate directly to the individual
-        * or organisation page") AccountHolderIndividualOrOrganisationPage.goToPage()
-        *
-        * // When("They open the account holder task") // ManualSendAReportIndexPage.clickAccountHolder()
+      When("They open the Account holders task from the task list")
+      AccountHolderAccountPage.clickAccountHolders()
+
+      Then("They are on the accounts held by this account holder page with no accounts")
+      AccountHolderAccountPage.checkPage()
+
+      When("They click the add an account link")
+      AccountHolderAccountPage.clickAddAnAccountLink()
+
+      And("They click the Add an account button")
+      AccountHolderAccountPage.clickAddAnAccountButton()
+
+      And("They complete the accounts journey (number route) from the have number page")
+      AccountHolderJourneyHelper.completeAccountByNumberCrs()
+
+      /** TODO: after the account journey the user lands on /manual/accounts, which asks "Do you need to add another
+        * account?". Select No and continue from there. Until that page is built, No goes to the Under construction
+        * page. For now the scenario goes back to the task list and opens Account holders instead.
         */
 
-      When("They add an account using the account number route, open the account holders task and select the account")
-      AccountHolderAccountPage.reachIndividualOrOrganisationPageByDebtOrEquityNumber()
+      And("They open Account holders and select the account")
+      AccountHolderJourneyHelper.openAccountHoldersAndSelectFirstAccount()
 
       Then("They are on the individual or organisation page")
       AccountHolderIndividualOrOrganisationPage.checkPage()
@@ -92,12 +105,6 @@ class AccountHolderManualSpec extends BaseSpec with ManualJourneyHelper {
       When("They enter the non UK address and continue")
       AccountHolderAddressNonUKPage.enterAddressNonUK()
 
-      Then("The Debt or equity account means they are asked whether to provide the equity interest type")
-      AccountHolderProvideEquityInterestTypePage.checkPage()
-
-      When("They select No and continue")
-      AccountHolderProvideEquityInterestTypePage.selectNoAndContinue()
-
       Then("CRS asks whether a valid self-certification was provided")
       AccountHolderSelfCertificationPage.checkPage()
 
@@ -140,7 +147,7 @@ class AccountHolderManualSpec extends BaseSpec with ManualJourneyHelper {
     }
 
     Scenario(
-      "Account Holder - selecting Individual continues the journey - FATCA (account identifier route)",
+      "Account Holder - selecting Individual continues the journey - FATCA (account identifier route) - then account holders page: add another, Incomplete tag and remove",
       ManualSubmissionTests,
       SoloTests
     ) {
@@ -149,17 +156,28 @@ class AccountHolderManualSpec extends BaseSpec with ManualJourneyHelper {
       selectTheSuitableFI("FourthFI")
       navigateToTaskList("FATCA")
 
-      /** // TODO: Replace direct navigation below with the click-through once //
-        * ManualSendAReportIndexPage.clickAccountHolder() is implemented. When("They navigate directly to the individual
-        * or organisation page") AccountHolderIndividualOrOrganisationPage.goToPage()
-        *
-        * // When("They open the account holder task") // ManualSendAReportIndexPage.clickAccountHolder()
+      When("They open the Account holders task from the task list")
+      AccountHolderAccountPage.clickAccountHolders()
+
+      Then("They are on the accounts held by this account holder page with no accounts")
+      AccountHolderAccountPage.checkPage()
+
+      When("They click the add an account link")
+      AccountHolderAccountPage.clickAddAnAccountLink()
+
+      And("They click the Add an account button")
+      AccountHolderAccountPage.clickAddAnAccountButton()
+
+      And("They complete the accounts journey (identifier route) from the have number page")
+      AccountHolderJourneyHelper.completeAccountByIdentifierFatca()
+
+      /** TODO: after the account journey the user lands on /manual/accounts, which asks "Do you need to add another
+        * account?". Select No and continue from there. Until that page is built, No goes to the Under construction
+        * page. For now the scenario goes back to the task list and opens Account holders instead.
         */
 
-      When(
-        "They add an account using the account identifier route, open the account holders task and select the account"
-      )
-      AccountHolderAccountPage.reachIndividualOrOrganisationPageByIdentifier()
+      And("They open Account holders and select the account")
+      AccountHolderJourneyHelper.openAccountHoldersAndSelectFirstAccount()
 
       Then("They are on the individual or organisation page")
       AccountHolderIndividualOrOrganisationPage.checkPage()
@@ -242,10 +260,47 @@ class AccountHolderManualSpec extends BaseSpec with ManualJourneyHelper {
       Then("They lands on check answers page")
       AccountHolderCheckAnswersPage.checkPage()
 
+      When("They select Continue on the check answers page")
+      AccountHoldersPage.continueFromCheckAnswers()
+
+      Then(
+        "They see the account holders page with the 1 account holder heading and the add another account holder question"
+      )
+      AccountHoldersPage.checkPage()
+      AccountHoldersPage.checkHeading(1)
+      AccountHoldersPage.checkAddAnotherQuestionShown()
+
+      When("They select Yes to add another account holder")
+      AccountHoldersPage.selectYesToAddAnotherAndContinue()
+
+      Then("They see the accounts held by this account holder page")
+      AccountHolderAccountPage.checkPage()
+
+      When("They add a second account holder with just a name and open the account holders link")
+      AccountHoldersPage.addIndividualAccountHolderToFirstAccount()
+      AccountHolderAccountPage.clickAccountHolders()
+
+      Then("They see the 2 account holders heading with the Incomplete tag on the unfinished account holder only")
+      AccountHoldersPage.checkPage()
+      AccountHoldersPage.checkHeading(2)
+      AccountHoldersPage.checkIncompleteTagCount(1)
+      AccountHoldersPage.checkChangeAndRemoveLinks()
+
+      When("They select Remove against the unfinished account holder, Yes and continue")
+      AccountHoldersPage.clickRemove(AccountHoldersPage.secondAccountHolderName)
+      AccountHolderRemovePage.checkPage("FATCA")
+      AccountHolderRemovePage.selectYesAndContinue()
+
+      Then("They see the success banner and one account holder left")
+      AccountHoldersPage.checkPage()
+      AccountHoldersPage.checkRemovedBanner(AccountHoldersPage.secondAccountHolderName)
+      AccountHoldersPage.checkHeading(1)
+      AccountHoldersPage.checkAccountHolderNotListed(AccountHoldersPage.secondAccountHolderName)
+
     }
 
     Scenario(
-      "Account Holder - selecting Organisation continues the journey - FATCA (account number route)",
+      "Account Holder - selecting Organisation continues the journey - FATCA (account number route) - then account holders page: Change, Remove No and Yes, back link and add an account holder",
       ManualSubmissionTests,
       SoloTests
     ) {
@@ -254,15 +309,28 @@ class AccountHolderManualSpec extends BaseSpec with ManualJourneyHelper {
       selectTheSuitableFI("FourthFI")
       navigateToTaskList("FATCA")
 
-      /** // TODO: Replace direct navigation below with the click-through once //
-        * ManualSendAReportIndexPage.clickAccountHolder() is implemented. When("They navigate directly to the individual
-        * or organisation page") AccountHolderIndividualOrOrganisationPage.goToPage()
-        *
-        * // When("They open the account holder task") // ManualSendAReportIndexPage.clickAccountHolder()
+      When("They open the Account holders task from the task list")
+      AccountHolderAccountPage.clickAccountHolders()
+
+      Then("They are on the accounts held by this account holder page with no accounts")
+      AccountHolderAccountPage.checkPage()
+
+      When("They click the add an account link")
+      AccountHolderAccountPage.clickAddAnAccountLink()
+
+      And("They click the Add an account button")
+      AccountHolderAccountPage.clickAddAnAccountButton()
+
+      And("They complete the accounts journey (number route) from the have number page")
+      AccountHolderJourneyHelper.completeAccountByNumberFatca()
+
+      /** TODO: after the account journey the user lands on /manual/accounts, which asks "Do you need to add another
+        * account?". Select No and continue from there. Until that page is built, No goes to the Under construction
+        * page. For now the scenario goes back to the task list and opens Account holders instead.
         */
 
-      When("They add an account using the account number route, open the account holders task and select the account")
-      AccountHolderAccountPage.reachIndividualOrOrganisationPageByNumber()
+      And("They open Account holders and select the account")
+      AccountHolderJourneyHelper.openAccountHoldersAndSelectFirstAccount()
 
       Then("They are on the individual or organisation page")
       AccountHolderIndividualOrOrganisationPage.checkPage()
@@ -311,10 +379,60 @@ class AccountHolderManualSpec extends BaseSpec with ManualJourneyHelper {
 
       Then("They lands on check answers page")
       AccountHolderCheckAnswersPage.checkPage()
+
+      When("They select Continue on the check answers page")
+      AccountHoldersPage.continueFromCheckAnswers()
+
+      Then(
+        "They see the account holders page with the 1 account holder heading, Change and Remove links and no Incomplete tag"
+      )
+      AccountHoldersPage.checkPage()
+      AccountHoldersPage.checkHeading(1)
+      AccountHoldersPage.checkChangeAndRemoveLinks()
+      AccountHoldersPage.checkIncompleteTagCount(0)
+
+      When("They select Change against the account holder")
+      AccountHoldersPage.clickChange()
+
+      Then("They see the check answers page again")
+      AccountHolderCheckAnswersPage.checkPage()
+
+      When("They select Continue and then Remove against the account holder")
+      AccountHoldersPage.continueFromCheckAnswers()
+      AccountHoldersPage.clickRemove()
+
+      Then("They see the remove account holder page with the substantial owner wording and the account holder name")
+      AccountHolderRemovePage.checkPage("FATCA")
+
+      When("They select No and continue")
+      AccountHolderRemovePage.selectNoAndContinue()
+
+      Then("They are back on the account holders page with no banner and the account holder still listed")
+      AccountHoldersPage.checkPage()
+      AccountHoldersPage.checkNoBanner()
+      AccountHoldersPage.checkHeading(1)
+
+      When("They select Remove again, select Yes and continue")
+      AccountHoldersPage.clickRemove()
+      AccountHolderRemovePage.selectYesAndContinue()
+
+      Then("They see the success banner, the no account holders version and the FATCA back link")
+      AccountHoldersPage.checkPage()
+      AccountHoldersPage.checkRemovedBanner()
+      AccountHoldersPage.checkNoAccountHolders()
+      AccountHoldersPage.checkAddAnotherQuestionNotShown()
+      AccountHoldersPage.checkBackLink("FATCA", AccountHoldersPage.fiName("FATCA"))
+
+      When("They select the Add an account holder button")
+      AccountHoldersPage.clickAddAnAccountHolder()
+
+      Then("They see the accounts held by this account holder page")
+      AccountHolderAccountPage.checkPage()
+
     }
 
     Scenario(
-      "Account Holder - selecting Organisation continues the journey - CRS (account identifier route)",
+      "Account Holder - selecting Organisation continues the journey - CRS (Debt or equity account, account identifier route) - then account holders page: Remove No and add another No",
       ManualSubmissionTests,
       SoloTests
     ) {
@@ -323,17 +441,28 @@ class AccountHolderManualSpec extends BaseSpec with ManualJourneyHelper {
       selectTheSuitableFI("ThirdFI")
       navigateToTaskList("CRS")
 
-      /** // TODO: Replace direct navigation below with the click-through once //
-        * ManualSendAReportIndexPage.clickAccountHolder() is implemented. When("They navigate directly to the individual
-        * or organisation page") AccountHolderIndividualOrOrganisationPage.goToPage()
-        *
-        * // When("They open the account holder task") // ManualSendAReportIndexPage.clickAccountHolder()
+      When("They open the Account holders task from the task list")
+      AccountHolderAccountPage.clickAccountHolders()
+
+      Then("They are on the accounts held by this account holder page with no accounts")
+      AccountHolderAccountPage.checkPage()
+
+      When("They click the add an account link")
+      AccountHolderAccountPage.clickAddAnAccountLink()
+
+      And("They click the Add an account button")
+      AccountHolderAccountPage.clickAddAnAccountButton()
+
+      And("They complete the accounts journey (Debt or equity, identifier route) from the have number page")
+      AccountHolderJourneyHelper.completeAccountByDebtOrEquityIdentifierCrs()
+
+      /** TODO: after the account journey the user lands on /manual/accounts, which asks "Do you need to add another
+        * account?". Select No and continue from there. Until that page is built, No goes to the Under construction
+        * page. For now the scenario goes back to the task list and opens Account holders instead.
         */
 
-      When(
-        "They add an account using the account identifier route, open the account holders task and select the account"
-      )
-      AccountHolderAccountPage.reachIndividualOrOrganisationPageByDebtOrEquityIdentifier()
+      And("They open Account holders and select the account")
+      AccountHolderJourneyHelper.openAccountHoldersAndSelectFirstAccount()
 
       Then("They are on the individual or organisation page")
       AccountHolderIndividualOrOrganisationPage.checkPage()
@@ -412,6 +541,36 @@ class AccountHolderManualSpec extends BaseSpec with ManualJourneyHelper {
 
       Then("They lands on check answers page")
       AccountHolderCheckAnswersPage.checkPage()
+
+      When("They select Continue on the check answers page")
+      AccountHoldersPage.continueFromCheckAnswers()
+
+      Then("They see the account holders page with the 1 account holder heading")
+      AccountHoldersPage.checkPage()
+      AccountHoldersPage.checkHeading(1)
+
+      When("They select Remove against the account holder")
+      AccountHoldersPage.clickRemove()
+
+      Then("They see the remove account holder page with the controlling person wording and the account holder name")
+      AccountHolderRemovePage.checkPage("CRS")
+
+      When("They select No and continue")
+      AccountHolderRemovePage.selectNoAndContinue()
+
+      Then(
+        "They are back on the account holders page with no banner, the account holder still listed and the add another question"
+      )
+      AccountHoldersPage.checkPage()
+      AccountHoldersPage.checkNoBanner()
+      AccountHoldersPage.checkHeading(1)
+      AccountHoldersPage.checkAddAnotherQuestionShown()
+
+      When("They select No to add another account holder")
+      AccountHoldersPage.selectNoToAddAnotherAndContinue()
+
+      Then("They see the under construction page")
+      AccountHoldersPage.checkUnderConstruction()
     }
 
     Scenario(
@@ -449,6 +608,58 @@ class AccountHolderManualSpec extends BaseSpec with ManualJourneyHelper {
 
       When("They select the back to send a report link")
       AccountHolderAccountPage.clickBackToSendAReport()
+    }
+
+    Scenario(
+      "Account Holder - one account without an account holder shows the missing account text, Incomplete tag and back link - CRS",
+      ManualSubmissionTests,
+      SoloTests
+    ) {
+      Given("The user has two accounts and one account holder linked to the first account as CRS")
+      journeyToYourFis()
+      selectTheSuitableFI("FirstFI")
+      navigateToTaskList("CRS")
+      AccountHolderAccountPage.addAccountByNumber()
+      AccountHoldersPage.addAnotherAccountByNumber(TestData.iBANAccount2)
+      AccountHoldersPage.addOrganisationAccountHolder("CRS", TestData.iBANAccount)
+
+      When("They open the account holders page")
+      AccountHolderAccountPage.clickAccountHolders()
+      AccountHoldersPage.checkPage()
+
+      Then(
+        "They see the missing account holder text for the second account, the Add an account holder button, the Incomplete tag and the back link"
+      )
+      AccountHoldersPage.checkHeading(1)
+      AccountHoldersPage.checkOneAccountMissing(TestData.iBANAccount2)
+      AccountHoldersPage.checkIncompleteTagShown()
+      AccountHoldersPage.checkBackLink("CRS", AccountHoldersPage.fiName("CRS"))
+
+      When("They select the back link")
+      AccountHoldersPage.clickBackToSendAReport()
+    }
+
+    Scenario(
+      "Account Holder - multiple accounts without an account holder shows the missing accounts text - CRS",
+      ManualSubmissionTests,
+      SoloTests
+    ) {
+      Given("The user has three accounts and one account holder linked to the first account as CRS")
+      journeyToYourFis()
+      selectTheSuitableFI("FirstFI")
+      navigateToTaskList("CRS")
+      AccountHolderAccountPage.addAccountByNumber()
+      AccountHoldersPage.addAnotherAccountByNumber(TestData.iBANAccount2)
+      AccountHoldersPage.addAnotherAccountByNumber(TestData.iBANAccount3)
+      AccountHoldersPage.addOrganisationAccountHolder("CRS", TestData.iBANAccount)
+
+      When("They open the account holders page")
+      AccountHolderAccountPage.clickAccountHolders()
+      AccountHoldersPage.checkPage()
+
+      Then("They see the missing account holder text listing the second and third accounts")
+      AccountHoldersPage.checkHeading(1)
+      AccountHoldersPage.checkAccountsMissing(Seq(TestData.iBANAccount2, TestData.iBANAccount3))
     }
 
   }
