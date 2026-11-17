@@ -16,6 +16,7 @@
 
 package uk.gov.hmrc.ui.pages.manual.filercategory
 
+import uk.gov.hmrc.selenium.webdriver.Driver
 import uk.gov.hmrc.ui.pages.BasePage
 
 object CheckAnswersPage extends BasePage {
@@ -28,4 +29,14 @@ object CheckAnswersPage extends BasePage {
     this
   }
 
+  def goToCheckAnswers(): this.type = {
+    Driver.instance.get(pageUrl)
+    this
+  }
+
+  def continueFromCheckAnswers(): this.type = {
+    onPage(pageUrl)
+    click(submitButtonId)
+    this
+  }
 }
