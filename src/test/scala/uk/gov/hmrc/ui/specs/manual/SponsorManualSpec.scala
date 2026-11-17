@@ -18,6 +18,7 @@ package uk.gov.hmrc.ui.specs.manual
 
 import uk.gov.hmrc.ui.pages.*
 import uk.gov.hmrc.ui.pages.manual.*
+import uk.gov.hmrc.ui.pages.manual.filercategory.*
 import uk.gov.hmrc.ui.pages.manual.sponsor.*
 import uk.gov.hmrc.ui.specs.BaseSpec
 import uk.gov.hmrc.ui.specs.tags.*
@@ -77,6 +78,9 @@ class SponsorManualSpec extends BaseSpec with SponsorJourneyHelper {
       Then("They are returned to the manual send a report task list page")
       ManualSendAReportIndexPage.onPage()
 
+      And("Sponsor details is Completed and Filer category is Incomplete")
+      SendAReportSectionStatusPage.checkSponsorStatus("Completed")
+      SendAReportSectionStatusPage.checkFilerCategoryStatus("Incomplete")
     }
 
     Scenario(
@@ -141,6 +145,10 @@ class SponsorManualSpec extends BaseSpec with SponsorJourneyHelper {
       Then("They are returned to the manual send a report task list page")
       ManualSendAReportIndexPage.onPage()
 
+      And("Sponsor details is Completed and Filer category is Incomplete")
+      SendAReportSectionStatusPage.checkSponsorStatus("Completed")
+      SendAReportSectionStatusPage.checkFilerCategoryStatus("Incomplete")
+
     }
 
     Scenario("Sponsor journey - Address Non-UK", ManualSubmissionTests, SoloTests) {
@@ -177,6 +185,57 @@ class SponsorManualSpec extends BaseSpec with SponsorJourneyHelper {
 
       Then("They are returned to the manual send a report task list page")
       ManualSendAReportIndexPage.onPage()
+
+      And("Sponsor details is Completed and Filer category is Incomplete")
+      SendAReportSectionStatusPage.checkSponsorStatus("Completed")
+      SendAReportSectionStatusPage.checkFilerCategoryStatus("Incomplete")
+    }
+
+    Scenario(
+      "Sponsor details - Yes to a sponsor with the details missing shows the problem page and keeps the section Incomplete",
+      ManualSubmissionTests,
+      SoloTests
+    ) {
+      Given("The user has reached the manual task list as FATCA")
+      journeyToYourFis()
+      selectTheSuitableFI("FirstFI")
+      navigateToTaskList("FATCA")
+
+      When("They open Sponsor details and select Yes to having a sponsor")
+      SendAReportSectionStatusPage.clickSponsorDetails()
+      SponsorCompletionPage.checkHaveSponsorPage("First FI")
+      SponsorCompletionPage.selectYesAndContinue()
+      SponsorCompletionPage.checkSponsorNamePage()
+
+      And("They go back to the task list without providing the sponsor details")
+      SendAReportSectionStatusPage.goToPage()
+
+      Then("Sponsor details is Incomplete and Filer category is now Incomplete")
+      SendAReportSectionStatusPage.checkSponsorStatus("Incomplete")
+      SendAReportSectionStatusPage.checkFilerCategoryStatus("Incomplete")
+
+      When("They go straight to the sponsor check answers page")
+      SponsorCompletionPage.goToCheckAnswers()
+
+      When("They go back to the task list")
+      SendAReportSectionStatusPage.goToPage()
+
+      Then("Sponsor details is still Incomplete")
+      SendAReportSectionStatusPage.checkSponsorStatus("Incomplete")
+    }
+
+    Scenario(
+      "Sponsor details and Filer category - are not shown on the CRS task list",
+      ManualSubmissionTests,
+      SoloTests
+    ) {
+      Given("The user has reached the manual task list as CRS")
+      journeyToYourFis()
+      selectTheSuitableFI("FirstFI")
+      navigateToTaskList("CRS")
+
+      Then("Neither the Sponsor details nor the Filer category section is shown")
+      SendAReportSectionStatusPage.checkSponsorAndFilerCategoryNotShown()
     }
   }
 }
