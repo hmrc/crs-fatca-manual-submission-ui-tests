@@ -16,12 +16,26 @@
 
 package uk.gov.hmrc.ui.pages.manual.account
 
+import org.openqa.selenium.By
+import uk.gov.hmrc.selenium.webdriver.Driver
 import uk.gov.hmrc.ui.pages.BasePage
 import uk.gov.hmrc.ui.utils.TestData
+
+import scala.jdk.CollectionConverters.*
 
 object AccountAccountsPage extends BasePage {
 
   override val pageUrl: String = baseUrlManualSub + "/manual/accounts"
+
+  private val addAnotherNoRadio: By  = By.cssSelector("input[name='value'][value='false']")
+  private val addAnotherContinue: By = By.cssSelector("form button[type='submit']")
+
+  private val incompleteTags: By =
+    By.xpath(
+      "//dl[contains(@class,'accounts-summary-list')]//strong[contains(@class,'govuk-tag')][normalize-space()='Incomplete']"
+    )
+
+  private val accountsStatus: By = By.id("accounts-information-1-status")
 
   def checkPage(): this.type = {
     onPage(pageUrl)
@@ -49,6 +63,33 @@ object AccountAccountsPage extends BasePage {
   def removeAccount(account: String): Unit = {
     onPage(pageUrl)
     click(removeAccountLink(account))
+  }
+
+  def goToAccountsList(): this.type = {
+    Driver.instance.get(pageUrl)
+    onPage(pageUrl)
+    this
+  }
+
+  def selectNoToAddAnotherAndContinue(): this.type = {
+    onPage(pageUrl)
+    click(addAnotherNoRadio)
+    click(addAnotherContinue)
+    this
+  }
+
+  def checkIncompleteTagCount(expected: Int): this.type = {
+    onPage(pageUrl)
+    val actual = Driver.instance.findElements(incompleteTags).asScala.size
+    assert(actual == expected, s"Expected $expected Incomplete tag(s) on the accounts list but found $actual")
+    this
+  }
+
+  def checkAccountsStatus(expected: String): this.type = {
+    onPageContaining("/manual/send-a-report")
+    val actual = getText(accountsStatus).trim
+    assert(actual == expected, s"Expected the Accounts status '$expected' but found '$actual'")
+    this
   }
 
 }
