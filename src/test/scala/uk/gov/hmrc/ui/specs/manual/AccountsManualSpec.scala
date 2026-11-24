@@ -28,7 +28,7 @@ class AccountsManualSpec extends BaseSpec with ManualJourneyHelper {
   Feature("CRS/FATCA Manual - Accounts journey") {
 
     Scenario(
-      "Accounts - FATCA report does not show SEMP and IBAN can be selected",
+      "Accounts - FATCA report does not show SEMP and IBAN can be selected; incomplete account leaves Accounts Incomplete",
       ManualSubmissionTests,
       SoloTests
     ) {
@@ -57,10 +57,23 @@ class AccountsManualSpec extends BaseSpec with ManualJourneyHelper {
 
       When("They enter a valid IBAN and continue")
       AccountNumberPage.enterNumberAndContinue("GB33BUKB20201555555555")
+
+      Then("They land on the account closed page, so the number is saved; they leave the account incomplete")
+      AccountClosedPage.checkPage()
+
+      When("They go to the accounts list and see one Incomplete tag")
+      AccountAccountsPage.goToAccountsList()
+      AccountAccountsPage.checkIncompleteTagCount(1)
+
+      When("They select No to add another account and continue")
+      AccountAccountsPage.selectNoToAddAnotherAndContinue()
+
+      Then("They are returned to the task list and Accounts is shown as Incomplete")
+      AccountAccountsPage.checkAccountsStatus("Incomplete")
     }
 
     Scenario(
-      "Accounts - CRS report shows SEMP and IBAN can be selected",
+      "Accounts - CRS report shows SEMP and IBAN can be selected; incomplete account leaves Accounts Incomplete",
       ManualSubmissionTests,
       SoloTests
     ) {
@@ -89,10 +102,23 @@ class AccountsManualSpec extends BaseSpec with ManualJourneyHelper {
 
       When("They enter a valid account number and continue")
       AccountNumberPage.enterNumberAndContinue("ABC123")
+
+      Then("They land on the account closed page, so the number is saved; they leave the account incomplete")
+      AccountClosedPage.checkPage()
+
+      When("They go to the accounts list and see one Incomplete tag")
+      AccountAccountsPage.goToAccountsList()
+      AccountAccountsPage.checkIncompleteTagCount(1)
+
+      When("They select No to add another account and continue")
+      AccountAccountsPage.selectNoToAddAnotherAndContinue()
+
+      Then("They are returned to the task list and Accounts is shown as Incomplete")
+      AccountAccountsPage.checkAccountsStatus("Incomplete")
     }
 
     Scenario(
-      "Accounts - balance page valid currency and amount (FATCA)",
+      "Accounts - balance page valid currency and amount, section finished Yes gives Completed (FATCA)",
       ManualSubmissionTests,
       SoloTests
     ) {
@@ -155,10 +181,21 @@ class AccountsManualSpec extends BaseSpec with ManualJourneyHelper {
       Then("They lands on accounts page and display number of accounts created")
       AccountAccountsPage.checkPage()
 
+      When("They select No to add another account and continue")
+      AccountAccountsPage.selectNoToAddAnotherAndContinue()
+
+      Then("They are on the accounts section completed page for the FI")
+      AccountsSectionCompletedPage.checkPage(TestData.fourthFi)
+
+      When("They select Yes to finishing adding the accounts and continue")
+      AccountsSectionCompletedPage.selectYesAndContinue()
+
+      Then("They are returned to the task list and Accounts is shown as Completed")
+      AccountAccountsPage.checkAccountsStatus("Completed")
     }
 
     Scenario(
-      "Accounts - year opened, joint account and holders (CRS)",
+      "Accounts - year opened, joint account and holders, section finished Yes gives Completed (CRS)",
       ManualSubmissionTests,
       SoloTests
     ) {
@@ -251,10 +288,21 @@ class AccountsManualSpec extends BaseSpec with ManualJourneyHelper {
       Then("They lands on account page with one account added in the list")
       AccountAccountsPage.checkPage()
 
+      When("They select No to add another account and continue")
+      AccountAccountsPage.selectNoToAddAnotherAndContinue()
+
+      Then("They are on the accounts section completed page for the FI")
+      AccountsSectionCompletedPage.checkPage(TestData.firstFi)
+
+      When("They select Yes to finishing adding the accounts and continue")
+      AccountsSectionCompletedPage.selectYesAndContinue()
+
+      Then("They are returned to the task list and Accounts is shown as Completed")
+      AccountAccountsPage.checkAccountsStatus("Completed")
     }
 
     Scenario(
-      "Accounts - account type reached via joint account No. (CRS)",
+      "Accounts - account type reached via joint account No, section finished No gives Incomplete (CRS)",
       ManualSubmissionTests,
       SoloTests
     ) {
@@ -347,6 +395,17 @@ class AccountsManualSpec extends BaseSpec with ManualJourneyHelper {
       Then("They lands on accounts page with one account added to the list ")
       AccountAccountsPage.checkPage()
 
+      When("They select No to add another account and continue")
+      AccountAccountsPage.selectNoToAddAnotherAndContinue()
+
+      Then("They are on the accounts section completed page for the FI")
+      AccountsSectionCompletedPage.checkPage(TestData.firstFi)
+
+      When("They select No to finishing adding the accounts and continue")
+      AccountsSectionCompletedPage.selectNoAndContinue()
+
+      Then("They are returned to the task list and Accounts is shown as Incomplete")
+      AccountAccountsPage.checkAccountsStatus("Incomplete")
     }
 
     Scenario(
@@ -622,8 +681,6 @@ class AccountsManualSpec extends BaseSpec with ManualJourneyHelper {
 
       And("The notification banner about removed account displayed")
       AccountAccountsPage.notificationBanner()
-
     }
-
   }
 }
