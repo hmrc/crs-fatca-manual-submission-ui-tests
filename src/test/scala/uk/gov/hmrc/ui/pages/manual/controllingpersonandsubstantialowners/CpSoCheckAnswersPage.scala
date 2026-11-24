@@ -25,13 +25,13 @@ object CpSoCheckAnswersPage extends BasePage {
 
   def checkPageCRS(): this.type = {
     onPage(pageUrl)
-    checkH1(s"Check your answers for the${TestData.crs}")
+    checkH1(s"Check your answers for the ${TestData.crs}")
     this
   }
 
   def checkPageFATCA(): this.type = {
     onPage(pageUrl)
-    checkH1(s"Check your answers for the${TestData.fatca}")
+    checkH1(s"Check your answers for the ${TestData.fatca}")
     this
   }
 }

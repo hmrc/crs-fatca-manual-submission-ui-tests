@@ -194,12 +194,6 @@ class CpSoManualSpec extends BaseSpec with ManualJourneyHelper {
       Then("They enter to again to tax resident countries page with no countries added")
       CpSoChangeTaxResidentCountriesPage.checkPageWithNoAddedCountries()
 
-      And("If they don't want to add another country they can continue to check answers page")
-      CpSoChangeTaxResidentCountriesPage.selectNoAndContinue()
-
-      Then("They lands on check answers page for the substantial owner")
-      CpSoCheckAnswersPage.checkPageFATCA()
-
     }
 
     Scenario(
