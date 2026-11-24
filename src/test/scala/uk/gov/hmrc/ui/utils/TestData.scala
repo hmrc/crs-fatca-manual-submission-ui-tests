@@ -49,6 +49,8 @@ object TestData {
   val iBANAccount3                 = "GB82WEST12345698765432"
   val secondAccountHolderFirstName = "Alex"
   val secondAccountHolderLastName  = "Jones"
+  val crs                          = "controlling person"
+  val fatca                        = "substantial owner"
 
   private val env: String =
     System.getProperty("environment", "local").toLowerCase
