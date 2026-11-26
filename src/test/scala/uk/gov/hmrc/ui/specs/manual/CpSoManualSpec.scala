@@ -28,155 +28,155 @@ class CpSoManualSpec extends BaseSpec with ManualJourneyHelper {
 
   Feature("CRS/FATCA Manual - CP-SO individual or organisation") {
 
-//    Scenario(
-//      "CP-SO - end to end (FATCA): accounts, organisation account holder, individual substantial owner, list page, remove and section completed",
-//      ManualSubmissionTests,
-//      SoloTests
-//    ) {
-//      Given("The user has reached the manual task list as FATCA")
-//      journeyToYourFis()
-//      selectTheSuitableFI("FourthFI")
-//      navigateToTaskList("FATCA")
-//
-//      When("They complete the accounts section")
-//      ManualSendAReportIndexPage.clickAccounts()
-//      AccountHolderJourneyHelper.completeAccountByNumberFatca()
-//      AccountHolderJourneyHelper.completeAccountsSection(TestData.fourthFi)
-//
-//      And("They open Account holders, select the account and complete an organisation account holder")
-//      AccountHolderJourneyHelper.openAccountHoldersAndSelectFirstAccount()
-//      AccountHolderJourneyHelper.completeOrganisationAccountHolderFatca()
-//
-//      And("They open the substantial owners task and select the account holder")
-//      CpSoAccountHolderPage.openCpSoJourneyFromTaskList("FATCA")
-//
-//      Then("They see the individual or organisation page")
-//      CpSoIndividualOrOrganisationPage.checkPage()
-//
-//      When("They select Individual and continue")
-//      CpSoIndividualOrOrganisationPage.selectIndividualAndContinue()
-//
-//      Then("They see the individual name page with FATCA wording")
-//      CpSoIndividualNamePage.checkHeadingForFatca()
-//
-//      When("They enter a valid first and last name and continue")
-//      CpSoIndividualNamePage.enterNameAndContinue("Sarah", "Smith")
-//
-//      Then("They see the have date of birth page with FATCA wording")
-//      CpSoIndividualHaveDoB.checkPageForFatca()
-//
-//      When("They select Yes and continue")
-//      CpSoIndividualHaveDoB.selectYesAndContinue()
-//
-//      Then("They are taken to the date of birth page")
-//      CpSoIndividualD0B.checkPage()
-//
-//      When("They enter a valid date of birth and continue")
-//      CpSoIndividualD0B.enterDateOfBirth()
-//
-//      Then("They see the have place of birth page")
-//      CpSoIndividualHavePlaceOfBirthPage.checkPage()
-//
-//      When("They select Yes and continue")
-//      CpSoIndividualHavePlaceOfBirthPage.selectYesAndContinue()
-//
-//      And("They enter the Individual place of birth")
-//      CpSoIndividualPlaceOfBirthPage.enterPlaceOfBirthAndContinue("city", "Region", "Japan")
-//
-//      Then("They need to provide the details of Where are they based")
-//      CpSoWhereAreTheyBasedPage.checkPage()
-//
-//      When("They select yes to enter UK address")
-//      CpSoWhereAreTheyBasedPage.selectYesAndContinue()
-//
-//      Then("They will see the UK Postcode page")
-//      CpSoUKPostcodePage.checkPage()
-//
-//      When("They enter the address and click find address")
-//      CpSoUKPostcodePage.enterPostcodeAndFindAddress(TestData.postcodeMultipleAddressEnv)
-//
-//      And("They select the first address and continue")
-//      CpSoSelectAddressPage.selectFirstAddressAndContinue()
-//
-//      Then("They lands on resident for tax page")
-//      CpSoResidentForTaxPage.checkPage()
-//
-//      When("They enter the resident country for tax and continue")
-//      CpSoResidentForTaxPage.addResidentForTaxCountry(TestData.residentForTax)
-//
-//      Then("They lands on tax identification number page")
-//      CpSoIdentificationNumberPage.checkPage()
-//
-//      When("They enter the tax identification number and continue")
-//      CpSoIdentificationNumberPage.enterIdentificationAndContinue("123-45-6789")
-//
-//      Then("They enter the tax resident countries page")
-//      CpSoTaxResidentCountriesPage.checkPage()
-//
-//      When("They click on change link to change the tax resident country")
-//      CpSoTaxResidentCountriesPage.changeCountry(TestData.residentForTax)
-//
-//      Then("They enter change resident for tax page")
-//      CpSoChangeResidentForTaxPage.checkPage()
-//
-//      And("They want to continue with the same country")
-//      CpSoChangeResidentForTaxPage.submitPage()
-//
-//      And("With the same identification number")
-//      CpSoChangeIdentificationNumberPage.enterIdentificationAndContinue("123-45-6789")
-//
-//      Then("They enters again to tax resident countries page")
-//      CpSoChangeTaxResidentCountriesPage.checkPage()
-//
-//      And("If they don't want to add another country they can continue to check answers page")
-//      CpSoChangeTaxResidentCountriesPage.selectNoAndContinue()
-//
-//      Then("They lands on check answers page for the substantial owner")
-//      CpSoCheckAnswersPage.checkPageFATCA()
-//
-//      When("They select Continue on the check answers page")
-//      CpSoCheckAnswersPage.submitPage()
-//
-//      Then("They see the substantial owner list with one substantial owner and no Incomplete tag")
-//      CpSoListPage.checkAddedCount("FATCA", 1)
-//      CpSoListPage.checkNotMarkedIncomplete("Sarah Smith")
-//
-//      When("They remove the substantial owner but select No")
-//      CpSoListPage.clickRemove("Sarah Smith")
-//      CpSoRemovePage.checkPage("FATCA", "Sarah Smith")
-//      CpSoRemovePage.selectNoAndContinue()
-//
-//      Then("The substantial owner is still listed")
-//      CpSoListPage.checkAddedCount("FATCA", 1)
-//
-//      When("They select No to add another substantial owner and continue")
-//      CpSoListPage.chooseNoAnotherAndContinue()
-//
-//      Then("They are on the section completed page")
-//      CpSoSectionCompletedPage.checkPage("FATCA", TestData.fourthFi)
-//
-//      When("They select Yes and continue")
-//      CpSoSectionCompletedPage.selectYesAndContinue()
-//
-//      Then("They are back on the task list and the CP/SO row shows Completed")
-//      ManualSendAReportIndexPage.checkCpSoStatus("Completed")
-//
-//      When("They go back to the list, remove the substantial owner and select Yes")
-//      CpSoListPage.goToPage()
-//      CpSoListPage.clickRemove("Sarah Smith")
-//      CpSoRemovePage.checkPage("FATCA", "Sarah Smith")
-//      CpSoRemovePage.selectYesAndContinue()
-//
-//      Then("They see the removed banner and no substantial owners added")
-//      CpSoListPage.checkRemovedBanner("FATCA", "Sarah Smith")
-//      CpSoListPage.checkNoneAdded("FATCA")
-//
-//      When("They go back to the task list")
-//      AccountHolderAccountPage.goToTaskList()
-//
-//      Then("The substantial owners row shows <status>")
-//      ManualSendAReportIndexPage.checkCpSoStatus("Completed")
-//    }
+    Scenario(
+      "CP-SO - end to end (FATCA): accounts, organisation account holder, individual substantial owner, list page, remove and section completed",
+      ManualSubmissionTests,
+      SoloTests
+    ) {
+      Given("The user has reached the manual task list as FATCA")
+      journeyToYourFis()
+      selectTheSuitableFI("FourthFI")
+      navigateToTaskList("FATCA")
+
+      When("They complete the accounts section")
+      ManualSendAReportIndexPage.clickAccounts()
+      AccountHolderJourneyHelper.completeAccountByNumberFatca()
+      AccountHolderJourneyHelper.completeAccountsSection(TestData.fourthFi)
+
+      And("They open Account holders, select the account and complete an organisation account holder")
+      AccountHolderJourneyHelper.openAccountHoldersAndSelectFirstAccount()
+      AccountHolderJourneyHelper.completeOrganisationAccountHolderFatca()
+
+      And("They open the substantial owners task and select the account holder")
+      CpSoAccountHolderPage.openCpSoJourneyFromTaskList("FATCA")
+
+      Then("They see the individual or organisation page")
+      CpSoIndividualOrOrganisationPage.checkPage()
+
+      When("They select Individual and continue")
+      CpSoIndividualOrOrganisationPage.selectIndividualAndContinue()
+
+      Then("They see the individual name page with FATCA wording")
+      CpSoIndividualNamePage.checkHeadingForFatca()
+
+      When("They enter a valid first and last name and continue")
+      CpSoIndividualNamePage.enterNameAndContinue("Sarah", "Smith")
+
+      Then("They see the have date of birth page with FATCA wording")
+      CpSoIndividualHaveDoB.checkPageForFatca()
+
+      When("They select Yes and continue")
+      CpSoIndividualHaveDoB.selectYesAndContinue()
+
+      Then("They are taken to the date of birth page")
+      CpSoIndividualD0B.checkPage()
+
+      When("They enter a valid date of birth and continue")
+      CpSoIndividualD0B.enterDateOfBirth()
+
+      Then("They see the have place of birth page")
+      CpSoIndividualHavePlaceOfBirthPage.checkPage()
+
+      When("They select Yes and continue")
+      CpSoIndividualHavePlaceOfBirthPage.selectYesAndContinue()
+
+      And("They enter the Individual place of birth")
+      CpSoIndividualPlaceOfBirthPage.enterPlaceOfBirthAndContinue("city", "Region", "Japan")
+
+      Then("They need to provide the details of Where are they based")
+      CpSoWhereAreTheyBasedPage.checkPage()
+
+      When("They select yes to enter UK address")
+      CpSoWhereAreTheyBasedPage.selectYesAndContinue()
+
+      Then("They will see the UK Postcode page")
+      CpSoUKPostcodePage.checkPage()
+
+      When("They enter the address and click find address")
+      CpSoUKPostcodePage.enterPostcodeAndFindAddress(TestData.postcodeMultipleAddressEnv)
+
+      And("They select the first address and continue")
+      CpSoSelectAddressPage.selectFirstAddressAndContinue()
+
+      Then("They lands on resident for tax page")
+      CpSoResidentForTaxPage.checkPage()
+
+      When("They enter the resident country for tax and continue")
+      CpSoResidentForTaxPage.addResidentForTaxCountry(TestData.residentForTax)
+
+      Then("They lands on tax identification number page")
+      CpSoIdentificationNumberPage.checkPage()
+
+      When("They enter the tax identification number and continue")
+      CpSoIdentificationNumberPage.enterIdentificationAndContinue("123-45-6789")
+
+      Then("They enter the tax resident countries page")
+      CpSoTaxResidentCountriesPage.checkPage()
+
+      When("They click on change link to change the tax resident country")
+      CpSoTaxResidentCountriesPage.changeCountry(TestData.residentForTax)
+
+      Then("They enter change resident for tax page")
+      CpSoChangeResidentForTaxPage.checkPage()
+
+      And("They want to continue with the same country")
+      CpSoChangeResidentForTaxPage.submitPage()
+
+      And("With the same identification number")
+      CpSoChangeIdentificationNumberPage.enterIdentificationAndContinue("123-45-6789")
+
+      Then("They enters again to tax resident countries page")
+      CpSoChangeTaxResidentCountriesPage.checkPage()
+
+      And("If they don't want to add another country they can continue to check answers page")
+      CpSoChangeTaxResidentCountriesPage.selectNoAndContinue()
+
+      Then("They lands on check answers page for the substantial owner")
+      CpSoCheckAnswersPage.checkPageFATCA()
+
+      When("They select Continue on the check answers page")
+      CpSoCheckAnswersPage.submitPage()
+
+      Then("They see the substantial owner list with one substantial owner and no Incomplete tag")
+      CpSoListPage.checkAddedCount("FATCA", 1)
+      CpSoListPage.checkNotMarkedIncomplete("Sarah Smith")
+
+      When("They remove the substantial owner but select No")
+      CpSoListPage.clickRemove("Sarah Smith")
+      CpSoRemovePage.checkPage("FATCA", "Sarah Smith")
+      CpSoRemovePage.selectNoAndContinue()
+
+      Then("The substantial owner is still listed")
+      CpSoListPage.checkAddedCount("FATCA", 1)
+
+      When("They select No to add another substantial owner and continue")
+      CpSoListPage.chooseNoAnotherAndContinue()
+
+      Then("They are on the section completed page")
+      CpSoSectionCompletedPage.checkPage("FATCA", TestData.fourthFi)
+
+      When("They select Yes and continue")
+      CpSoSectionCompletedPage.selectYesAndContinue()
+
+      Then("They are back on the task list and the CP/SO row shows Completed")
+      ManualSendAReportIndexPage.checkCpSoStatus("Completed")
+
+      When("They go back to the list, remove the substantial owner and select Yes")
+      CpSoListPage.goToPage()
+      CpSoListPage.clickRemove("Sarah Smith")
+      CpSoRemovePage.checkPage("FATCA", "Sarah Smith")
+      CpSoRemovePage.selectYesAndContinue()
+
+      Then("They see the removed banner and no substantial owners added")
+      CpSoListPage.checkRemovedBanner("FATCA", "Sarah Smith")
+      CpSoListPage.checkNoneAdded("FATCA")
+
+      When("They go back to the task list")
+      AccountHolderAccountPage.goToTaskList()
+
+      Then("The substantial owners row shows <status>")
+      ManualSendAReportIndexPage.checkCpSoStatus("Completed")
+    }
 
     Scenario(
       "CP-SO - end to end (FATCA): organisation substantial owner, UK address, tax residency, check answers and list",
