@@ -28,4 +28,17 @@ object CpSoChangeResidentForTaxPage extends BasePage {
     checkH1(s"Where is ${TestData.firstName} ${TestData.lastName} resident for tax?")
     this
   }
+
+  def checkPageForOrganisation(): this.type = {
+    onPage(pageUrl)
+    checkH1("Where is ABC Corp resident for tax?")
+    this
+  }
+
+  def addResidentForTaxCountry(country: String = TestData.residentForTax): this.type = {
+    onPage(pageUrl)
+    selectCountry(country)
+    click(submitButtonId)
+    this
+  }
 }
