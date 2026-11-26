@@ -27,6 +27,8 @@ object ManualSendAReportIndexPage extends BasePage {
   val accountsLink: By       = By.cssSelector("a[href*='account/have-number']")
   val filerCategoryLink: By  = By.cssSelector("a[href*='filer-category/sponsor']")
 
+  val cpSoStatus: By = By.id("accounts-information-3-status")
+
   def clickSponsorDetails(): this.type = {
     onPage(pageUrl)
     click(sponsorDetailsLink)
@@ -42,6 +44,12 @@ object ManualSendAReportIndexPage extends BasePage {
   def clickFilerCategory(): this.type = {
     onPage(pageUrl)
     click(filerCategoryLink)
+    this
+  }
+
+  def checkCpSoStatus(expected: String): this.type = {
+    onPage(pageUrl)
+    getText(cpSoStatus) should include(expected)
     this
   }
 

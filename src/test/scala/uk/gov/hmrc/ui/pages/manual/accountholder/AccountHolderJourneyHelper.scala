@@ -112,4 +112,64 @@ object AccountHolderJourneyHelper {
     AccountHolderAccountPage.checkAccountsListed()
     AccountHolderAccountPage.selectFirstAccountAndContinue()
   }
+
+  def completeAccountsSection(fiName: String): Unit = {
+    AccountAccountsPage.selectNoToAddAnotherAndContinue()
+    AccountsSectionCompletedPage.checkPage(fiName)
+    AccountsSectionCompletedPage.selectYesAndContinue()
+    AccountAccountsPage.checkAccountsStatus("Completed")
+  }
+
+  def completeOrganisationAccountHolderCrs(): Unit = {
+    AccountHolderIndividualOrOrganisationPage.checkPage()
+    AccountHolderIndividualOrOrganisationPage.selectOrganisationAndContinue()
+    AccountHolderOrganisationNamePage.enterCrsAccountHolderName()
+    AccountHolderOrgCrsTypePage.checkPage()
+    AccountHolderOrgCrsTypePage.selectAccountHolderType("passiveWithMultiplePersons")
+    AccountHolderWhereAreTheyBasedPage.checkPage()
+    AccountHolderWhereAreTheyBasedPage.selectYesAndContinue()
+    AccountHolderUKPostcodePage.checkPage()
+    AccountHolderUKPostcodePage.enterPostcodeAndContinueForAddress(TestData.postcodeSingleAddress)
+    AccountHolderIsThisTheAddressPage.checkPage()
+    AccountHolderIsThisTheAddressPage.selectYesAndContinue()
+    AccountHolderSelfCertificationPage.checkPage()
+    AccountHolderSelfCertificationPage.selectSelfCertificationAndContinue("Yes")
+    AccountHolderResidentForTaxPage.checkPage()
+    AccountHolderResidentForTaxPage.selectCountryAndContinue("United Kingdom")
+    AccountHolderHaveIdentificationNumberPage.checkPage()
+    AccountHolderHaveIdentificationNumberPage.selectYesAndContinue()
+    AccountHolderIdentificationNumberPage.checkPageForCountry("United Kingdom")
+    AccountHolderIdentificationNumberPage.enterTinAndContinue("1234567890")
+    AccountHolderTaxResidentCountriesPage.checkPageForCRSOrg()
+    AccountHolderTaxResidentCountriesPage.selectNoAndContinue()
+    AccountHolderCheckAnswersPage.checkPage()
+    AccountHoldersPage.continueFromCheckAnswers()
+    AccountHoldersPage.checkPage()
+  }
+
+  def completeOrganisationAccountHolderFatca(): Unit = {
+    AccountHolderIndividualOrOrganisationPage.checkPage()
+    AccountHolderIndividualOrOrganisationPage.selectOrganisationAndContinue()
+    AccountHolderOrganisationNamePage.enterFatcaAccountHolderName()
+    AccountHolderOrgFatcaTypePage.checkPage()
+    AccountHolderOrgFatcaTypePage.selectAccountHolderType("ownerDocumented")
+    AccountHolderWhereAreTheyBasedPage.checkPage()
+    AccountHolderWhereAreTheyBasedPage.selectNoAndContinue()
+    AccountHolderAddressNonUKPage.checkPage()
+    AccountHolderAddressNonUKPage.enterAddressNonUK()
+    AccountHolderResidentForTaxPage.checkPage()
+    AccountHolderResidentForTaxPage.selectCountryAndContinue("United States")
+    AccountHolderIdentificationNumberPage.checkPageForCountry("United States")
+    AccountHolderIdentificationNumberPage.enterTinAndContinue("123-45-6789")
+    AccountHolderTaxResidentCountriesPage.checkPageForFATCAOrg()
+    AccountHolderTaxResidentCountriesPage.selectNoAndContinue()
+    AccountHolderCheckAnswersPage.checkPage()
+    AccountHoldersPage.continueFromCheckAnswers()
+    AccountHoldersPage.checkPage()
+
+    /* TODO add these test here after DAC6-4525 for CP/SO e2e test
+     * AccountHolderSectionCompletedPage.selectYesAndContinue()
+     * AccountHolderAccountPage.checkAccountsStatus("Completed")
+     */
+  }
 }

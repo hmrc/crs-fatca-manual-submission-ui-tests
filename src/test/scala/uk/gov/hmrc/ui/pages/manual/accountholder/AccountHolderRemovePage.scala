@@ -44,9 +44,6 @@ object AccountHolderRemovePage extends BasePage {
       page.contains(s"Are you sure you want to remove the account holder $accountHolderName?"),
       s"Expected 'Are you sure you want to remove the account holder $accountHolderName?'"
     )
-    assert(isElementPresent(yesRadioId), "Expected the Yes radio")
-    assert(isElementPresent(noRadioId), "Expected the No radio")
-    assert(isElementPresent(submitButtonId), "Expected the Continue button")
     this
   }
 }

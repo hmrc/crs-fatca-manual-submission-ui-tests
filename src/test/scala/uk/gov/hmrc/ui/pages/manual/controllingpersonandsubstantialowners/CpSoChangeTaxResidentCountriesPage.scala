@@ -16,12 +16,15 @@
 
 package uk.gov.hmrc.ui.pages.manual.controllingpersonandsubstantialowners
 
+import org.openqa.selenium.By
 import uk.gov.hmrc.ui.pages.BasePage
 import uk.gov.hmrc.ui.utils.TestData
 
 object CpSoChangeTaxResidentCountriesPage extends BasePage {
 
   override val pageUrl: String = baseUrlManualSub + "/manual/cp-so/change-tax-resident-countries"
+
+  val addCountryButton: By = By.partialLinkText("Add a country")
 
   def checkPage(): this.type = {
     onPage(pageUrl)
@@ -32,6 +35,12 @@ object CpSoChangeTaxResidentCountriesPage extends BasePage {
   def checkPageWithNoAddedCountries(): this.type = {
     onPage(pageUrl)
     checkH1(s"You have not added any countries where ABC Corp is resident for tax")
+    this
+  }
+
+  def clickAddCountry(): this.type = {
+    onPage(pageUrl)
+    click(addCountryButton)
     this
   }
 }

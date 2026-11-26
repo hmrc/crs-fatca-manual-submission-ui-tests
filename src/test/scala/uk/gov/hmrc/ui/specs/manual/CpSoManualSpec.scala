@@ -29,7 +29,7 @@ class CpSoManualSpec extends BaseSpec with ManualJourneyHelper {
   Feature("CRS/FATCA Manual - CP-SO individual or organisation") {
 
     Scenario(
-      "CP-SO - reaching individual name page after selecting Individual (FATCA)",
+      "CP-SO - end to end (FATCA): accounts, organisation account holder, individual substantial owner, list page, remove and section completed",
       ManualSubmissionTests,
       SoloTests
     ) {
@@ -38,8 +38,17 @@ class CpSoManualSpec extends BaseSpec with ManualJourneyHelper {
       selectTheSuitableFI("FourthFI")
       navigateToTaskList("FATCA")
 
-      When("They add an eligible account holder, open the substantial owners task and select the account holder")
-      CpSoAccountHolderPage.reachCpSoJourney("FATCA")
+      When("They complete the accounts section")
+      ManualSendAReportIndexPage.clickAccounts()
+      AccountHolderJourneyHelper.completeAccountByNumberFatca()
+      AccountHolderJourneyHelper.completeAccountsSection(TestData.fourthFi)
+
+      And("They open Account holders, select the account and complete an organisation account holder")
+      AccountHolderJourneyHelper.openAccountHoldersAndSelectFirstAccount()
+      AccountHolderJourneyHelper.completeOrganisationAccountHolderFatca()
+
+      And("They open the substantial owners task and select the account holder")
+      CpSoAccountHolderPage.openCpSoJourneyFromTaskList("FATCA")
 
       Then("They see the individual or organisation page")
       CpSoIndividualOrOrganisationPage.checkPage()
@@ -125,10 +134,52 @@ class CpSoManualSpec extends BaseSpec with ManualJourneyHelper {
       Then("They lands on check answers page for the substantial owner")
       CpSoCheckAnswersPage.checkPageFATCA()
 
+      When("They select Continue on the check answers page")
+      CpSoCheckAnswersPage.submitPage()
+
+      Then("They see the substantial owner list with one substantial owner and no Incomplete tag")
+      CpSoListPage.checkAddedCount("FATCA", 1)
+      CpSoListPage.checkNotMarkedIncomplete("Sarah Smith")
+
+      When("They remove the substantial owner but select No")
+      CpSoListPage.clickRemove("Sarah Smith")
+      CpSoRemovePage.checkPage("FATCA", "Sarah Smith")
+      CpSoRemovePage.selectNoAndContinue()
+
+      Then("The substantial owner is still listed")
+      CpSoListPage.checkAddedCount("FATCA", 1)
+
+      When("They select No to add another substantial owner and continue")
+      CpSoListPage.chooseNoAnotherAndContinue()
+
+      Then("They are on the section completed page")
+      CpSoSectionCompletedPage.checkPage("FATCA", TestData.fourthFi)
+
+      When("They select Yes and continue")
+      CpSoSectionCompletedPage.selectYesAndContinue()
+
+      Then("They are back on the task list and the CP/SO row shows Completed")
+      ManualSendAReportIndexPage.checkCpSoStatus("Completed")
+
+      When("They go back to the list, remove the substantial owner and select Yes")
+      CpSoListPage.goToPage()
+      CpSoListPage.clickRemove("Sarah Smith")
+      CpSoRemovePage.checkPage("FATCA", "Sarah Smith")
+      CpSoRemovePage.selectYesAndContinue()
+
+      Then("They see the removed banner and no substantial owners added")
+      CpSoListPage.checkRemovedBanner("FATCA", "Sarah Smith")
+      CpSoListPage.checkNoneAdded("FATCA")
+
+      When("They go back to the task list")
+      AccountHolderAccountPage.goToTaskList()
+
+      Then("The substantial owners row shows <status>")
+      ManualSendAReportIndexPage.checkCpSoStatus("Completed")
     }
 
     Scenario(
-      "CP-SO - selecting Organisation continues the journey",
+      "CP-SO - end to end (FATCA): organisation substantial owner, UK address, tax residency, check answers and list",
       ManualSubmissionTests,
       SoloTests
     ) {
@@ -137,8 +188,17 @@ class CpSoManualSpec extends BaseSpec with ManualJourneyHelper {
       selectTheSuitableFI("FourthFI")
       navigateToTaskList("FATCA")
 
-      When("They add an eligible account holder, open the substantial owners task and select the account holder")
-      CpSoAccountHolderPage.reachCpSoJourney("FATCA")
+      When("They complete the accounts section")
+      ManualSendAReportIndexPage.clickAccounts()
+      AccountHolderJourneyHelper.completeAccountByNumberFatca()
+      AccountHolderJourneyHelper.completeAccountsSection(TestData.fourthFi)
+
+      And("They open Account holders, select the account and complete an organisation account holder")
+      AccountHolderJourneyHelper.openAccountHoldersAndSelectFirstAccount()
+      AccountHolderJourneyHelper.completeOrganisationAccountHolderFatca()
+
+      And("They open the substantial owners task and select the account holder")
+      CpSoAccountHolderPage.openCpSoJourneyFromTaskList("FATCA")
 
       Then("They see the individual or organisation page")
       CpSoIndividualOrOrganisationPage.checkPage()
@@ -194,10 +254,46 @@ class CpSoManualSpec extends BaseSpec with ManualJourneyHelper {
       Then("They enter to again to tax resident countries page with no countries added")
       CpSoChangeTaxResidentCountriesPage.checkPageWithNoAddedCountries()
 
+      When("They add the country again")
+      CpSoChangeTaxResidentCountriesPage.clickAddCountry()
+
+      Then("They see the change resident for tax page for the organisation")
+      CpSoChangeResidentForTaxPage.checkPageForOrganisation()
+
+      When("They enter the resident for tax country and continue")
+      CpSoChangeResidentForTaxPage.addResidentForTaxCountry(TestData.residentForTax)
+
+      And("They enter the tax identification number")
+      CpSoChangeIdentificationNumberPage.enterIdentificationAndContinue("123-45-6789")
+
+      When("They select No to add another country and continue")
+      CpSoChangeTaxResidentCountriesPage.selectNoAndContinue()
+
+      Then("They land on the check answers page for the organisation substantial owner")
+      CpSoCheckAnswersPage.checkPageFATCA()
+
+      When("They select Continue on the check answers page")
+      CpSoCheckAnswersPage.submitPage()
+
+      Then("The list shows the organisation as a substantial owner with no Incomplete tag")
+      CpSoListPage.checkAddedCount("FATCA", 1)
+      CpSoListPage.checkNotMarkedIncomplete("ABC Corp")
+
+      When("They select No to add another substantial owner and continue")
+      CpSoListPage.chooseNoAnotherAndContinue()
+
+      Then("They are on the section completed page")
+      CpSoSectionCompletedPage.checkPage("FATCA", TestData.fourthFi)
+
+      When("They select Yes and continue")
+      CpSoSectionCompletedPage.selectYesAndContinue()
+
+      Then("They are back on the task list and the CP/SO row shows Completed")
+      ManualSendAReportIndexPage.checkCpSoStatus("Completed")
     }
 
     Scenario(
-      "CP-SO - individual name page under CRS regime",
+      "CP-SO - end to end (CRS): accounts, organisation account holder, individual controlling person, list page, remove and section completed",
       ManualSubmissionTests,
       SoloTests
     ) {
@@ -206,8 +302,17 @@ class CpSoManualSpec extends BaseSpec with ManualJourneyHelper {
       selectTheSuitableFI("FirstFI")
       navigateToTaskList("CRS")
 
-      When("They add an eligible account holder, open the controlling persons task and select the account holder")
-      CpSoAccountHolderPage.reachCpSoJourney("CRS")
+      When("They complete the accounts section")
+      ManualSendAReportIndexPage.clickAccounts()
+      AccountHolderJourneyHelper.completeAccountByNumberCrs()
+      AccountHolderJourneyHelper.completeAccountsSection(TestData.firstFi)
+
+      And("They open Account holders, select the account and complete an organisation account holder")
+      AccountHolderJourneyHelper.openAccountHoldersAndSelectFirstAccount()
+      AccountHolderJourneyHelper.completeOrganisationAccountHolderCrs()
+
+      And("They open the controlling persons task and select the account holder")
+      CpSoAccountHolderPage.openCpSoJourneyFromTaskList("CRS")
 
       Then("They see the individual name page with CRS wording")
       CpSoIndividualNamePage.checkHeadingForCrs()
@@ -291,10 +396,55 @@ class CpSoManualSpec extends BaseSpec with ManualJourneyHelper {
       Then("They lands on check answers page for the controlling person")
       CpSoCheckAnswersPage.checkPageCRS()
 
+      When("They select Continue on the check answers page")
+      CpSoCheckAnswersPage.submitPage()
+
+      Then("They see the controlling person list with one controlling person and no Incomplete tag")
+      CpSoListPage.checkAddedCount("CRS", 1)
+      CpSoListPage.checkNotMarkedIncomplete("Sarah Smith")
+
+      When("They remove the controlling person but select No")
+      CpSoListPage.clickRemove("Sarah Smith")
+      CpSoRemovePage.checkPage("CRS", "Sarah Smith")
+      CpSoRemovePage.selectNoAndContinue()
+
+      Then("The controlling person is still listed")
+      CpSoListPage.checkAddedCount("CRS", 1)
+
+      When("They select No to add another controlling person and continue")
+      CpSoListPage.chooseNoAnotherAndContinue()
+
+      Then("They are on the section completed page")
+      CpSoSectionCompletedPage.checkPage("CRS", TestData.firstFi)
+
+      When("They select Yes and continue")
+      CpSoSectionCompletedPage.selectYesAndContinue()
+
+      Then("They are back on the task list and the CP/SO row shows Completed")
+      ManualSendAReportIndexPage.checkCpSoStatus("Completed")
+
+      When("They go back to the list, remove the controlling person and select Yes")
+      CpSoListPage.goToPage()
+      CpSoListPage.clickRemove("Sarah Smith")
+      CpSoRemovePage.checkPage("CRS", "Sarah Smith")
+      CpSoRemovePage.selectYesAndContinue()
+
+      Then("They see the removed banner and no controlling persons added")
+      CpSoListPage.checkRemovedBanner("CRS", "Sarah Smith")
+      CpSoListPage.checkNoneAdded("CRS")
+
+      And("The account holder is missing a controlling person")
+      CpSoListPage.checkAccountHolderMissingControllingPerson()
+
+      When("They select the back to send a CRS report link")
+      CpSoListPage.clickBackToSendAReport()
+
+      Then("They are on the task list and the controlling persons row shows Incomplete")
+      ManualSendAReportIndexPage.checkCpSoStatus("Incomplete")
     }
 
     Scenario(
-      "CP-SO - No to date of birth goes to have place of birth (FATCA)",
+      "CP-SO - No to date of birth goes to have place of birth - section incomplete (FATCA)",
       ManualSubmissionTests,
       SoloTests
     ) {
@@ -318,6 +468,81 @@ class CpSoManualSpec extends BaseSpec with ManualJourneyHelper {
 
       Then("They see the have place of birth page")
       CpSoIndividualHavePlaceOfBirthPage.checkPage()
+
+      Then("The unfinished substantial owner is listed as Incomplete")
+      CpSoListPage.goToPage()
+      CpSoListPage.checkAddedCount("FATCA", 1)
+      CpSoListPage.checkMarkedIncomplete("Sarah Smith")
+    }
+
+    Scenario(
+      "CP-SO - several account holders and controlling persons: missing text, Incomplete tags, plural heading and add another question (CRS)",
+      ManualSubmissionTests,
+      SoloTests
+    ) {
+      Given("The user has two accounts, each with an eligible organisation account holder, as CRS")
+      journeyToYourFis()
+      selectTheSuitableFI("FirstFI")
+      navigateToTaskList("CRS")
+      AccountHolderAccountPage.addAccountByNumber()
+      AccountHoldersPage.addAnotherAccountByNumber(TestData.iBANAccount2)
+      AccountHoldersPage.addOrganisationAccountHolder("CRS", TestData.iBANAccount)
+
+      And("They add a second account holder from the account holders list, for the second account")
+      AccountHolderAccountPage.goToTaskList()
+      AccountHolderAccountPage.clickAccountHolders()
+      AccountHoldersPage.checkPage()
+      AccountHoldersPage.clickAddAnAccountHolder()
+      AccountHolderAccountPage.checkPage()
+      AccountHolderAccountPage.selectAccountAndContinue(TestData.iBANAccount2)
+      AccountHolderIndividualOrOrganisationPage.selectOrganisationAndContinue()
+      AccountHolderOrganisationNamePage.enterCrsAccountHolderName()
+      AccountHolderOrgCrsTypePage.checkPage()
+      AccountHolderOrgCrsTypePage.selectAccountHolderType("passiveWithMultiplePersons")
+      AccountHolderWhereAreTheyBasedPage.checkPage()
+
+      And("The account holders list shows both account holders")
+      AccountHolderAccountPage.goToTaskList()
+      AccountHolderAccountPage.clickAccountHolders()
+      AccountHoldersPage.checkHeading(2)
+      AccountHolderAccountPage.goToTaskList()
+
+      When("They open the controlling persons task and see both account holders")
+      CpSoAccountHolderPage.openFromTaskList()
+      CpSoAccountHolderPage.checkAccountHoldersListed("CRS")
+      CpSoAccountHolderPage.checkCheckboxCount(2)
+
+      And("They select the first account holder and add a controlling person with just a name")
+      CpSoAccountHolderPage.selectFirstAccountHolderAndContinue()
+      CpSoIndividualNamePage.checkHeadingForCrs()
+      CpSoIndividualNamePage.enterNameAndContinue("Sarah", "Smith")
+      CpSoIndividualHaveDoB.checkPageForCrs()
+
+      Then("The list shows one Incomplete controlling person and the other account holder is missing one")
+      CpSoListPage.goToPage()
+      CpSoListPage.checkAddedCount("CRS", 1)
+      CpSoListPage.checkMarkedIncomplete("Sarah Smith")
+      CpSoListPage.checkAccountHolderIsMissingControllingPerson()
+
+      And("The add another controlling person question is not shown")
+      CpSoListPage.checkAddAnotherQuestionNotShown("CRS")
+
+      When("They add a controlling person and link them to the account holders listed, with just a name")
+      CpSoListPage.clickAddButton("CRS")
+      CpSoAccountHolderPage.checkPage("CRS")
+      CpSoAccountHolderPage.selectAllAccountHoldersAndContinue()
+      CpSoIndividualNamePage.enterNameAndContinue("Alex", "Jones")
+      CpSoIndividualHaveDoB.checkPageForCrs()
+
+      Then("The list shows two Incomplete controlling persons with the plural heading")
+      CpSoListPage.goToPage()
+      CpSoListPage.checkAddedCount("CRS", 2)
+      CpSoListPage.checkMarkedIncomplete("Sarah Smith")
+      CpSoListPage.checkMarkedIncomplete("Alex Jones")
+
+      And("No account holder is missing a controlling person and the add another question is shown")
+      CpSoListPage.checkNoAccountHolderIsMissingControllingPerson()
+      CpSoListPage.checkAddAnotherQuestionShown("CRS")
     }
 
     Scenario(
@@ -373,13 +598,13 @@ class CpSoManualSpec extends BaseSpec with ManualJourneyHelper {
       Then("They see the empty state")
       CpSoAccountHolderPage.checkEmptyState("FATCA")
 
-      /** uncomment the below lines after the implementation of ticket DAC6-4524
-        *
-        * When("They click the add an account holder link") CpSoAccountHolderPage.clickAddAnAccountHolder()
-        *
-        * Then("They are taken to the account holder pages") CpSoAccountHolderPage.checkOnAccountHolderPages()
-        */
+      When("They click the add an account holder link")
+      CpSoAccountHolderPage.clickAddAnAccountHolder()
 
+      Then("They are taken to the account holders page with no account holders")
+      AccountHoldersPage.checkPage()
+      AccountHoldersPage.checkHeading(0)
+      AccountHoldersPage.checkAddAnAccountHolderButtonShown()
     }
 
     Scenario(
@@ -391,15 +616,8 @@ class CpSoManualSpec extends BaseSpec with ManualJourneyHelper {
       journeyToYourFis()
       selectTheSuitableFI("FirstFI")
       navigateToTaskList("CRS")
-      AccountHolderAccountPage.reachIndividualOrOrganisationPageByNumber()
-      AccountHolderIndividualOrOrganisationPage.selectOrganisationAndContinue()
-      AccountHolderOrganisationNamePage.enterCrsAccountHolderName()
-      AccountHolderOrgCrsTypePage.checkPage()
-      AccountHolderOrgCrsTypePage.selectAccountHolderType("crsReportable")
-      AccountHolderWhereAreTheyBasedPage.checkPage()
 
-      When("They return to the task list and open the controlling persons task")
-      AccountHolderAccountPage.goToTaskList()
+      CpSoAccountHolderPage.addAccountHolder("CRS", "crsReportable")
       CpSoAccountHolderPage.goToPage()
 
       Then("The account holder is not listed, so they see the empty state")
@@ -415,15 +633,8 @@ class CpSoManualSpec extends BaseSpec with ManualJourneyHelper {
       journeyToYourFis()
       selectTheSuitableFI("FourthFI")
       navigateToTaskList("FATCA")
-      AccountHolderAccountPage.reachIndividualOrOrganisationPageByNumber()
-      AccountHolderIndividualOrOrganisationPage.selectOrganisationAndContinue()
-      AccountHolderOrganisationNamePage.enterFatcaAccountHolderName()
-      AccountHolderOrgFatcaTypePage.checkPage()
-      AccountHolderOrgFatcaTypePage.selectAccountHolderType("specifiedPerson")
-      AccountHolderWhereAreTheyBasedPage.checkPage()
 
-      When("They return to the task list and open the substantial owners task")
-      AccountHolderAccountPage.goToTaskList()
+      CpSoAccountHolderPage.addAccountHolder("FATCA", "specifiedPerson")
       CpSoAccountHolderPage.goToPage()
 
       Then("The account holder is not listed, so they see the empty state")

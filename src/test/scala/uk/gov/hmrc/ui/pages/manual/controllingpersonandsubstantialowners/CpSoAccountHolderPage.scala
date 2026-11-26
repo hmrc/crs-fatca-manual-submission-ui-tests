@@ -56,22 +56,25 @@ object CpSoAccountHolderPage extends BasePage {
     this
   }
 
-  def addEligibleAccountHolder(regime: String): this.type = {
+  def addAccountHolder(regime: String, accountHolderType: String): this.type = {
     AccountHolderAccountPage.reachIndividualOrOrganisationPageByNumber()
     AccountHolderIndividualOrOrganisationPage.selectOrganisationAndContinue()
     if (regime == "CRS") {
       AccountHolderOrganisationNamePage.enterCrsAccountHolderName()
       AccountHolderOrgCrsTypePage.checkPage()
-      AccountHolderOrgCrsTypePage.selectAccountHolderType("passiveWithMultiplePersons")
+      AccountHolderOrgCrsTypePage.selectAccountHolderType(accountHolderType)
     } else {
       AccountHolderOrganisationNamePage.enterFatcaAccountHolderName()
       AccountHolderOrgFatcaTypePage.checkPage()
-      AccountHolderOrgFatcaTypePage.selectAccountHolderType("ownerDocumented")
+      AccountHolderOrgFatcaTypePage.selectAccountHolderType(accountHolderType)
     }
     AccountHolderWhereAreTheyBasedPage.checkPage()
     AccountHolderAccountPage.goToTaskList()
     this
   }
+
+  def addEligibleAccountHolder(regime: String): this.type =
+    addAccountHolder(regime, if (regime == "CRS") "passiveWithMultiplePersons" else "ownerDocumented")
 
   def reachCpSoJourney(regime: String): this.type = {
     addEligibleAccountHolder(regime)
@@ -127,6 +130,16 @@ object CpSoAccountHolderPage extends BasePage {
     this
   }
 
+  def selectAllAccountHoldersAndContinue(): this.type = {
+    onPage(pageUrl)
+    Driver.instance
+      .findElements(By.cssSelector(".govuk-checkboxes__label"))
+      .asScala
+      .foreach(_.click())
+    click(continueButton)
+    this
+  }
+
   def clickAddAnAccountHolder(): this.type = {
     click(addAccountHolderLink)
     this
@@ -136,5 +149,12 @@ object CpSoAccountHolderPage extends BasePage {
     click(backToReportLink)
     onPageContaining("/manual/send-a-report")
     this
+  }
+
+  def openCpSoJourneyFromTaskList(regime: String): this.type = {
+    AccountHolderAccountPage.goToTaskList()
+    openFromTaskList()
+    checkAccountHoldersListed(regime)
+    selectFirstAccountHolderAndContinue()
   }
 }
