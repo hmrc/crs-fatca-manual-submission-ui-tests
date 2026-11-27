@@ -30,7 +30,7 @@ object AccountHoldersPage extends BasePage {
 
   val rows: By                   = By.cssSelector("dl.hmrc-list-with-actions .govuk-summary-list__row")
   val rowNames: By               = By.cssSelector("dl.hmrc-list-with-actions .govuk-summary-list__key")
-  val changeLinks: By            = By.cssSelector("dl.hmrc-list-with-actions a[href*='change-account-holder']")
+  val changeLinks: By            = By.cssSelector("[id^='Change-accountHolder-'")
   val removeLinks: By            = By.cssSelector("dl.hmrc-list-with-actions a[href*='remove-account-holder']")
   val incompleteTag: By          = By.xpath("//strong[contains(@class,'govuk-tag')][normalize-space()='Incomplete']")
   val notificationBanner: By     = By.cssSelector(".govuk-notification-banner")
@@ -41,7 +41,8 @@ object AccountHoldersPage extends BasePage {
   val continueButton: By         = By.cssSelector("form button[type='submit']")
   val missingAccountItems: By    = By.xpath("//p[contains(.,'missing an account holder')]/following-sibling::ul[1]/li")
 
-  val addAnotherQuestion: String = "Do you need to add another account holder?"
+  val addAnotherQuestion: String           = "Do you need to add another account holder?"
+  private var selectedName: Option[String] = None
 
   def goToPage(): this.type = {
     Driver.instance.get(pageUrl)
@@ -100,15 +101,6 @@ object AccountHoldersPage extends BasePage {
 
   def fiName(regime: String): String = if (regime == "CRS") TestData.firstFi else TestData.fourthFi
 
-  def accountHolderCount: Int = Driver.instance.findElements(rows).size
-
-  def accountHolderNames: Seq[String] =
-    Driver.instance
-      .findElements(rowNames)
-      .asScala
-      .map(_.getText.replace("Incomplete", "").trim)
-      .toSeq
-
   def firstAccountHolderName: String = {
     onPage(pageUrl)
     accountHolderNames.headOption.getOrElse(
@@ -116,23 +108,17 @@ object AccountHoldersPage extends BasePage {
     )
   }
 
-  def expectedHeading(count: Int): String = count match {
-    case 0 => "You have not added any account holders"
-    case 1 => "You have added 1 account holder"
-    case n => s"You have added $n account holders"
-  }
-
-  def checkHeading(count: Int): this.type = {
-    val actual = getText(pageHeader).trim
-    assert(actual == expectedHeading(count), s"Expected H1 '${expectedHeading(count)}' but found '$actual'")
-    assert(accountHolderCount == count, s"Expected $count account holder rows but found $accountHolderCount")
-    this
-  }
-
   def checkAccountHolderNotListed(name: String): this.type = {
     assert(!accountHolderNames.contains(name), s"Did not expect '$name' in the list: $accountHolderNames")
     this
   }
+
+  def accountHolderNames: Seq[String] =
+    Driver.instance
+      .findElements(rowNames)
+      .asScala
+      .map(_.getText.replace("Incomplete", "").trim)
+      .toSeq
 
   def checkChangeAndRemoveLinks(): this.type = {
     val count   = accountHolderCount
@@ -143,14 +129,6 @@ object AccountHoldersPage extends BasePage {
     this
   }
 
-  private def rowLink(name: String, hrefPart: String): By =
-    By.xpath(
-      s"//dl[contains(@class,'hmrc-list-with-actions')]//div[contains(@class,'govuk-summary-list__row')]" +
-        s"[.//dt[contains(normalize-space(.),'$name')]]//a[contains(@href,'$hrefPart')]"
-    )
-
-  private var selectedName: Option[String] = None
-
   def selectedAccountHolderName: String =
     selectedName.getOrElse(throw new AssertionError("No account holder has been selected with Change or Remove yet"))
 
@@ -159,6 +137,12 @@ object AccountHoldersPage extends BasePage {
     click(rowLink(name, "change-account-holder"))
     this
   }
+
+  private def rowLink(name: String, hrefPart: String): By =
+    By.xpath(
+      s"//dl[contains(@class,'hmrc-list-with-actions')]//div[contains(@class,'govuk-summary-list__row')]" +
+        s"[.//dt[contains(normalize-space(.),'$name')]]//a[contains(@href,'$hrefPart')]"
+    )
 
   def clickRemove(name: String = firstAccountHolderName): this.type = {
     selectedName = Some(name)
@@ -172,12 +156,12 @@ object AccountHoldersPage extends BasePage {
     this
   }
 
-  def incompleteTagCount: Int = Driver.instance.findElements(incompleteTag).size
-
   def checkIncompleteTagCount(expected: Int): this.type = {
     assert(incompleteTagCount == expected, s"Expected $expected 'Incomplete' tags but found $incompleteTagCount")
     this
   }
+
+  def incompleteTagCount: Int = Driver.instance.findElements(incompleteTag).size
 
   def checkIncompleteTagShown(): this.type = {
     assert(incompleteTagCount > 0, "Expected at least one 'Incomplete' tag")
@@ -207,18 +191,25 @@ object AccountHoldersPage extends BasePage {
     this
   }
 
-  def checkAddAnAccountHolderButtonShown(): this.type = {
-    assert(isElementPresent(addAccountHolderButton), "Expected the 'Add an account holder' button")
+  def checkHeading(count: Int): this.type = {
+    val actual = getText(pageHeader).trim
+    assert(actual == expectedHeading(count), s"Expected H1 '${expectedHeading(count)}' but found '$actual'")
+    assert(accountHolderCount == count, s"Expected $count account holder rows but found $accountHolderCount")
     this
+  }
+
+  def accountHolderCount: Int = Driver.instance.findElements(rows).size
+
+  def expectedHeading(count: Int): String = count match {
+    case 0 => "You have not added any account holders"
+    case 1 => "You have added 1 account holder"
+    case n => s"You have added $n account holders"
   }
 
   def clickAddAnAccountHolder(): this.type = {
     click(addAccountHolderButton)
     this
   }
-
-  def missingAccounts: Seq[String] =
-    Driver.instance.findElements(missingAccountItems).asScala.map(_.getText.trim).toSeq
 
   def checkOneAccountMissing(account: String): this.type = {
     val page = Driver.instance.getPageSource
@@ -236,6 +227,16 @@ object AccountHoldersPage extends BasePage {
     assert(!page.contains("link to the accounts"), "Did not expect the plural bullets")
     checkAddAnAccountHolderButtonShown()
     checkAddAnotherQuestionNotShown()
+    this
+  }
+
+  def checkAddAnAccountHolderButtonShown(): this.type = {
+    assert(isElementPresent(addAccountHolderButton), "Expected the 'Add an account holder' button")
+    this
+  }
+
+  def checkAddAnotherQuestionNotShown(): this.type = {
+    assert(!Driver.instance.getPageSource.contains(addAnotherQuestion), s"Did not expect '$addAnotherQuestion'")
     this
   }
 
@@ -260,14 +261,12 @@ object AccountHoldersPage extends BasePage {
     this
   }
 
+  def missingAccounts: Seq[String] =
+    Driver.instance.findElements(missingAccountItems).asScala.map(_.getText.trim).toSeq
+
   def checkAddAnotherQuestionShown(): this.type = {
     assert(Driver.instance.getPageSource.contains(addAnotherQuestion), s"Expected '$addAnotherQuestion'")
     assert(isElementPresent(addAnotherYes) && isElementPresent(addAnotherNo), "Expected Yes and No radios")
-    this
-  }
-
-  def checkAddAnotherQuestionNotShown(): this.type = {
-    assert(!Driver.instance.getPageSource.contains(addAnotherQuestion), s"Did not expect '$addAnotherQuestion'")
     this
   }
 

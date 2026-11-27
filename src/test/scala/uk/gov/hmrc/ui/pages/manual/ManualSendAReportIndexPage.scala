@@ -53,4 +53,7 @@ object ManualSendAReportIndexPage extends BasePage {
     this
   }
 
+  def checkPage(): this.type =
+    onPage(pageUrl)
+
 }
