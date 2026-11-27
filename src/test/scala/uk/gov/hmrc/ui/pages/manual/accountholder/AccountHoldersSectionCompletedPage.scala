@@ -19,16 +19,20 @@ package uk.gov.hmrc.ui.pages.manual.accountholder
 import org.openqa.selenium.By
 import uk.gov.hmrc.ui.pages.BasePage
 
-object AccountHoldersSectionCompletedPage extends BasePage{
+object AccountHoldersSectionCompletedPage extends BasePage {
 
   override val pageUrl: String = baseUrlManualSub + "/manual/is-account-holders-section-completed"
 
-  private val paragraph : By = By.xpath("//main//p[normalize-space()='You can still change the information for the account holders later.']")
-  
+  private val paragraph: By =
+    By.xpath("//main//p[normalize-space()='You can still change the information for the account holders later.']")
+
   def checkPage(fiName: String): this.type = {
     onPage(pageUrl)
     checkH1(s"Have you finished adding the account holders for $fiName?")
-    assert(isElementPresent(paragraph), "Expected the paragraph 'You can still change the information for the account holders later.'")
+    assert(
+      isElementPresent(paragraph),
+      "Expected the paragraph 'You can still change the information for the account holders later.'"
+    )
     this
   }
 }
