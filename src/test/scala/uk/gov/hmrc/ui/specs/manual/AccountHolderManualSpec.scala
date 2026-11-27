@@ -569,8 +569,14 @@ class AccountHolderManualSpec extends BaseSpec with ManualJourneyHelper {
       When("They select No to add another account holder")
       AccountHoldersPage.selectNoToAddAnotherAndContinue()
 
-      Then("They see the under construction page")
-      AccountHoldersPage.checkUnderConstruction()
+      Then("They see is account holders section completed page")
+      AccountHoldersSectionCompletedPage.checkPage("Third FI")
+
+      When("They select Yes for finished adding account holders for FI")
+      AccountHoldersSectionCompletedPage.selectYesAndContinue()
+
+      Then("They will navigate back to send a report page with Account holders as Complete")
+      ManualSendAReportIndexPage.checkPage()
     }
 
     Scenario(
